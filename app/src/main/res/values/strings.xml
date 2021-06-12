@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">VolleyTools</string>
+    <string name="activiy_welcome_string_madarin">早安排球人! 今天賣衝啥</string>
+    <string name="button_selection_score">計分仔</string>
+    <string name="button_selection_viewhistory">以前的比分</string>
+</resources>
