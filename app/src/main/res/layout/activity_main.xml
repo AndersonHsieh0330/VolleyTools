@@ -6,21 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/left_guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="46dp" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/right_guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_end="46dp"
-        />
-
     <TextView
         android:id="@+id/welcome_text"
         android:layout_width="wrap_content"
@@ -28,33 +13,46 @@
         android:text="@string/activiy_welcome_string_madarin"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/right_guideline"
+        app:layout_constraintStart_toStartOf="@id/left_guideline"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.30"
-        />
+        app:layout_constraintVertical_bias="0.13" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/right_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="46dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/left_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="46dp" />
 
 
     <io.github.florent37.shapeofview.shapes.DiagonalView
         android:id="@+id/DiagonalView_launch_scorer"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="60dp"
         android:background="@color/white"
-        android:elevation="4dp"
         app:layout_constraintDimensionRatio="1.5:1"
         app:layout_constraintEnd_toEndOf="@id/right_guideline"
         app:layout_constraintStart_toStartOf="@id/left_guideline"
         app:layout_constraintTop_toBottomOf="@+id/welcome_text"
         app:shape_diagonal_angle="7"
-        app:shape_diagonal_position="bottom"
-        >
+        app:shape_diagonal_position="bottom">
 
         <Button
             android:id="@+id/button_launch_scorer"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/welcome_page_button_design"
+            android:layout_height="219dp"
+            android:background="@drawable/welcome_page_button_design_scorer"
             android:text="@string/button_selection_score"
+            android:textSize="40sp"
             app:backgroundTint="#FFFFFF"
             app:backgroundTintMode="multiply" />
 
@@ -64,31 +62,26 @@
         android:id="@+id/DiagonalView_launch_history"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="1dp"
         android:background="@color/white"
-        android:elevation="4dp"
         android:rotation="180"
         app:layout_constraintDimensionRatio="1.5:1"
         app:layout_constraintEnd_toEndOf="@id/right_guideline"
         app:layout_constraintStart_toStartOf="@id/left_guideline"
         app:layout_constraintTop_toBottomOf="@+id/DiagonalView_launch_scorer"
         app:shape_diagonal_angle="7"
-        app:shape_diagonal_position="bottom"
-        >
+        app:shape_diagonal_position="bottom">
 
         <com.AndyH.volleytools.FlippedTextButton
             android:id="@+id/button_launch_history"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/welcome_page_button_design"
+            android:background="@drawable/welcome_page_button_design_history"
             android:text="@string/button_selection_viewhistory"
-            />
+            android:textSize="40sp"
+            android:textColor="@color/white"/>
 
     </io.github.florent37.shapeofview.shapes.DiagonalView>
-
-
-
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

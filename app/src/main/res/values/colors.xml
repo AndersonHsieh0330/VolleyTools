@@ -8,4 +8,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="Mint_Green">#C0F7A4</color>
+    <color name="Azure_Blue">#90F1EF</color>
+    <color name="Blossom_Pink">#F7D5DF</color>
+    <color name="Yellow_Crayola">#FFEF9F</color>
+    <color name="Maroon_Purple">#D9B8F1</color>
 </resources>

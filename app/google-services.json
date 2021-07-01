@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "830613042627",
+    "project_id": "volleytools",
+    "storage_bucket": "volleytools.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:830613042627:android:9794cdc89e632675763976",
+        "android_client_info": {
+          "package_name": "com.AndyH.volleytools"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "830613042627-fqdk7o78375nrslf0eb136sf8vqjr5vo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.AndyH.volleytools",
+            "certificate_hash": "f4af074303aee83c0b5fae7a506eb0b582ff04eb"
+          }
+        },
+        {
+          "client_id": "830613042627-kotj93d5mm9pa0o7tcm3msirvgoqid02.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANiuR0YxgwRaWUfv7Z7jK4dtoPygPfFfw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "830613042627-kotj93d5mm9pa0o7tcm3msirvgoqid02.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
