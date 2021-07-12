@@ -3,6 +3,8 @@
     <string name="activiy_welcome_string_madarin">早安排球人! 今天袂衝啥</string>
     <string name="button_selection_score">計分仔</string>
     <string name="button_selection_viewhistory">以前的比分</string>
+    <string name="teams_goodpeople">好人</string>
+    <string name="teams_badpeople">壞人</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

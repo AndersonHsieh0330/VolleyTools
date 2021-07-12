@@ -12,14 +12,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.025" />
+        app:layout_constraintGuide_percent="0.04" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/right"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.975" />
+        app:layout_constraintGuide_percent="0.96" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/top"
@@ -36,73 +36,163 @@
         app:layout_constraintGuide_percent="0.95" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline7"
+        android:id="@+id/mid_left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5"/>
+        app:layout_constraintGuide_percent="0.48"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/mid_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.52"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:background="right"
-        ></androidx.constraintlayout.widget.ConstraintLayout>
-
-        <io.github.florent37.shapeofview.shapes.DiagonalView
-            android:id="@+id/DiagonalView_launch_scorer"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="@color/white"
-            android:rotation="270"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintBottom_toTopOf="@+id/bottom"
-            app:layout_constraintEnd_toStartOf="@+id/guideline7"
-            app:layout_constraintStart_toStartOf="@+id/left"
-            app:layout_constraintTop_toTopOf="@+id/top"
-            app:shape_diagonal_angle="10"
-            app:shape_diagonal_position="bottom">
-
-            <Button
-                android:id="@+id/rightscoreboard_diagonalview"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/scorer_page_button_design_left"
-                android:rotation="90"
-                android:padding="10dp"
-                android:text="16"
-                android:textSize="40sp"
-                app:backgroundTint="#FFFFFF"
-                app:backgroundTintMode="multiply" />
-
-        </io.github.florent37.shapeofview.shapes.DiagonalView>
-
-
-
-    <io.github.florent37.shapeofview.shapes.DiagonalView
-        android:id="@+id/leftscoreboard_diagonalview"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/white"
-        android:rotation="90"
+        android:background="@drawable/scorer_page_button_design_left"
+        app:layout_constraintBottom_toTopOf="@+id/bottom"
+        app:layout_constraintEnd_toStartOf="@+id/mid_left"
+        app:layout_constraintStart_toStartOf="@+id/left"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintTop_toTopOf="@+id/top">
+
+
+        <Button
+            android:id="@+id/left_button_set"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/scorer_sets_design"
+            android:padding="10dp"
+            android:text="2"
+            android:textSize="40sp"
+            app:backgroundTint="#FFFFFF"
+            app:backgroundTintMode="multiply"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/left_button_leave"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="20dp"
+
+            android:layout_marginTop="20dp"
+            android:background="@drawable/exit_icon"
+            android:padding="10dp"
+            android:textSize="40sp"
+            app:backgroundTint="#FFFFFF"
+            app:backgroundTintMode="multiply"
+            app:layout_constraintBottom_toTopOf="@+id/left_button_score"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+
+            android:id="@+id/left_button_score"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/Transparent"
+            android:backgroundTint="#00FFFFFF"
+            android:text="25"
+            app:backgroundTint="#00FFFFFF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/left_button_set" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:text="@string/teams_goodpeople"
+            android:textSize="40dp"
+            app:layout_constraintBottom_toTopOf="@+id/left_button_score"
+            app:layout_constraintEnd_toStartOf="@+id/left_button_set"
+            app:layout_constraintStart_toEndOf="@+id/left_button_leave"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/scorer_page_button_design_right"
         app:layout_constraintBottom_toTopOf="@+id/bottom"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="@+id/right"
-        app:layout_constraintStart_toStartOf="@+id/guideline7"
-        app:layout_constraintTop_toTopOf="@+id/top"
-        app:shape_diagonal_angle="10"
-        app:shape_diagonal_position="bottom">
+        app:layout_constraintStart_toStartOf="@+id/mid_right"
+        app:layout_constraintTop_toTopOf="@+id/top">
 
+        <TextView
+            android:id="@+id/badpeople"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:text="@string/teams_badpeople"
+            android:textSize="40dp"
+            app:layout_constraintBottom_toTopOf="@+id/right_button_score"
+            app:layout_constraintEnd_toStartOf="@+id/right_button_Settings"
+            app:layout_constraintStart_toEndOf="@+id/right_button_set"
+            app:layout_constraintTop_toTopOf="parent" />
         <Button
-            android:id="@+id/button_launch_scorer"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/scorer_page_button_design_right"
-            android:rotation="270"
-            android:text="25"
+            android:id="@+id/right_button_set"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="20dp"
+
+            android:layout_marginTop="20dp"
+            android:background="@drawable/scorer_sets_design"
+            android:padding="10dp"
+            android:text="1"
+
             android:textSize="40sp"
             app:backgroundTint="#FFFFFF"
-            app:backgroundTintMode="multiply" />
+            app:backgroundTintMode="multiply"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </io.github.florent37.shapeofview.shapes.DiagonalView>
+        <Button
+            android:id="@+id/right_button_score"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/Transparent"
+            android:backgroundTint="#00FFFFFF"
+            app:backgroundTint="#00FFFFFF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/right_button_set" />
+
+
+        <Button
+            android:id="@+id/right_button_Settings"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/settings_icon"
+            android:padding="10dp"
+            android:text="2"
+            android:textSize="40sp"
+            app:backgroundTint="#FFFFFF"
+            app:backgroundTintMode="multiply"
+            app:layout_constraintBottom_toTopOf="@+id/right_button_score"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

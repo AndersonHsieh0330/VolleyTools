@@ -4,8 +4,8 @@
 
     <solid android:color="@color/Mint_Green"></solid>
     <corners
-        android:topLeftRadius="40dp"
-        android:bottomLeftRadius="40dp"
+
+        android:radius="20dp"
         ></corners>
     <stroke
         android:dashGap="500dp"></stroke>

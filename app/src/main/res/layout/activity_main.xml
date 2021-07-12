@@ -78,8 +78,8 @@
             android:layout_height="match_parent"
             android:background="@drawable/welcome_page_button_design_history"
             android:text="@string/button_selection_viewhistory"
-            android:textSize="40sp"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white"
+            android:textSize="40sp" />
 
     </io.github.florent37.shapeofview.shapes.DiagonalView>
 

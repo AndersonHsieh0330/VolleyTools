@@ -12,4 +12,5 @@
     <color name="Blossom_Pink">#F7D5DF</color>
     <color name="Yellow_Crayola">#FFEF9F</color>
     <color name="Maroon_Purple">#D9B8F1</color>
+    <color name="Transparent">@null</color>
 </resources>

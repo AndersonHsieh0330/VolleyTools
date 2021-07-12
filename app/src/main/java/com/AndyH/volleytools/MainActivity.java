@@ -10,6 +10,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -17,6 +20,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+//        FirebaseDatabase firebaseDatabase= FirebaseDatabase.getInstance();
+//        DatabaseReference databaseReference = firebaseDatabase.getReference("message");
+//        databaseReference.setValue("testing2 22222");
+//
+//        DatabaseReference databaseReference1 = firebaseDatabase.getReference("tick");
+//        databaseReference1.setValue("ticktick");
 
         Button welcomepage_button_scorer = (Button)findViewById(R.id.button_launch_scorer);
         welcomepage_button_scorer.setOnClickListener(new View.OnClickListener() {
@@ -24,11 +33,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent scoring_intent = new Intent(v.getContext(), scorer.class);
                 v.getContext().startActivity(scoring_intent);
-
-
-
             }
         });
+
+
 
 
         Button welcomepage_button_history = (Button)findViewById(R.id.button_launch_history);
