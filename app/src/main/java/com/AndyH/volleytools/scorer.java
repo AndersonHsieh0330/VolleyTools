@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -25,16 +26,14 @@ public class scorer extends AppCompatActivity {
     Game current_game;
     Button goodpeople_score_button,badpeople_score_button,goodpeople_set_button,badpeople_set_button,button_leave,button_settings;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.activity_scorer);
-        Log.d("bundletag", "onCreate: "+savedInstanceState);
-        // set initial screen orientation to landscape
-//        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
+        // set initial screen orientation to landscape, content is set in onconfigchange
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         this.setContentView(R.layout.activity_scorer);
+
 
         // if saveInstanceState has the key "is_game_on", then it is always true
         if(savedInstanceState != null){
@@ -56,96 +55,62 @@ public class scorer extends AppCompatActivity {
         }
 
 
-        //only allows landscape and reverse landscape
-        OrientationEventListener orientationEventListener = new OrientationEventListener(this, SensorManager.SENSOR_DELAY_NORMAL) {
+
+
+
+        goodpeople_score_button =  findViewById(R.id.left_button_score);
+        Log.d("buttontag","button: "+goodpeople_score_button);
+
+        goodpeople_score_button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onOrientationChanged(int orientation) {
-                Log.v("orientation", "Orientation changed to " + orientation);
-
-                if (orientation == OrientationEventListener.ORIENTATION_UNKNOWN) {
-                    return;
-                }
-
-                int degrees = -1;
-                if (orientation < 45 || orientation > 315) {
-                    Log.i("orientation", "Portrait "+degrees);
-                } else if (orientation < 135) {
-                    degrees = 90;
-                    scorer.super.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE);
-                    Log.i("orientation", "Landscape "+degrees);    // This can be reverse landscape
-                } else if (orientation < 225) {
-                    degrees = 180;
-                    Log.i("orientation", "Reverse Portrait "+degrees);
-                } else {
-                    degrees = 270;
-                    Log.i("orientation", "Reverse Landscape "+degrees); // This can be landscape
-                    scorer.super.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-                }
-                setContentView(R.layout.activity_scorer);
+            public void onClick(View v) {
+                current_game.goodpeople_gain_point();
+                goodpeople_score_button.setText(current_game.getGoodpeople_points());
             }
-        };
-
-        if (orientationEventListener.canDetectOrientation() == true) {
-            Log.v("orientation", "Can detect orientation");
-            orientationEventListener.enable();
-        } else {
-            Log.v("orientation", "Cannot detect orientation");
-            orientationEventListener.disable();
-        }
+        });
 
 
-//        goodpeople_score_button = (Button) this.findViewById(R.id.left_button_score);
-//        goodpeople_score_button.setText(current_game.getGoodpeople_points());
-//        goodpeople_score_button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                current_game.goodpeople_gain_point();
-//                goodpeople_score_button.setText(current_game.getGoodpeople_points());
-//            }
-//        });
-//
-//
-//        badpeople_score_button = (Button) this.findViewById(R.id.right_button_score);
-//        badpeople_score_button.setText(current_game.getBadpeople_points());
-//        badpeople_score_button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                current_game.badpeople_gain_point();
-//                badpeople_score_button.setText(current_game.getBadpeople_points());
-//            }
-//        });
-//
-//        goodpeople_set_button = (Button) this.findViewById(R.id.right_button_set);
-//        goodpeople_set_button.setText(current_game.getGoodpeople_sets());
-//        goodpeople_set_button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                current_game.goodpeople_gain_set();
-//                goodpeople_set_button.setText(current_game.getGoodpeople_sets());
-//            }
-//        });
-//
-//        badpeople_set_button = (Button) this.findViewById(R.id.left_button_set);
-//        badpeople_set_button.setText(current_game.getBadpeople_sets());
-//        badpeople_set_button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                current_game.badpeople_gain_set();
-//                badpeople_set_button.setText(current_game.getBadpeople_sets());
-//            }
-//        });
-//
-//        button_leave = (Button)this.findViewById(R.id.left_button_leave);
-//        button_leave.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(v.getContext(), MainActivity.class);
-//                startActivity(intent);
-//                savedInstanceState.putParcelable("ongoing_game",current_game);
-//
-//            }
-//        });
-//        button_settings =(Button) this.findViewById(R.id.right_button_Settings);
+        badpeople_score_button = this.findViewById(R.id.right_button_score);
+        badpeople_score_button.setText(current_game.getBadpeople_points());
+        badpeople_score_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                current_game.badpeople_gain_point();
+                badpeople_score_button.setText(current_game.getBadpeople_points());
+            }
+        });
+
+        goodpeople_set_button =  this.findViewById(R.id.right_button_set);
+        goodpeople_set_button.setText(current_game.getGoodpeople_sets());
+        goodpeople_set_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                current_game.goodpeople_gain_set();
+                goodpeople_set_button.setText(current_game.getGoodpeople_sets());
+            }
+        });
+
+        badpeople_set_button =  this.findViewById(R.id.left_button_set);
+        badpeople_set_button.setText(current_game.getBadpeople_sets());
+        badpeople_set_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                current_game.badpeople_gain_set();
+                badpeople_set_button.setText(current_game.getBadpeople_sets());
+            }
+        });
+
+        button_leave = (Button)this.findViewById(R.id.left_button_leave);
+        button_leave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), MainActivity.class);
+                startActivity(intent);
+                savedInstanceState.putParcelable("ongoing_game",current_game);
+
+            }
+        });
+        button_settings =(Button) this.findViewById(R.id.right_button_Settings);
 
 
 
@@ -179,5 +144,12 @@ public class scorer extends AppCompatActivity {
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         current_game = savedInstanceState.getParcelable("ongoing_game");
         super.onRestoreInstanceState(savedInstanceState);
+    }
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        setContentView(R.layout.activity_scorer);
+
     }
 }
