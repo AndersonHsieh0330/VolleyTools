@@ -28,10 +28,12 @@ public class scorer extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         super.onCreate(savedInstanceState);
 
+
         // set initial screen orientation to landscape, content is set in onconfigchange
-        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
         this.setContentView(R.layout.activity_scorer);
 
 
