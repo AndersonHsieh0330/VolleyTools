@@ -26,17 +26,16 @@ public class scorer extends AppCompatActivity {
     Game current_game;
     Button goodpeople_score_button,badpeople_score_button,goodpeople_set_button,badpeople_set_button,button_leave,button_settings;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+//        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         super.onCreate(savedInstanceState);
 
 
         // set initial screen orientation to landscape, content is set in onconfigchange
 
         this.setContentView(R.layout.activity_scorer);
-
-
         // if saveInstanceState has the key "is_game_on", then it is always true
         if(savedInstanceState != null){
             if(savedInstanceState.getBoolean("is_game_on")==false){
@@ -60,7 +59,7 @@ public class scorer extends AppCompatActivity {
 
 
 
-        goodpeople_score_button =  findViewById(R.id.left_button_score);
+        goodpeople_score_button =  findViewById(R.id.goodpeople_button_score);
         Log.d("buttontag","button: "+goodpeople_score_button);
 
         goodpeople_score_button.setOnClickListener(new View.OnClickListener() {
@@ -72,8 +71,8 @@ public class scorer extends AppCompatActivity {
         });
 
 
-        badpeople_score_button = this.findViewById(R.id.right_button_score);
-        badpeople_score_button.setText(current_game.getBadpeople_points());
+        badpeople_score_button = findViewById(R.id.badpeople_button_score);
+        Log.d("buttontag", "button: "+badpeople_score_button);
         badpeople_score_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,8 +81,7 @@ public class scorer extends AppCompatActivity {
             }
         });
 
-        goodpeople_set_button =  this.findViewById(R.id.right_button_set);
-        goodpeople_set_button.setText(current_game.getGoodpeople_sets());
+        goodpeople_set_button =  this.findViewById(R.id.goodpeople_button_set);
         goodpeople_set_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,8 +90,7 @@ public class scorer extends AppCompatActivity {
             }
         });
 
-        badpeople_set_button =  this.findViewById(R.id.left_button_set);
-        badpeople_set_button.setText(current_game.getBadpeople_sets());
+        badpeople_set_button =  this.findViewById(R.id.badpeople_button_set);
         badpeople_set_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,7 +99,7 @@ public class scorer extends AppCompatActivity {
             }
         });
 
-        button_leave = (Button)this.findViewById(R.id.left_button_leave);
+        button_leave = (Button)this.findViewById(R.id.goodpeople_button_leave);
         button_leave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,7 +109,7 @@ public class scorer extends AppCompatActivity {
 
             }
         });
-        button_settings =(Button) this.findViewById(R.id.right_button_Settings);
+        button_settings =(Button) this.findViewById(R.id.badpeople_button_Settings);
 
 
 

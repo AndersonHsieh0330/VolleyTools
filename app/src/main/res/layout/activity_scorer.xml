@@ -7,12 +7,196 @@
     tools:context=".scorer">
 
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/goodpeople_constraintLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/scorer_page_button_design_left"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toStartOf="@id/right"
+        app:layout_constraintStart_toEndOf="@+id/left"
+        app:layout_constraintTop_toBottomOf="@id/top"
+        app:layout_constraintBottom_toBottomOf="@id/mid_top">
 
+
+        <Button
+            android:id="@+id/goodpeople_button_set"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
+            android:background="@drawable/scorer_sets_design"
+            android:text="2"
+            style="?android:attr/borderlessButtonStyle"
+
+            android:textSize="40sp"
+            app:backgroundTint="#FFFFFF"
+            app:backgroundTintMode="multiply"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+             />
+
+        <Button
+            android:id="@+id/goodpeople_button_leave"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/exit_icon"
+            android:padding="10dp"
+            android:textSize="40sp"
+            app:backgroundTint="#FFFFFF"
+            app:backgroundTintMode="multiply"
+            app:layout_constraintBottom_toTopOf="@+id/goodpeople_button_score"
+            app:layout_constraintDimensionRatio="1:1"
+
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <Button
+
+            android:id="@+id/goodpeople_button_score"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/Transparent"
+            android:backgroundTint="#00FFFFFF"
+            android:text="25"
+            app:backgroundTint="#00FFFFFF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/goodpeople_button_set" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:text="@string/teams_goodpeople"
+            android:textSize="40dp"
+            android:paddingTop="10dp"
+            app:layout_constraintBottom_toTopOf="@+id/goodpeople_button_score"
+            app:layout_constraintEnd_toStartOf="@+id/goodpeople_button_leave"
+            app:layout_constraintStart_toEndOf="@+id/goodpeople_button_set"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/badpeople_constraintLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/scorer_page_button_design_right"
+        app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintBottom_toTopOf="@+id/bottom"
+        app:layout_constraintEnd_toEndOf="@+id/right"
+        app:layout_constraintStart_toStartOf="@+id/left"
+        app:layout_constraintTop_toBottomOf="@+id/mid_bottom"
+        app:layout_constraintDimensionRatio="1:1">
+
+        <Button
+            android:id="@+id/badpeople_button_set"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/scorer_sets_design"
+            android:padding="10dp"
+            android:text="1"
+            style="?android:attr/borderlessButtonStyle"
+            android:textSize="40sp"
+            app:backgroundTint="#FFFFFF"
+            app:backgroundTintMode="multiply"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/badpeople_button_score"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/Transparent"
+            android:backgroundTint="#00FFFFFF"
+            app:backgroundTint="#00FFFFFF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/badpeople_button_set" />
+
+        <Button
+            android:id="@+id/badpeople_button_Settings"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/settings_icon"
+            android:padding="10dp"
+            android:text="2"
+            android:textSize="40sp"
+            app:backgroundTint="#FFFFFF"
+            app:backgroundTintMode="multiply"
+            app:layout_constraintBottom_toTopOf="@+id/badpeople_button_score"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/badpeople"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:text="@string/teams_badpeople"
+            android:textSize="40dp"
+            android:paddingTop="10dp"
+            app:layout_constraintBottom_toTopOf="@+id/badpeople_button_score"
+            app:layout_constraintEnd_toStartOf="@+id/badpeople_button_Settings"
+            app:layout_constraintStart_toEndOf="@+id/badpeople_button_set"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline2"
+        android:id="@+id/top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.95" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="20dp" />
+        app:layout_constraintGuide_percent="0.05" />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.95" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/mid_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.475" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/mid_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.525" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
