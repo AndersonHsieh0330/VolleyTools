@@ -3,6 +3,7 @@ package com.AndyH.volleytools;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import android.content.Context;
 import android.content.Intent;
@@ -66,7 +67,7 @@ public class scorer extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 current_game.goodpeople_gain_point();
-                goodpeople_score_button.setText(current_game.getGoodpeople_points());
+                goodpeople_score_button.setText(String.valueOf(current_game.getGoodpeople_points()));
             }
         });
 
@@ -77,7 +78,7 @@ public class scorer extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 current_game.badpeople_gain_point();
-                badpeople_score_button.setText(current_game.getBadpeople_points());
+                badpeople_score_button.setText(String.valueOf(current_game.getBadpeople_points()));
             }
         });
 
@@ -86,7 +87,7 @@ public class scorer extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 current_game.goodpeople_gain_set();
-                goodpeople_set_button.setText(current_game.getGoodpeople_sets());
+                goodpeople_set_button.setText(String.valueOf(current_game.getGoodpeople_sets()));
             }
         });
 
@@ -95,7 +96,7 @@ public class scorer extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 current_game.badpeople_gain_set();
-                badpeople_set_button.setText(current_game.getBadpeople_sets());
+                badpeople_set_button.setText(String.valueOf(current_game.getBadpeople_sets()));
             }
         });
 
@@ -105,11 +106,20 @@ public class scorer extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), MainActivity.class);
                 startActivity(intent);
-                savedInstanceState.putParcelable("ongoing_game",current_game);
+//                savedInstanceState.putParcelable("ongoing_game",current_game);
 
             }
         });
         button_settings =(Button) this.findViewById(R.id.badpeople_button_Settings);
+        button_settings.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmanager = scorer.super.getSupportFragmentManager();
+                scorer_settings scorer_settings_class = new scorer_settings();
+                scorer_settings_class.show(fragmanager,"scorer_settings_tag");
+            }
+        });
 
 
 
