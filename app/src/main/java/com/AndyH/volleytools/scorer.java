@@ -38,88 +38,29 @@ public class scorer extends AppCompatActivity {
 
         this.setContentView(R.layout.activity_scorer);
         // if saveInstanceState has the key "is_game_on", then it is always true
-        if(savedInstanceState != null){
-            if(savedInstanceState.getBoolean("is_game_on")==false){
-                //should never end up here
-                throw new RuntimeException("key false state: is_game_on");
-            }else{
-                //load unfinished game
-                is_game_on = savedInstanceState.getBoolean("is_game_on");
-                current_game= savedInstanceState.getParcelable("ongoing_game");
+//        if(savedInstanceState != null){
+//            if(savedInstanceState.getBoolean("is_game_on")==false){
+//                //should never end up here
+//                throw new RuntimeException("key false state: is_game_on");
+//            }else{
+//                //load unfinished game
+//                is_game_on = savedInstanceState.getBoolean("is_game_on");
+//                current_game= savedInstanceState.getParcelable("ongoing_game");
+//
+//            }
+//        }else{
+//
+//            //create new game with default settings
+//            this.is_game_on = true;
+//            current_game = new Game(25,2,14,
+//                    13,0,0,null, null);
+//        }
 
-            }
-        }else{
-
-            //create new game with default settings
-            this.is_game_on = true;
-            current_game = new Game(25,2,14,
-                    13,0,0,null, null);
-        }
-
-
-
-
-
-        goodpeople_score_button =  findViewById(R.id.goodpeople_button_score);
-        Log.d("buttontag","button: "+goodpeople_score_button);
-
-        goodpeople_score_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                current_game.goodpeople_gain_point();
-                goodpeople_score_button.setText(String.valueOf(current_game.getGoodpeople_points()));
-            }
-        });
+        this.initialize_buttons();
 
 
-        badpeople_score_button = findViewById(R.id.badpeople_button_score);
-        Log.d("buttontag", "button: "+badpeople_score_button);
-        badpeople_score_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                current_game.badpeople_gain_point();
-                badpeople_score_button.setText(String.valueOf(current_game.getBadpeople_points()));
-            }
-        });
 
-        goodpeople_set_button =  this.findViewById(R.id.goodpeople_button_set);
-        goodpeople_set_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                current_game.goodpeople_gain_set();
-                goodpeople_set_button.setText(String.valueOf(current_game.getGoodpeople_sets()));
-            }
-        });
 
-        badpeople_set_button =  this.findViewById(R.id.badpeople_button_set);
-        badpeople_set_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                current_game.badpeople_gain_set();
-                badpeople_set_button.setText(String.valueOf(current_game.getBadpeople_sets()));
-            }
-        });
-
-        button_leave = (Button)this.findViewById(R.id.goodpeople_button_leave);
-        button_leave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), MainActivity.class);
-                startActivity(intent);
-//                savedInstanceState.putParcelable("ongoing_game",current_game);
-
-            }
-        });
-        button_settings =(Button) this.findViewById(R.id.badpeople_button_Settings);
-        button_settings.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View v) {
-                FragmentManager fragmanager = scorer.super.getSupportFragmentManager();
-                scorer_settings scorer_settings_class = new scorer_settings();
-                scorer_settings_class.show(fragmanager,"scorer_settings_tag");
-            }
-        });
 
 
 
@@ -127,7 +68,68 @@ public class scorer extends AppCompatActivity {
     }
 
 
+private void initialize_buttons(){
+    goodpeople_score_button =  findViewById(R.id.goodpeople_button_score);
+    goodpeople_score_button.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Log.d("buttontag","button: "+"socore");
+            current_game.goodpeople_gain_point();
+            goodpeople_score_button.setText(String.valueOf(current_game.getGoodpeople_points()));
+        }
+    });
 
+
+    badpeople_score_button = findViewById(R.id.badpeople_button_score);
+    Log.d("buttontag", "button: "+badpeople_score_button);
+    badpeople_score_button.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            current_game.badpeople_gain_point();
+            badpeople_score_button.setText(String.valueOf(current_game.getBadpeople_points()));
+        }
+    });
+
+    goodpeople_set_button =  this.findViewById(R.id.goodpeople_button_set);
+    goodpeople_set_button.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            current_game.goodpeople_gain_set();
+            goodpeople_set_button.setText(String.valueOf(current_game.getGoodpeople_sets()));
+        }
+    });
+
+    badpeople_set_button =  this.findViewById(R.id.badpeople_button_set);
+    badpeople_set_button.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            current_game.badpeople_gain_set();
+            badpeople_set_button.setText(String.valueOf(current_game.getBadpeople_sets()));
+        }
+    });
+
+    button_leave = (Button)this.findViewById(R.id.goodpeople_button_leave);
+    button_leave.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(v.getContext(), MainActivity.class);
+            startActivity(intent);
+            Log.d("buttontag","button: "+"socore");
+//                savedInstanceState.putParcelable("ongoing_game",current_game);
+
+        }
+    });
+    button_settings =(Button) this.findViewById(R.id.badpeople_button_Settings);
+    button_settings.setOnClickListener(new View.OnClickListener(){
+
+        @Override
+        public void onClick(View v) {
+            FragmentManager fragmanager = scorer.super.getSupportFragmentManager();
+            scorer_settings scorer_settings_class = new scorer_settings();
+            scorer_settings_class.show(fragmanager,"scorer_settings_tag");
+        }
+    });
+}
 
 
     //    public Game resort_ongoing_game(Bundle bundle){
@@ -159,6 +161,7 @@ public class scorer extends AppCompatActivity {
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         setContentView(R.layout.activity_scorer);
+        this.initialize_buttons();
 
     }
 }
