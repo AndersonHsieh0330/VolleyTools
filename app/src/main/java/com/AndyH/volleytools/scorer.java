@@ -124,9 +124,9 @@ private void initialize_buttons(){
 
         @Override
         public void onClick(View v) {
-            FragmentManager fragmanager = scorer.super.getSupportFragmentManager();
+
             scorer_settings scorer_settings_class = new scorer_settings();
-            scorer_settings_class.show(fragmanager,"scorer_settings_tag");
+            scorer_settings_class.show(getSupportFragmentManager(),"scorer_settings_tag");
         }
     });
 }
