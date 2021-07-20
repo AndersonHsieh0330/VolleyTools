@@ -3,8 +3,10 @@ package com.AndyH.volleytools;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
 
+import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -124,9 +126,10 @@ private void initialize_buttons(){
 
         @Override
         public void onClick(View v) {
-
+            FragmentManager manager = scorer.super.;
             scorer_settings scorer_settings_class = new scorer_settings();
-            scorer_settings_class.show(g,"scorer_settings_tag");
+            scorer_settings_class.show(getSupportFragmentManager(),"scorer_settings_tag");
+            scorer_settings_class.show(get,"scorer_settings_tag");
         }
     });
 }
