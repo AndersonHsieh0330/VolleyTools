@@ -126,7 +126,7 @@ private void initialize_buttons(){
         public void onClick(View v) {
 
             scorer_settings scorer_settings_class = new scorer_settings();
-            scorer_settings_class.show(getSupportFragmentManager(),"scorer_settings_tag");
+            scorer_settings_class.show(g,"scorer_settings_tag");
         }
     });
 }
