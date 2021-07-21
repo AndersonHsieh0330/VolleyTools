@@ -3,10 +3,10 @@ package com.AndyH.volleytools;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -28,17 +28,30 @@ public class scorer extends AppCompatActivity {
     Boolean is_game_on;
     Game current_game;
     Button goodpeople_score_button,badpeople_score_button,goodpeople_set_button,badpeople_set_button,button_leave,button_settings;
+    FragmentManager fmanager=this.getSupportFragmentManager();
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
+        outState.putParcelable("ongoing_game",current_game);
+        super.onSaveInstanceState(outState, outPersistentState);
+    }
+
+    @Override
+    public void onRestoreInstanceState(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
+        super.onRestoreInstanceState(savedInstanceState, persistentState);
+        //onRestoredInstanceState is only called when saedInstanceState != null
+        current_game = savedInstanceState.getParcelable("ongoing_game");
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-//        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         super.onCreate(savedInstanceState);
-
-
-        // set initial screen orientation to landscape, content is set in onconfigchange
-
         this.setContentView(R.layout.activity_scorer);
+
+        if(!savedInstanceState.getBoolean("is_game_on")){
+
+        }
+
         // if saveInstanceState has the key "is_game_on", then it is always true
 //        if(savedInstanceState != null){
 //            if(savedInstanceState.getBoolean("is_game_on")==false){
@@ -126,10 +139,8 @@ private void initialize_buttons(){
 
         @Override
         public void onClick(View v) {
-            FragmentManager manager = scorer.super.;
             scorer_settings scorer_settings_class = new scorer_settings();
-            scorer_settings_class.show(getSupportFragmentManager(),"scorer_settings_tag");
-            scorer_settings_class.show(get,"scorer_settings_tag");
+            scorer_settings_class.show(fmanager,"scorer_settings_tag");
         }
     });
 }
@@ -147,12 +158,6 @@ private void initialize_buttons(){
 //        return game;
 //    }
 
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
-        outState.putParcelable("ongoing_game",current_game);
-        super.onSaveInstanceState(outState, outPersistentState);
-    }
 
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {

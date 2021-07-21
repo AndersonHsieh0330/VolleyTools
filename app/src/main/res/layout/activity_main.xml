@@ -6,6 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <ImageButton
+        android:id="@+id/hamburger_menu"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/hamburger_menu_icon"
+        android:text="Button"
+        app:layout_constraintBottom_toTopOf="@+id/welcome_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.96"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/welcome_text"
         android:layout_width="wrap_content"
@@ -52,6 +64,7 @@
             android:layout_height="219dp"
             android:background="@drawable/welcome_page_button_design_scorer"
             android:text="@string/button_selection_score"
+            style="?android:attr/borderlessButtonStyle"
             android:textSize="40sp"
             app:backgroundTint="#FFFFFF"
             app:backgroundTintMode="multiply" />
@@ -78,10 +91,13 @@
             android:layout_height="match_parent"
             android:background="@drawable/welcome_page_button_design_history"
             android:text="@string/button_selection_viewhistory"
+            style="?android:attr/borderlessButtonStyle"
             android:textColor="@color/white"
             android:textSize="40sp" />
 
     </io.github.florent37.shapeofview.shapes.DiagonalView>
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
