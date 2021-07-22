@@ -48,10 +48,6 @@ public class scorer extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_scorer);
 
-        if(!savedInstanceState.getBoolean("is_game_on")){
-
-        }
-
         // if saveInstanceState has the key "is_game_on", then it is always true
 //        if(savedInstanceState != null){
 //            if(savedInstanceState.getBoolean("is_game_on")==false){

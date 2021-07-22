@@ -1,11 +1,15 @@
 package com.AndyH.volleytools;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Fragment;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,10 +19,12 @@ import android.widget.ImageButton;
 public class MainActivity extends AppCompatActivity {
     Button welcomepage_button_scorer, welcomepage_button_history;
     ImageButton hamburger_menu;
+    FragmentManager fragmentManager= this.getSupportFragmentManager();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        button_initialization();
 
 //        FirebaseDatabase firebaseDatabase= FirebaseDatabase.getInstance();
 //        DatabaseReference databaseReference = firebaseDatabase.getReference("message");
@@ -37,7 +43,8 @@ public class MainActivity extends AppCompatActivity {
         hamburger_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
+                loginpage loginpage_fragment = new loginpage();
+                loginpage_fragment.show(fragmentManager,"login_page_dialfrag");
             }
         });
         welcomepage_button_scorer = (Button)findViewById(R.id.button_launch_scorer);
@@ -52,12 +59,31 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-       welcomepage_button_history = (Button)findViewById(R.id.button_launch_history);
-        welcomepage_button_history.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+//       if(getResources().getConfiguration().orientation== ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE ||getResources().getConfiguration().orientation== ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE){
+//           welcomepage_button_history = (Button)findViewById(R.id.button_launch_history_flippedtext);
+//           welcomepage_button_history.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });}
+//       if(getResources().getConfiguration().orientation== ActivityInfo.SCREEN_ORIENTATION_PORTRAIT){
+//           welcomepage_button_history = (Button)findViewById(R.id.button_launch_history);
+//           welcomepage_button_history.setOnClickListener(new View.OnClickListener() {
+//               @Override
+//               public void onClick(View v) {
+//
+//               }
+//           });
+//        }
 
-            }
-        });
+
+    }
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        this.setContentView(R.layout.activity_main);
+        this.button_initialization();
     }
 }
