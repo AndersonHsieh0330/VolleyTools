@@ -1,5 +1,6 @@
 package com.AndyH.volleytools;
 
+import android.app.Activity;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.view.Display;
@@ -17,9 +18,18 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.firebase.auth.FirebaseAuth;
+
 public class loginpage extends DialogFragment {
+    Activity current_Activity = this.getActivity();
+    Fragment context_fragment = this;
     ImageButton exit_imgbutton;
     Button login_button;
+    private GoogleSignInClient mGoogleSignInClient;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -27,7 +37,6 @@ public class loginpage extends DialogFragment {
         View v=   inflater.inflate(R.layout.google_login_page,container,false);
 
         this.button_initialization(v);
-
         return v;
     }
 
@@ -65,5 +74,17 @@ public class loginpage extends DialogFragment {
         //window.setLayout((int) (width * 0.75), WindowManager.LayoutParams.WRAP_CONTENT);
         window.setLayout((int) (width * 0.75), (int)(height*0.75));
         window.setGravity(Gravity.CENTER);
+    }
+    private void createRequest(){
+        //create google sign in request
+        GoogleSignInOptions gso = new GoogleSignInOptions
+                .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+
+
+        //build a client and pass sign in request to client
+        mGoogleSignInClient = GoogleSignIn.getClient(this.getActivity(), gso);
     }
 }
