@@ -12,6 +12,7 @@
         android:layout_height="30dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
+        android:padding="10dp"
         android:background="@drawable/hamburger_menu_icon"
         android:text="Button"
         app:layout_constraintEnd_toEndOf="parent"
