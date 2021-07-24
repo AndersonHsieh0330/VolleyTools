@@ -83,6 +83,7 @@ public class loginpage extends DialogFragment {
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
+
        FirebaseUser currentUser = mAuth.getCurrentUser();
 
     }
@@ -146,6 +147,8 @@ public class loginpage extends DialogFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.d("FirebaseLogs","Activity result1");
+
 
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
@@ -154,9 +157,11 @@ public class loginpage extends DialogFragment {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 firebaseAuthWithGoogle(account.getIdToken());
+                Log.d("FirebaseLogs","Activity result1"+account.getId());
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
-                Toast toast = Toast.makeText(current_Activity,e.getMessage(),Toast.LENGTH_SHORT);
+                if(e!=null){
+                Toast toast = Toast.makeText(current_Activity,e.getMessage(),Toast.LENGTH_SHORT);}
             }
         }
     }
