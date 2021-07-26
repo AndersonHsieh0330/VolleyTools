@@ -32,7 +32,6 @@ public class scorer extends AppCompatActivity {
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
-        outState.putParcelable("ongoing_game",current_game);
         super.onSaveInstanceState(outState, outPersistentState);
     }
 
@@ -40,7 +39,7 @@ public class scorer extends AppCompatActivity {
     public void onRestoreInstanceState(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
         super.onRestoreInstanceState(savedInstanceState, persistentState);
         //onRestoredInstanceState is only called when saedInstanceState != null
-        current_game = savedInstanceState.getParcelable("ongoing_game");
+
     }
 
     @Override
@@ -66,7 +65,7 @@ public class scorer extends AppCompatActivity {
 //            current_game = new Game(25,2,14,
 //                    13,0,0,null, null);
 //        }
-
+        current_game = new Game(25,2,0,0,0,0,null,null);
         this.initialize_buttons();
 
 
@@ -81,6 +80,7 @@ public class scorer extends AppCompatActivity {
 
 private void initialize_buttons(){
     goodpeople_score_button =  findViewById(R.id.goodpeople_button_score);
+    goodpeople_score_button.setText(String.valueOf(current_game.getGoodpeople_points()));
     goodpeople_score_button.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -92,7 +92,7 @@ private void initialize_buttons(){
 
 
     badpeople_score_button = findViewById(R.id.badpeople_button_score);
-    Log.d("buttontag", "button: "+badpeople_score_button);
+    badpeople_score_button.setText(String.valueOf(current_game.getBadpeople_points()));
     badpeople_score_button.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -102,6 +102,7 @@ private void initialize_buttons(){
     });
 
     goodpeople_set_button =  this.findViewById(R.id.goodpeople_button_set);
+    goodpeople_set_button.setText(String.valueOf(current_game.getGoodpeople_sets()));
     goodpeople_set_button.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -111,6 +112,7 @@ private void initialize_buttons(){
     });
 
     badpeople_set_button =  this.findViewById(R.id.badpeople_button_set);
+    badpeople_set_button.setText(String.valueOf(current_game.getBadpeople_sets()));
     badpeople_set_button.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
