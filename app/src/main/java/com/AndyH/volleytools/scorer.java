@@ -24,21 +24,31 @@ import android.view.OrientationEventListener;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class scorer extends AppCompatActivity {
     Boolean is_game_on;
     Game current_game;
     Button goodpeople_score_button,badpeople_score_button,goodpeople_set_button,badpeople_set_button,button_leave,button_settings;
     FragmentManager fmanager=this.getSupportFragmentManager();
+    String tag_game_saved = "ongoing_game";
+    FirebaseDatabase rootNode;
+    DatabaseReference reference;
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
         super.onSaveInstanceState(outState, outPersistentState);
+        if(current_game!=null){
+            outState.putParcelable(tag_game_saved,current_game);
+        }
     }
 
     @Override
     public void onRestoreInstanceState(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
         super.onRestoreInstanceState(savedInstanceState, persistentState);
         //onRestoredInstanceState is only called when saedInstanceState != null
+        current_game = savedInstanceState.getParcelable(tag_game_saved);
 
     }
 
@@ -46,7 +56,7 @@ public class scorer extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_scorer);
-
+        Log.d("mutage","oncreate called");
         // if saveInstanceState has the key "is_game_on", then it is always true
 //        if(savedInstanceState != null){
 //            if(savedInstanceState.getBoolean("is_game_on")==false){
@@ -65,12 +75,12 @@ public class scorer extends AppCompatActivity {
 //            current_game = new Game(25,2,14,
 //                    13,0,0,null, null);
 //        }
-        current_game = new Game(25,2,0,0,0,0,null,null);
+        if(current_game==null) {
+            current_game = new Game(25, 2, 0, 0, 0, 0, null, null);
+        }else{
+            current_game = savedInstanceState.getParcelable(tag_game_saved);
+        }
         this.initialize_buttons();
-
-
-
-
 
 
 
@@ -156,12 +166,6 @@ private void initialize_buttons(){
 //        return game;
 //    }
 
-
-    @Override
-    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
-        current_game = savedInstanceState.getParcelable("ongoing_game");
-        super.onRestoreInstanceState(savedInstanceState);
-    }
 
     @Override
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
