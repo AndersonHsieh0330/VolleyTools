@@ -154,9 +154,15 @@ public class Game implements Parcelable {
     }
     public void goodpeople_gain_set(){
         goodpeople_sets+=1;
+        if(goodpeople_sets==10){
+            goodpeople_sets=0;
+        };
     }
     public void badpeople_gain_set(){
         badpeople_sets+=1;
+        if(badpeople_sets==10){
+            badpeople_sets=0;
+        };
     }
 
 

@@ -26,10 +26,10 @@
             android:layout_marginTop="20dp"
             android:layout_marginStart="20dp"
             android:background="@drawable/scorer_sets_design"
-            android:text="2"
+            android:textSize="15sp"
+            android:text="1"
+            android:textColor="@color/Text_Grey"
             style="?android:attr/borderlessButtonStyle"
-
-            android:textSize="40sp"
             app:backgroundTint="#FFFFFF"
             app:backgroundTintMode="multiply"
             app:layout_constraintStart_toStartOf="parent"
@@ -49,8 +49,7 @@
             app:backgroundTintMode="multiply"
             app:layout_constraintBottom_toTopOf="@+id/goodpeople_button_score"
             app:layout_constraintDimensionRatio="1:1"
-
-
+            style="?android:attr/borderlessButtonStyle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
@@ -63,23 +62,31 @@
             android:background="@color/Transparent"
             android:backgroundTint="#00FFFFFF"
             android:text="25"
+            android:textSize="100sp"
             app:backgroundTint="#00FFFFFF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/goodpeople_button_set" />
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/goodpeople_name"
+            android:layout_width="0dp"
             android:layout_height="0dp"
-            android:text="@string/teams_goodpeople"
             android:textSize="40sp"
-            android:paddingTop="10dp"
+            android:background="@color/Transparent"
+            android:cursorVisible="false"
+            android:gravity="center_horizontal|bottom"
+            android:textColor="@color/Text_Grey"
+            android:inputType="textPersonName"
+            android:text="@string/teams_goodpeople"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             app:layout_constraintBottom_toTopOf="@+id/goodpeople_button_score"
             app:layout_constraintEnd_toStartOf="@+id/goodpeople_button_leave"
             app:layout_constraintStart_toEndOf="@+id/goodpeople_button_set"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/goodpeople_constraintLayout"
+            android:maxLength="8"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -102,10 +109,10 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/scorer_sets_design"
-            android:padding="10dp"
-            android:text="1"
+            android:textSize="15sp"
+            android:text="2"
+            android:textColor="@color/Text_Grey"
             style="?android:attr/borderlessButtonStyle"
-            android:textSize="40sp"
             app:backgroundTint="#FFFFFF"
             app:backgroundTintMode="multiply"
             app:layout_constraintStart_toStartOf="parent"
@@ -118,6 +125,8 @@
             android:layout_height="0dp"
             android:background="@color/Transparent"
             android:backgroundTint="#00FFFFFF"
+            android:textSize="100sp"
+            android:text="24"
             app:backgroundTint="#00FFFFFF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -133,6 +142,7 @@
             android:background="@drawable/settings_icon"
             android:padding="10dp"
             android:text="2"
+            style="?android:attr/borderlessButtonStyle"
             android:textSize="40sp"
             app:backgroundTint="#FFFFFF"
             app:backgroundTintMode="multiply"
@@ -142,17 +152,25 @@
             app:layout_constraintTop_toTopOf="parent" />
 
 
-        <TextView
-            android:id="@+id/badpeople"
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/badpeople_name"
+            android:layout_width="0dp"
             android:layout_height="0dp"
-            android:text="@string/teams_badpeople"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/Transparent"
+            android:cursorVisible="false"
+            android:gravity="center_horizontal|bottom"
+            android:inputType="textPersonName"
+            android:maxLength="8"
             android:textSize="40sp"
-            android:paddingTop="10dp"
+            android:text="@string/teams_badpeople"
+            android:textColor="@color/Text_Grey"
             app:layout_constraintBottom_toTopOf="@+id/badpeople_button_score"
             app:layout_constraintEnd_toStartOf="@+id/badpeople_button_Settings"
             app:layout_constraintStart_toEndOf="@+id/badpeople_button_set"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/badpeople_constraintLayout" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.Guideline

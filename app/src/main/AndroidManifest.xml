@@ -10,7 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.VolleyTools">
         <activity android:name=".scorer"
-            android:configChanges="screenSize|keyboard|keyboardHidden"></activity>
+            android:configChanges="orientation|screenSize|keyboard|keyboardHidden"></activity>
+        <activity android:name=".matchHistory"
+            android:configChanges="orientation|screenSize|keyboard|keyboardHidden"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

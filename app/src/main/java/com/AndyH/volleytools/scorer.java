@@ -36,50 +36,16 @@ public class scorer extends AppCompatActivity {
     FirebaseDatabase rootNode;
     DatabaseReference reference;
 
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
-        super.onSaveInstanceState(outState, outPersistentState);
-        if(current_game!=null){
-            outState.putParcelable(tag_game_saved,current_game);
-        }
-    }
 
-    @Override
-    public void onRestoreInstanceState(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onRestoreInstanceState(savedInstanceState, persistentState);
-        //onRestoredInstanceState is only called when saedInstanceState != null
-        current_game = savedInstanceState.getParcelable(tag_game_saved);
-
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_scorer);
         Log.d("mutage","oncreate called");
-        // if saveInstanceState has the key "is_game_on", then it is always true
-//        if(savedInstanceState != null){
-//            if(savedInstanceState.getBoolean("is_game_on")==false){
-//                //should never end up here
-//                throw new RuntimeException("key false state: is_game_on");
-//            }else{
-//                //load unfinished game
-//                is_game_on = savedInstanceState.getBoolean("is_game_on");
-//                current_game= savedInstanceState.getParcelable("ongoing_game");
-//
-//            }
-//        }else{
-//
-//            //create new game with default settings
-//            this.is_game_on = true;
-//            current_game = new Game(25,2,14,
-//                    13,0,0,null, null);
-//        }
-        if(current_game==null) {
+
             current_game = new Game(25, 2, 0, 0, 0, 0, null, null);
-        }else{
-            current_game = savedInstanceState.getParcelable(tag_game_saved);
-        }
+
         this.initialize_buttons();
 
 
@@ -153,18 +119,6 @@ private void initialize_buttons(){
     });
 }
 
-
-    //    public Game resort_ongoing_game(Bundle bundle){
-//        Game game = new Game();
-//        if(bundle.containsKey("is_game_on")){
-//
-//        }else{
-//            //should never get here
-//            throw new RuntimeException("bundle key not found");
-//        }
-//
-//        return game;
-//    }
 
 
     @Override

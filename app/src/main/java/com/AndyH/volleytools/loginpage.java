@@ -11,16 +11,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -39,75 +43,118 @@ import java.util.concurrent.Executor;
 
 public class loginpage extends DialogFragment {
     private static final int RC_SIGN_IN = 12345;
-    Activity current_Activity = this.getActivity();
-    Fragment context_fragment = this;
+    Activity current_Activity;
     ImageButton exit_imgbutton;
     Button login_button;
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth;
     SignInButton googleSignInButton;
-
+    Button signOutButton;
+    private LayoutInflater mInflater;
+    private ViewGroup mContainer;
+    FirebaseUser currentUser;
+    private boolean isloggedin;
 
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View v=   inflater.inflate(R.layout.google_login_page,container,false);
+        mInflater = inflater;
+        mContainer = container;
         mAuth = FirebaseAuth.getInstance();
-
-        this.button_initialization(v);
+        currentUser = mAuth.getCurrentUser();
+        isloggedin = checkLogin(currentUser);
+        View inflatedView= inflateView( inflater, container);
         createRequest();
+        button_initialization(inflatedView);
 
-        googleSignInButton = (SignInButton)v.findViewById(R.id.gsign_in_button);
-        googleSignInButton.setSize(SignInButton.SIZE_ICON_ONLY);
-        googleSignInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signIn();
-            }
-        });
-
-        Button button = v.findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               FirebaseAuth.getInstance().signOut();
-            }
-        });
-
-        return v;
+        return inflatedView;
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-
-       FirebaseUser currentUser = mAuth.getCurrentUser();
-
+        currentUser = mAuth.getCurrentUser();
     }
 
-    private void button_initialization(View view){
-        exit_imgbutton = view.findViewById(R.id.exit_imgbutton);
+    private View inflateView(LayoutInflater inflater, ViewGroup container){
+        if(!isloggedin){
+            return inflater.inflate(R.layout.google_login_page, container, false);
+        }else{
+            return inflater.inflate(R.layout.google_logout_page, container, false);
+        }
+    }
+
+    private boolean checkLogin(FirebaseUser currentUser){
+        if(currentUser!= null){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+
+    private void button_initialization(View inflatedView) {
+        //exit_imgbutton exist regardless of the login state
+        exit_imgbutton = inflatedView.findViewById(R.id.exit_imgbutton);
+        enableExitButton();
+
+        if(!isloggedin){
+            googleSignInButton = (SignInButton) inflatedView.findViewById(R.id.gsign_in_button);
+            googleSignInButton.setSize(SignInButton.SIZE_STANDARD);
+            googleSignInButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    signIn();
+                    Log.d("firebase", "onClick: "+currentUser);
+
+
+                }
+            });
+
+        } else{
+
+            signOutButton = inflatedView.findViewById(R.id.logout_button);
+            signOutButton.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    mAuth.signOut();
+                    mGoogleSignInClient.signOut();
+                    isloggedin = false;
+                   removeLoginPage();
+                   Toast.makeText(getContext(),R.string.logout_sucess,Toast.LENGTH_LONG).show();
+
+                }
+            });
+        }
+
+    }
+    private void disableExitButton(){
         exit_imgbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager fmanager= getParentFragmentManager();
-                fmanager.beginTransaction().remove(fmanager.findFragmentByTag("login_page_dialfrag")).commit();
+                //do nothing
             }
 
         });
-
-        login_button=view.findViewById(R.id.login_button);
-        login_button.setOnClickListener(new View.OnClickListener() {
+    }
+    private void enableExitButton(){
+        exit_imgbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                removeLoginPage();
             }
-        });
 
+        });
     }
+    public void removeLoginPage(){
+        disableExitButton();
+        FragmentManager fmanager = getParentFragmentManager();
+        fmanager.beginTransaction().remove(fmanager.findFragmentByTag(MainActivity.LOGIN_FRAGMENT_TAG)).commit();
+
+        }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -120,72 +167,72 @@ public class loginpage extends DialogFragment {
         int width = size.x;
         int height = size.y;
         //window.setLayout((int) (width * 0.75), WindowManager.LayoutParams.WRAP_CONTENT);
-        window.setLayout((int) (width * 0.75), (int)(height*0.75));
+        window.setLayout((int) (width * 0.7), (int) (height * 0.55));
         window.setGravity(Gravity.CENTER);
+
+        //diable closing by clicking outside of dialog fragment
+        window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL,WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
     }
+
     private void createRequest(){
-        //create google sign in request
-        GoogleSignInOptions gso = new GoogleSignInOptions
-                .Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN)
+        // Configure Google Sign In
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
 
-
-        //build a client and pass sign in request to client
-        mGoogleSignInClient = GoogleSignIn.getClient(this.getActivity(), gso);
-        Log.d("FirebaseLogs","clientget");
+        mGoogleSignInClient = GoogleSignIn.getClient(this.getContext(),gso);
     }
 
     private void signIn() {
-        //start the signin activity on button click
-        Log.d("FirebaseLogs","signinintent");
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        this.startActivityForResult(signInIntent, RC_SIGN_IN);
+        startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.d("FirebaseLogs","Activity result1");
-
-
+        Log.d("firebase", " currnet user statis:" );
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
                 // Google Sign In was successful, authenticate with Firebase
+                disableExitButton();
                 GoogleSignInAccount account = task.getResult(ApiException.class);
+                Log.d("firebase", "firebaseAuthWithGoogle:" + account.getId());
                 firebaseAuthWithGoogle(account.getIdToken());
-                Log.d("FirebaseLogs","Activity result1"+account.getId());
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
-                if(e!=null){
-                Toast toast = Toast.makeText(current_Activity,e.getMessage(),Toast.LENGTH_SHORT);}
+                enableExitButton();
+                Log.w("firebase", "Google sign in failed", e);
             }
         }
     }
 
+
     private void firebaseAuthWithGoogle(String idToken) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
-
-        //pass credentials to the instance of firebase authenticaation
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Log.d("e","mi");
-                            Toast.makeText(getContext(), "Firebase Login Success" + task.getException(), Toast.LENGTH_SHORT);
-                            FirebaseUser user = mAuth.getCurrentUser();
+                            Log.d("firebase", "signInWithCredential:success");
+                            currentUser = mAuth.getCurrentUser();
+                            isloggedin = true;
+                            Toast.makeText(getContext(),R.string.login_sucess_NOLINEBREAK,Toast.LENGTH_LONG).show();
+                            removeLoginPage();
+
                         } else {
                             // If sign in fails, display a message to the user.
-                            Toast.makeText(getContext(), "Firebase Login Failed" + task.getException(), Toast.LENGTH_SHORT);
+                            Log.w("firebase", "signInWithCredential:failure", task.getException());
+
                         }
                     }
                 });
-    }
 
+    }
 
 }

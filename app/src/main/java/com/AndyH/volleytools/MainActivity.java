@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     Button welcomepage_button_scorer, welcomepage_button_history;
     ImageButton hamburger_menu;
     FragmentManager fragmentManager= this.getSupportFragmentManager();
+    final public static String LOGIN_FRAGMENT_TAG = "login_page_dialfrag";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,9 +45,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 loginpage loginpage_fragment = new loginpage();
-                loginpage_fragment.show(fragmentManager,"login_page_dialfrag");
+                loginpage_fragment.show(fragmentManager,LOGIN_FRAGMENT_TAG);
             }
         });
+
         welcomepage_button_scorer = (Button)findViewById(R.id.button_launch_scorer);
         welcomepage_button_scorer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,26 +58,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        welcomepage_button_history = (Button)findViewById(R.id.button_launch_history);
+        welcomepage_button_history.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent matchHistory_intent = new Intent(v.getContext(), matchHistory.class);
+                v.getContext().startActivity(matchHistory_intent);
+            }
+        });
 
 
-
-//       if(getResources().getConfiguration().orientation== ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE ||getResources().getConfiguration().orientation== ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE){
-//           welcomepage_button_history = (Button)findViewById(R.id.button_launch_history_flippedtext);
-//           welcomepage_button_history.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });}
-//       if(getResources().getConfiguration().orientation== ActivityInfo.SCREEN_ORIENTATION_PORTRAIT){
-//           welcomepage_button_history = (Button)findViewById(R.id.button_launch_history);
-//           welcomepage_button_history.setOnClickListener(new View.OnClickListener() {
-//               @Override
-//               public void onClick(View v) {
-//
-//               }
-//           });
-//        }
 
 
     }

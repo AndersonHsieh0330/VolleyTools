@@ -13,4 +13,5 @@
     <color name="Yellow_Crayola">#FFEF9F</color>
     <color name="Maroon_Purple">#D9B8F1</color>
     <color name="Transparent">@null</color>
+    <color name="Text_Grey">#999999</color>
 </resources>
