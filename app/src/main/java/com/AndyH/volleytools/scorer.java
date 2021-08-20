@@ -27,6 +27,8 @@ import android.widget.Button;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Calendar;
+
 public class scorer extends AppCompatActivity {
     Boolean is_game_on;
     Game current_game;
@@ -44,7 +46,7 @@ public class scorer extends AppCompatActivity {
         this.setContentView(R.layout.activity_scorer);
         Log.d("mutage","oncreate called");
 
-            current_game = new Game(25, 2, 0, 0, 0, 0, null, null);
+            current_game = new Game(25, 23, 0, 0, "好人", "壞人", Calendar.getInstance());
 
         this.initialize_buttons();
 
@@ -104,7 +106,6 @@ private void initialize_buttons(){
             Intent intent = new Intent(v.getContext(), MainActivity.class);
             startActivity(intent);
             Log.d("buttontag","button: "+"socore");
-//                savedInstanceState.putParcelable("ongoing_game",current_game);
 
         }
     });

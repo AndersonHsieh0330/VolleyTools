@@ -5,88 +5,52 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
-public class Game implements Parcelable {
-    int points_to_win_set;
-    int sets_to_win_game;
-    int goodpeople_points;
-    int badpeople_points;
-    int goodpeople_sets;
-    int badpeople_sets;
-    String goodpeople_customize_name;
-    String badpeople_customize_name;
+import java.util.Calendar;
 
+public class Game {
+
+    private int goodpeople_points;
+    private int badpeople_points;
+    private int goodpeople_sets;
+    private int badpeople_sets;
+    private String goodpeople_teamname;
+    private String badpeople_teamname;
+    private Calendar currentTime;
 
 
     public Game(){
 
     }
 
-    public Game(int points_to_win_set, int sets_to_win_game, int goodpeople_points, int badpeople_points, int goodpeople_sets,
-                int badpeople_sets, String goodpeople_customize_name, String badpeople_customize_name) {
-        this.points_to_win_set = points_to_win_set;
-        this.sets_to_win_game = sets_to_win_game;
+    public Game( int goodpeople_points, int badpeople_points, int goodpeople_sets,
+                int badpeople_sets, String goodpeople_teamname, String badpeople_teamname, Calendar calender) {
+
         this.goodpeople_points = goodpeople_points;
         this.badpeople_points = badpeople_points;
         this.goodpeople_sets = goodpeople_sets;
         this.badpeople_sets = badpeople_sets;
-        this.goodpeople_customize_name = goodpeople_customize_name;
-        this.badpeople_customize_name = badpeople_customize_name;
+        this.goodpeople_teamname = goodpeople_teamname;
+        this.badpeople_teamname = badpeople_teamname;
+        this.currentTime = calender;
     }
 
     protected Game(Parcel in) {
-        points_to_win_set = in.readInt();
-        sets_to_win_game = in.readInt();
+
         goodpeople_points = in.readInt();
         badpeople_points = in.readInt();
         goodpeople_sets = in.readInt();
         badpeople_sets = in.readInt();
-        goodpeople_customize_name = in.readString();
-        badpeople_customize_name = in.readString();
+        goodpeople_teamname = in.readString();
+        badpeople_teamname = in.readString();
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(points_to_win_set);
-        dest.writeInt(sets_to_win_game);
-        dest.writeInt(goodpeople_points);
-        dest.writeInt(badpeople_points);
-        dest.writeInt(goodpeople_sets);
-        dest.writeInt(badpeople_sets);
-        dest.writeString(goodpeople_customize_name);
-        dest.writeString(badpeople_customize_name);
+
+    public Calendar getCalendar() {
+        return currentTime;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    public static final Creator<Game> CREATOR = new Creator<Game>() {
-        @Override
-        public Game createFromParcel(Parcel in) {
-            return new Game(in);
-        }
-
-        @Override
-        public Game[] newArray(int size) {
-            return new Game[size];
-        }
-    };
-
-    public int getPoints_to_win_set() {
-        return points_to_win_set;
-    }
-
-    public void setPoints_to_win_set(int points_to_win_set) {
-        this.points_to_win_set = points_to_win_set;
-    }
-
-    public int getSets_to_win_game() {
-        return sets_to_win_game;
-    }
-
-    public void setSets_to_win_game(int sets_to_win_game) {
-        this.sets_to_win_game = sets_to_win_game;
+    public void setCalendar(Calendar currentTime) {
+        this.currentTime = currentTime;
     }
 
     public int getGoodpeople_points() {
@@ -121,20 +85,20 @@ public class Game implements Parcelable {
         this.badpeople_sets = badpeople_sets;
     }
 
-    public String getGoodpeople_customize_name() {
-        return goodpeople_customize_name;
+    public String getGoodpeople_teamname() {
+        return goodpeople_teamname;
     }
 
-    public void setGoodpeople_customize_name(String goodpeople_customize_name) {
-        this.goodpeople_customize_name = goodpeople_customize_name;
+    public void setGoodpeople_teamname(String goodpeople_customize_name) {
+        this.goodpeople_teamname = goodpeople_customize_name;
     }
 
-    public String getBadpeople_customize_name() {
-        return badpeople_customize_name;
+    public String getBadpeople_teamname() {
+        return badpeople_teamname;
     }
 
-    public void setBadpeople_customize_name(String badpeople_customize_name) {
-        this.badpeople_customize_name = badpeople_customize_name;
+    public void setBadpeople_teamname(String badpeople_customize_name) {
+        this.badpeople_teamname = badpeople_customize_name;
     }
 
     public void goodpeople_gain_point(){
@@ -152,6 +116,7 @@ public class Game implements Parcelable {
     public void badpeople_lose_point(){
         badpeople_points -= 1;
     }
+
     public void goodpeople_gain_set(){
         goodpeople_sets+=1;
         if(goodpeople_sets==10){
@@ -166,37 +131,7 @@ public class Game implements Parcelable {
     }
 
 
-//    public void load_bundle_data_in(Bundle bundle){
-//        //bundle should either have all the keys, or non of the keys
-//        if(bundle.containsKey("is_game_on")){
-//            try {
-//                goodpeople_points = bundle.getInt("goodpeople_points");
-//                goodpeople_sets = bundle.getInt("goodpeople_sets");
-//                badpeople_sets = bundle.get("badpeople_sets");
-//            }catch (Exception e){
-//                Log.d("Missing_key", e.getMessage());
-//            }
-//        }else{
-//            throw new RuntimeException("string key not found while loading data");
-//        }
-//
-//    }
 
-    public boolean set_end_check(){
-        if ((goodpeople_points == points_to_win_set)||(badpeople_points==points_to_win_set)){
-            return true;
-        }else{
-            return false;
-        }
-    }
-
-    public boolean game_end_check(){
-        if ((goodpeople_sets == sets_to_win_game)||(badpeople_sets==sets_to_win_game)){
-            return true;
-        }else{
-            return false;
-        }
-    }
 
 
 }

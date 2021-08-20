@@ -1,6 +1,7 @@
 package com.AndyH.volleytools;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -152,13 +153,12 @@ public class loginpage extends DialogFragment {
         disableExitButton();
         FragmentManager fmanager = getParentFragmentManager();
         fmanager.beginTransaction().remove(fmanager.findFragmentByTag(MainActivity.LOGIN_FRAGMENT_TAG)).commit();
-
         }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        Window window = getDialog().getWindow();
+    public void setDialogSize(){
+        Dialog dialog = getDialog();
+        dialog.setCanceledOnTouchOutside(false);
+        Window window = dialog.getWindow();
         Point size = new Point();
 
         Display display = window.getWindowManager().getDefaultDisplay();
@@ -169,10 +169,13 @@ public class loginpage extends DialogFragment {
         //window.setLayout((int) (width * 0.75), WindowManager.LayoutParams.WRAP_CONTENT);
         window.setLayout((int) (width * 0.7), (int) (height * 0.55));
         window.setGravity(Gravity.CENTER);
-
-        //diable closing by clicking outside of dialog fragment
-        window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL,WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setDialogSize();
+        }
 
     private void createRequest(){
         // Configure Google Sign In

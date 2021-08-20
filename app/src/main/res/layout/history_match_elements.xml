@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp">
+
+        <TextView
+            android:id="@+id/hm_badpeople_textview_sets"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/scorer_sets_design"
+            android:text="0"
+            android:textSize="20sp"></TextView>
+
+        <TextView
+            android:id="@+id/hm_badpeople"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@id/hm_badpeople_textview_sets"
+            android:text="@string/teams_badpeople"
+            android:textSize="20sp"></TextView>
+
+        <TextView
+            android:id="@+id/hm_badpeople_textview_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@id/hm_badpeople"
+            android:text="25"
+            android:textSize="20sp"></TextView>
+
+        <TextView
+            android:id="@+id/hm_goodpeople_textview_sets"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="2"
+            android:textSize="20sp"></TextView>
+
+        <TextView
+            android:id="@+id/hm_goodpeople"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:layout_toLeftOf="@id/hm_goodpeople_textview_sets"
+            android:text="@string/teams_goodpeople"
+            android:textSize="20sp"></TextView>
+
+        <TextView
+            android:id="@+id/hm_goodpeople_textview_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:layout_toLeftOf="@id/hm_goodpeople"
+            android:text="24"
+            android:textSize="20sp"></TextView>
+        <TextView
+            android:id="@+id/hm_textview_dividor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=":"
+            android:textSize="20sp"
+            android:layout_alignParentTop="true"
+            android:layout_centerInParent="true"
+            ></TextView>
+        <TextView
+            android:id="@+id/hm_textivew_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2021/8/16 9:00 AM"
+            android:textSize="20sp"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/hm_textview_dividor"></TextView>
+
+
+
+
+    </RelativeLayout>
+
+
+</androidx.cardview.widget.CardView>
