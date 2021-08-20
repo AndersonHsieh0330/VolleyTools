@@ -34,7 +34,6 @@ public class scorer extends AppCompatActivity {
     Game current_game;
     Button goodpeople_score_button,badpeople_score_button,goodpeople_set_button,badpeople_set_button,button_leave,button_settings;
     FragmentManager fmanager=this.getSupportFragmentManager();
-    String tag_game_saved = "ongoing_game";
     FirebaseDatabase rootNode;
     DatabaseReference reference;
 
@@ -44,7 +43,6 @@ public class scorer extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_scorer);
-        Log.d("mutage","oncreate called");
 
             current_game = new Game(25, 23, 0, 0, "好人", "壞人", Calendar.getInstance());
 
@@ -62,7 +60,6 @@ private void initialize_buttons(){
     goodpeople_score_button.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Log.d("buttontag","button: "+"socore");
             current_game.goodpeople_gain_point();
             goodpeople_score_button.setText(String.valueOf(current_game.getGoodpeople_points()));
         }
@@ -105,7 +102,6 @@ private void initialize_buttons(){
         public void onClick(View v) {
             Intent intent = new Intent(v.getContext(), MainActivity.class);
             startActivity(intent);
-            Log.d("buttontag","button: "+"socore");
 
         }
     });

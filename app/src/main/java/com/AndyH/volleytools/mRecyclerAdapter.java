@@ -35,7 +35,7 @@ public class mRecyclerAdapter extends RecyclerView.Adapter<mRecyclerAdapter.mVie
     public mRecyclerAdapter(ArrayList<Game> matchHistoryArrayList){
 
         mhAL = matchHistoryArrayList;
-        simpleDateFormat = new SimpleDateFormat("YYYY/MM/dd 'at' hh:mm aa");
+        simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd 'at' hh:mm aa");
     }
 
 
@@ -51,12 +51,12 @@ public class mRecyclerAdapter extends RecyclerView.Adapter<mRecyclerAdapter.mVie
     public void onBindViewHolder(@NonNull mViewHolder holder, int position) {
 
         Game current_game = mhAL.get(position);
-        holder.bSets.setText(Integer.valueOf(current_game.getBadpeople_sets()));
+        holder.bSets.setText(String.valueOf(current_game.getBadpeople_sets()));
         holder.bName.setText(current_game.getBadpeople_teamname());
-        holder.bScore.setText(Integer.valueOf(current_game.getBadpeople_points()));
-        holder.bSets.setText(Integer.valueOf(current_game.getBadpeople_sets()));
-        holder.bName.setText(current_game.getBadpeople_teamname());
-        holder.bScore.setText(Integer.valueOf(current_game.getBadpeople_points()));
+        holder.bScore.setText(String.valueOf(current_game.getBadpeople_points()));
+        holder.gSets.setText(String.valueOf(current_game.getGoodpeople_sets()));
+        holder.gName.setText(current_game.getGoodpeople_teamname());
+        holder.gScore.setText(String.valueOf(current_game.getGoodpeople_points()));
         holder.time.setText(simpleDateFormat.format(current_game.getCalendar().getTime()));
 
     }
