@@ -21,28 +21,77 @@
             android:background="@drawable/scorer_sets_design"
             android:text="0"
             android:textSize="30sp"></TextView>
-
-        <TextView
-            android:id="@+id/hm_badpeople"
+        <RelativeLayout
+            android:id="@+id/InnerLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_toLeftOf="@id/hm_badpeople_textview_score"
-            android:gravity="center"
-            android:text="@string/teams_badpeople"
-            android:textSize="20sp"></TextView>
+            android:layout_toLeftOf="@id/hm_goodpeople_textview_sets"
+            android:layout_toRightOf="@id/hm_badpeople_textview_sets">
 
-        <TextView
-            android:id="@+id/hm_badpeople_textview_score"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:gravity="center"
-            android:layout_toLeftOf="@id/hm_textview_dividor"
-            android:text="25"
-            android:textColor="@color/white"
-            android:layout_marginRight="5dp"
-            android:textSize="40sp"></TextView>
+            <TextView
+                android:id="@+id/hm_badpeople"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_margin="5dp"
+
+                android:layout_toLeftOf="@id/hm_badpeople_textview_score"
+                android:gravity="center"
+                android:maxEms="5"
+                android:maxLines="2"
+                android:text="2"
+                android:textSize="15sp"></TextView>
+
+            <TextView
+                android:id="@+id/hm_badpeople_textview_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_toLeftOf="@id/hm_textview_dividor"
+                android:text="25"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/white"
+                android:layout_marginRight="5dp"
+                android:textSize="40sp"></TextView>
+
+
+            <TextView
+                android:id="@+id/hm_goodpeople"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_centerInParent="true"
+                android:layout_toRightOf="@id/hm_goodpeople_textview_score"
+                android:gravity="center"
+                android:maxEms="5"
+                android:maxLines="2"
+                android:text="testings2dddddd"
+                android:textSize="15sp"></TextView>
+
+            <TextView
+                android:id="@+id/hm_goodpeople_textview_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:layout_toRightOf="@id/hm_textview_dividor"
+                android:text="24"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"
+                android:textSize="40sp"></TextView>
+            <TextView
+                android:id="@+id/hm_textview_dividor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=":"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/white"
+                android:textSize="40sp"
+                android:gravity="center"
+                android:layout_alignParentTop="true"
+                android:layout_centerInParent="true"
+                ></TextView>
+
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/hm_goodpeople_textview_sets"
@@ -57,54 +106,18 @@
             android:textSize="30sp"></TextView>
 
         <TextView
-            android:id="@+id/hm_goodpeople"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/hm_goodpeople_textview_score"
-            android:layout_alignParentTop="true"
-            android:layout_centerVertical="true"
-            android:layout_marginTop="0dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="20dp"
-            android:layout_toRightOf="@id/hm_goodpeople_textview_score"
-            android:gravity="center"
-            android:text="@string/teams_goodpeople"
-            android:textSize="25sp"></TextView>
-
-        <TextView
-            android:id="@+id/hm_goodpeople_textview_score"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="15dp"
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:layout_toRightOf="@id/hm_textview_dividor"
-            android:text="24"
-            android:textSize="40sp"></TextView>
-        <TextView
-            android:id="@+id/hm_textview_dividor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=":"
-            android:textColor="@color/white"
-            android:textSize="40sp"
-            android:gravity="center"
-            android:layout_alignParentTop="true"
-            android:layout_centerInParent="true"
-            ></TextView>
-        <TextView
             android:id="@+id/hm_textivew_time"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="2021/8/16 9:00 AM"
             android:textSize="20sp"
             android:gravity="center"
+            android:layout_marginBottom="5dp"
+            android:layout_toLeftOf="@id/hm_goodpeople_textview_sets"
+            android:layout_toRightOf="@id/hm_badpeople_textview_sets"
             android:layout_centerHorizontal="true"
             android:textColor="@color/white"
-            android:layout_below="@id/hm_textview_dividor"></TextView>
-
-
-
+            android:layout_below="@id/InnerLayout"></TextView>
 
     </RelativeLayout>
 

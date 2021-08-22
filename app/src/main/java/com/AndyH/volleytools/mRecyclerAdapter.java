@@ -35,7 +35,7 @@ public class mRecyclerAdapter extends RecyclerView.Adapter<mRecyclerAdapter.mVie
     public mRecyclerAdapter(ArrayList<Game> matchHistoryArrayList){
 
         mhAL = matchHistoryArrayList;
-        simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd 'at' hh:mm aa");
+        simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd hh:mm aa");
     }
 
 
