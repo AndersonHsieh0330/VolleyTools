@@ -30,15 +30,16 @@
 
             <TextView
                 android:id="@+id/hm_badpeople"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-
+                android:layout_alignParentLeft="true"
+                android:layout_centerInParent="true"
                 android:layout_toLeftOf="@id/hm_badpeople_textview_score"
                 android:gravity="center"
-                android:maxEms="5"
+                android:maxEms="6"
                 android:maxLines="2"
-                android:text="2"
+                android:text="testings2dddddd"
                 android:textSize="15sp"></TextView>
 
             <TextView
@@ -60,9 +61,10 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_centerInParent="true"
+                android:layout_alignParentRight="true"
                 android:layout_toRightOf="@id/hm_goodpeople_textview_score"
                 android:gravity="center"
-                android:maxEms="5"
+                android:maxEms="6"
                 android:maxLines="2"
                 android:text="testings2dddddd"
                 android:textSize="15sp"></TextView>

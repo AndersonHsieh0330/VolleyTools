@@ -30,9 +30,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.Calendar;
 
 public class scorer extends AppCompatActivity {
+    SharedPreferences sp;
+    SharedPreferences.Editor speditor;
     Boolean is_game_on;
     Game current_game;
-    Button goodpeople_score_button,badpeople_score_button,goodpeople_set_button,badpeople_set_button,button_leave,button_settings;
+    Button goodpeople_score_button,badpeople_score_button,goodpeople_set_button,badpeople_set_button,button_leave,button_saveGame;
     FragmentManager fmanager=this.getSupportFragmentManager();
     FirebaseDatabase rootNode;
     DatabaseReference reference;
@@ -43,8 +45,10 @@ public class scorer extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_scorer);
+        sp = this.getSharedPreferences(MainActivity.SharedPreference_Key,Context.MODE_PRIVATE);
+        speditor = sp.edit();
 
-            current_game = new Game(25, 23, 0, 0, "好人", "壞人", Calendar.getInstance());
+        current_game = new Game(25, 23, 0, 0, "好人", "壞人", Calendar.getInstance());
 
         this.initialize_buttons();
 
@@ -105,17 +109,27 @@ private void initialize_buttons(){
 
         }
     });
-    button_settings =(Button) this.findViewById(R.id.badpeople_button_Settings);
-    button_settings.setOnClickListener(new View.OnClickListener(){
+    button_saveGame =(Button) this.findViewById(R.id.badpeople_button_saveGame);
+    button_saveGame.setOnClickListener(new View.OnClickListener(){
 
         @Override
         public void onClick(View v) {
-            scorer_settings scorer_settings_class = new scorer_settings();
-            scorer_settings_class.show(fmanager,"scorer_settings_tag");
+            scorer_saveGame scorer_saveGame_class = new scorer_saveGame();
+            scorer_saveGame_class.show(fmanager,"scorer_saveGame_tag");
         }
     });
 }
 
+    private void saveGameToSharedPreference(){
+        speditor.putInt(MainActivity.spBadScore_key,current_game.getBadpeople_points());
+        speditor.putInt(MainActivity.spGoodScore_key,current_game.getGoodpeople_points());
+        speditor.putInt(MainActivity.spBadSets_key,current_game.getBadpeople_sets());
+        speditor.putInt(MainActivity.spGoodSets_key,current_game.getGoodpeople_sets());
+        speditor.putString(MainActivity.spBadTameName_key,current_game.getBadpeople_teamname());
+        speditor.putString(MainActivity.spGoodTeamName_key,current_game.getGoodpeople_teamname());
+
+
+    }
 
 
     @Override

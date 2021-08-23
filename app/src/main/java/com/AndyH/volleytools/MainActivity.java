@@ -18,10 +18,21 @@ import android.widget.ImageButton;
 
 
 public class MainActivity extends AppCompatActivity {
+
     Button welcomepage_button_scorer, welcomepage_button_history;
     ImageButton hamburger_menu;
     FragmentManager fragmentManager= this.getSupportFragmentManager();
     final public static String LOGIN_FRAGMENT_TAG = "login_page_dialfrag";
+    final public static String SharedPreference_Key = "com.AndyH.VolleyTools";
+    final public static String spBadScore_key = "badPeopleScore";
+    final public static String spGoodScore_key = "goodPeopleScore";
+    final public static String spBadSets_key = "badPeopleSets";
+    final public static String spGoodSets_key = "goodPeopleSets";
+    final public static String spBadTameName_key = "badPeopleTeamName";
+    final public static String spGoodTeamName_key = "goodPeopleTeamName";
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

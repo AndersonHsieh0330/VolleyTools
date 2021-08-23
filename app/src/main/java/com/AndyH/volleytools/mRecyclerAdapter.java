@@ -52,11 +52,11 @@ public class mRecyclerAdapter extends RecyclerView.Adapter<mRecyclerAdapter.mVie
 
         Game current_game = mhAL.get(position);
         holder.bSets.setText(String.valueOf(current_game.getBadpeople_sets()));
-        holder.bName.setText(current_game.getBadpeople_teamname());
         holder.bScore.setText(String.valueOf(current_game.getBadpeople_points()));
+        holder.bName.setText(current_game.getBadpeople_teamname());
         holder.gSets.setText(String.valueOf(current_game.getGoodpeople_sets()));
-        holder.gName.setText(current_game.getGoodpeople_teamname());
         holder.gScore.setText(String.valueOf(current_game.getGoodpeople_points()));
+        holder.gName.setText(current_game.getGoodpeople_teamname());
         holder.time.setText(simpleDateFormat.format(current_game.getCalendar().getTime()));
 
     }

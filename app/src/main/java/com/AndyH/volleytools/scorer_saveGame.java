@@ -3,24 +3,22 @@ package com.AndyH.volleytools;
 import android.app.Dialog;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 
-public class scorer_settings extends DialogFragment {
+public class scorer_saveGame extends DialogFragment {
 
-    public static scorer_settings newInstance(String title) {
-        scorer_settings frag = new scorer_settings();
+    public static scorer_saveGame newInstance(String title) {
+        scorer_saveGame frag = new scorer_saveGame();
         Bundle args = new Bundle();
         args.putString("title", title);
         frag.setArguments(args);
@@ -50,7 +48,7 @@ public class scorer_settings extends DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        return inflater.inflate(R.layout.dialogfrag_scorer_setting,container);
+        return inflater.inflate(R.layout.dialogfrag_scorer_savegame,container);
 
 
 
