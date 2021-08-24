@@ -28,6 +28,7 @@
             android:background="@drawable/scorer_sets_design"
             android:textSize="15sp"
             android:text="1"
+            android:gravity="center"
             android:textColor="@color/Text_Grey"
             style="?android:attr/borderlessButtonStyle"
             app:backgroundTint="#FFFFFF"
@@ -115,6 +116,7 @@
             style="?android:attr/borderlessButtonStyle"
             app:backgroundTint="#FFFFFF"
             app:backgroundTintMode="multiply"
+            android:gravity="center"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

@@ -18,6 +18,8 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.PersistableBundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.OrientationEventListener;
@@ -49,9 +51,7 @@ public class scorer extends AppCompatActivity {
         this.setContentView(R.layout.activity_scorer);
         sp = this.getSharedPreferences(MainActivity.SharedPreference_Key,Context.MODE_PRIVATE);
         speditor = sp.edit();
-
-        initializeCurrentGame();
-
+        current_game = initializeCurrentGame();
         this.initialize_views();
 
 
@@ -185,10 +185,53 @@ public class scorer extends AppCompatActivity {
     });
 
     leftBadTeam = this.findViewById(R.id.badpeople_name);
+    leftBadTeam.setText(sp.getString(MainActivity.spBadTameName_key,"Error"));
+    leftBadTeam.addTextChangedListener(new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            current_game.setBadpeople_teamname(s.toString());
+            speditor.putString(MainActivity.spBadTameName_key,s.toString()).apply();
+
+        }
+    });
+
+    rightGoodTeam = this.findViewById(R.id.goodpeople_name);
+    rightGoodTeam.setText(sp.getString(MainActivity.spGoodTeamName_key,"Error"));
+    rightGoodTeam.addTextChangedListener(new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            current_game.setGoodpeople_teamname(s.toString());
+            speditor.putString(MainActivity.spGoodTeamName_key,s.toString()).apply();
+        }
+    });
+
+    }
 
 
-}
-
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
 
     @Override
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
