@@ -103,18 +103,30 @@ public class Game {
 
     public void goodpeople_gain_point(){
         goodpeople_points += 1;
+        if(goodpeople_points ==100){
+            goodpeople_points =0;
+        }
     }
 
     public void badpeople_gain_point(){
         badpeople_points += 1;
+        if(badpeople_points == 100){
+            badpeople_points = 0;
+        }
     }
 
     public void goodpeople_lose_point(){
         goodpeople_points -= 1;
+        if(goodpeople_points == -1){
+            goodpeople_points = 99;
+        }
     }
 
     public void badpeople_lose_point(){
         badpeople_points -= 1;
+        if(badpeople_points==-1){
+            badpeople_points = 99;
+        }
     }
 
     public void goodpeople_gain_set(){
