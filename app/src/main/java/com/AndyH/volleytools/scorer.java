@@ -52,11 +52,9 @@ public class scorer extends AppCompatActivity {
         sp = this.getSharedPreferences(MainActivity.SharedPreference_Key,Context.MODE_PRIVATE);
         speditor = sp.edit();
         current_game = initializeCurrentGame();
-        this.initialize_views();
-
-
-
-
+        BindViewsAndListeners();
+        initializeViewContent();
+        
     }
 
     private Game initializeCurrentGame(){
@@ -111,10 +109,9 @@ public class scorer extends AppCompatActivity {
     }
 
 
-    private void initialize_views(){
+    private void BindViewsAndListeners(){
 
     goodpeople_score_button =  findViewById(R.id.goodpeople_button_score);
-    goodpeople_score_button.setText(String.valueOf(sp.getInt(MainActivity.spGoodScore_key,99)));
     goodpeople_score_button.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -128,7 +125,6 @@ public class scorer extends AppCompatActivity {
 
 
     badpeople_score_button = findViewById(R.id.badpeople_button_score);
-    badpeople_score_button.setText(String.valueOf(sp.getInt(MainActivity.spBadScore_key,99)));
     badpeople_score_button.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -141,7 +137,6 @@ public class scorer extends AppCompatActivity {
     });
 
     goodpeople_set_button =  this.findViewById(R.id.goodpeople_button_set);
-    goodpeople_set_button.setText(String.valueOf(sp.getInt(MainActivity.spGoodSets_key,0)));
     goodpeople_set_button.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -153,7 +148,6 @@ public class scorer extends AppCompatActivity {
     });
 
     badpeople_set_button =  this.findViewById(R.id.badpeople_button_set);
-    badpeople_set_button.setText(String.valueOf(sp.getInt(MainActivity.spBadSets_key,0)));
     badpeople_set_button.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -185,7 +179,6 @@ public class scorer extends AppCompatActivity {
     });
 
     leftBadTeam = this.findViewById(R.id.badpeople_name);
-    leftBadTeam.setText(sp.getString(MainActivity.spBadTameName_key,"Error"));
     leftBadTeam.addTextChangedListener(new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -206,7 +199,6 @@ public class scorer extends AppCompatActivity {
     });
 
     rightGoodTeam = this.findViewById(R.id.goodpeople_name);
-    rightGoodTeam.setText(sp.getString(MainActivity.spGoodTeamName_key,"Error"));
     rightGoodTeam.addTextChangedListener(new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -225,19 +217,26 @@ public class scorer extends AppCompatActivity {
         }
     });
 
+    initializeViewContent();
     }
 
+    private void initializeViewContent(){
+        goodpeople_score_button.setText(String.valueOf(sp.getInt(MainActivity.spGoodScore_key,99)));
+        badpeople_score_button.setText(String.valueOf(sp.getInt(MainActivity.spBadScore_key,99)));
+        goodpeople_set_button.setText(String.valueOf(sp.getInt(MainActivity.spGoodSets_key,0)));
+        badpeople_set_button.setText(String.valueOf(sp.getInt(MainActivity.spBadSets_key,0)));
+        leftBadTeam.setText(sp.getString(MainActivity.spBadTameName_key,"Error"));
+        rightGoodTeam.setText(sp.getString(MainActivity.spGoodTeamName_key,"Error"));
 
-    @Override
-    protected void onPause() {
-        super.onPause();
+
     }
 
     @Override
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         setContentView(R.layout.activity_scorer);
-        this.initialize_views();
+        BindViewsAndListeners();
+        initializeViewContent();
 
     }
 }
