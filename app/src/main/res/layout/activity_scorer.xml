@@ -136,7 +136,7 @@
             app:layout_constraintTop_toBottomOf="@+id/badpeople_button_set" />
 
         <Button
-            android:id="@+id/badpeople_button_saveGame"
+            android:id="@+id/badpeople_button_Settings"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="20dp"
@@ -169,7 +169,7 @@
             android:text="@string/teams_badpeople"
             android:textColor="@color/Text_Grey"
             app:layout_constraintBottom_toTopOf="@+id/badpeople_button_score"
-            app:layout_constraintEnd_toStartOf="@+id/badpeople_button_saveGame"
+            app:layout_constraintEnd_toStartOf="@+id/badpeople_button_Settings"
             app:layout_constraintStart_toEndOf="@+id/badpeople_button_set"
             app:layout_constraintTop_toTopOf="@+id/badpeople_constraintLayout" />
 

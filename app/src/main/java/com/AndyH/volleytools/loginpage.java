@@ -3,6 +3,7 @@ package com.AndyH.volleytools;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.util.Log;
@@ -238,4 +239,9 @@ public class loginpage extends DialogFragment {
 
     }
 
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+//        setDialogSize();
+    }
 }

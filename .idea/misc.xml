@@ -3,8 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/layout-land/activity_scorer.xml" value="0.1" />
+        <entry key="app/src/main/res/layout-land/google_login_page.xml" value="0.15255731922398588" />
+        <entry key="app/src/main/res/layout-land/google_logout_page.xml" value="0.15255731922398588" />
         <entry key="app/src/main/res/layout/activity_match_history.xml" value="0.15625" />
-        <entry key="app/src/main/res/layout/activity_scorer.xml" value="0.15625" />
+        <entry key="app/src/main/res/layout/activity_scorer.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/dialogfrag_scorer_savegame.xml" value="0.15520833333333334" />
+        <entry key="app/src/main/res/layout/dialogfrag_scorer_settings.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/google_login_page.xml" value="0.15625" />
+        <entry key="app/src/main/res/layout/google_logout_page.xml" value="0.15625" />
         <entry key="app/src/main/res/layout/history_match_elements.xml" value="0.22708333333333333" />
       </map>
     </option>

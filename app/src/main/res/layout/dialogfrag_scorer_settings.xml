@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <ImageButton
+        android:id="@+id/exit_imgbutton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/x_icon"
+        android:padding="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"></ImageButton>
+    <RelativeLayout
+        android:id="@+id/firstRowLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/exit_imgbutton"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="15dp"
+        android:padding="10dp"
+        android:background="@drawable/scorer_page_button_design_right"
+        >
+
+        <TextView
+            android:id="@+id/scorerSettings_Textview_ReStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:gravity="center"
+            android:text="歸零"
+            android:textSize="25sp"></TextView>
+
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@id/scorerSettings_Textview_ReStart"
+            android:background="@drawable/settings_icon"></ImageButton>
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/firstRowLayout"
+        android:layout_alignLeft="@id/firstRowLayout"
+        android:layout_marginTop="15dp"
+        android:padding="10dp"
+        android:background="@drawable/scorer_page_button_design_left">
+
+        <TextView
+            android:id="@+id/scorerSettings_Textview_SaveGame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="儲存"
+            android:textSize="25sp"></TextView>
+
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/settings_icon"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@id/scorerSettings_Textview_SaveGame"></ImageButton>
+
+    </RelativeLayout>
+
+
+
+
+</RelativeLayout>
+
+
+
+
