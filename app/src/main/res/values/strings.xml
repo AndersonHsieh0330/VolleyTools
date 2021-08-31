@@ -1,17 +1,17 @@
 <resources>
     <string name="app_name">VolleyTools</string>
-    <string name="activiy_welcome_string_madarin_NOLINEBREAK">早安排球人! 今天袂衝啥</string>
-    <string name="activiy_welcome_string_madarin_LINEBREAK">早安排球人!<br></br>今天袂衝啥</string>
+    <string name="activiy_welcome_string_madarin_NOLINEBREAK">早安，排球人! 今天袂衝啥</string>
+    <string name="activiy_welcome_string_madarin_LINEBREAK"><br>早安，排球人!\n今天袂衝啥</br></string>
     <string name="button_selection_score">計分仔</string>
     <string name="button_selection_viewhistory">以前的比賽</string>
     <string name="teams_goodpeople">好人</string>
     <string name="teams_badpeople">壞人</string>
-    <string name= "login_waringtext_linebreak">要登入才能<br></br>紀錄以前的比賽呦</string>
+    <string name= "login_waringtext_linebreak"><br>要登入才能\n紀錄以前的比賽呦</br></string>
     <string name= "login_waringtext_nolinebreak">要登入才能紀錄以前的比賽呦</string>
-    <string name= "logout_waringtext_linebreak">已登入<br></br>可以看以前的比賽了呦!</string>
+    <string name= "logout_waringtext_linebreak"><br>已登入\n\n可以看以前的比賽了呦!</br></string>
     <string name= "logout_waringtext_nolinebreak">已登入, 可以看以前的比賽了呦!</string>
-    <string name= "login_sucess_LINEBREAK">水啦!登入成功</string>
-    <string name= "login_sucess_NOLINEBREAK">水啦!<br></br>登入成功</string>
+    <string name= "login_sucess_LINEBREAK"><br>水啦!\n登入成功</br></string>
+    <string name= "login_sucess_NOLINEBREAK">水啦!登入成功</string>
     <string name="logout_mandarin">登出</string>
     <string name="logout_sucess">登出成功</string>
 

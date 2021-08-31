@@ -69,7 +69,7 @@ public class LoginPage extends DialogFragment {
         isloggedin = checkLogin(currentUser);
         View inflatedView= inflateView( inflater, container);
         createRequest();
-        button_initialization(inflatedView);
+        BindViewsAndListeners(inflatedView);
 
         return inflatedView;
     }
@@ -97,7 +97,7 @@ public class LoginPage extends DialogFragment {
     }
 
 
-    private void button_initialization(View inflatedView) {
+    private void BindViewsAndListeners(View inflatedView) {
         //exit_imgbutton exist regardless of the login state
         exit_imgbutton = inflatedView.findViewById(R.id.exit_imgbutton);
         enableExitButton();
@@ -124,7 +124,7 @@ public class LoginPage extends DialogFragment {
                     mAuth.signOut();
                     mGoogleSignInClient.signOut();
                     isloggedin = false;
-                   removeLoginPage();
+                    removeFragment();
                    Toast.makeText(getContext(),R.string.logout_sucess,Toast.LENGTH_LONG).show();
 
                 }
@@ -145,18 +145,18 @@ public class LoginPage extends DialogFragment {
         exit_imgbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                removeLoginPage();
+                removeFragment();
             }
 
         });
     }
-    public void removeLoginPage(){
+    private void removeFragment(){
         disableExitButton();
-        FragmentManager fmanager = getParentFragmentManager();
-        fmanager.beginTransaction().remove(fmanager.findFragmentByTag(MainActivity.LOGIN_FRAGMENT_TAG)).commit();
+        FragmentManager currentFragManager = getParentFragmentManager();
+        currentFragManager.beginTransaction().remove(currentFragManager.findFragmentByTag(MainActivity.LOGIN_FRAGMENT_TAG)).commit();
         }
 
-    public void setDialogSize(){
+    private void setDialogSize(){
         Dialog dialog = getDialog();
         dialog.setCanceledOnTouchOutside(false);
         Window window = dialog.getWindow();
@@ -227,7 +227,7 @@ public class LoginPage extends DialogFragment {
                             currentUser = mAuth.getCurrentUser();
                             isloggedin = true;
                             Toast.makeText(getContext(),R.string.login_sucess_NOLINEBREAK,Toast.LENGTH_LONG).show();
-                            removeLoginPage();
+                            removeFragment();
 
                         } else {
                             // If sign in fails, display a message to the user.

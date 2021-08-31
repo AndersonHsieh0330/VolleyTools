@@ -20,20 +20,13 @@ public class MainActivity extends AppCompatActivity {
     FragmentManager fragmentManager= this.getSupportFragmentManager();
     final public static String LOGIN_FRAGMENT_TAG = "login_page_dialfrag";
     final public static String SharedPreference_Key = "com.AndyH.VolleyTools";
-    final public static String spBadScore_key = "badPeopleScore";
-    final public static String spGoodScore_key = "goodPeopleScore";
-    final public static String spBadSets_key = "badPeopleSets";
-    final public static String spGoodSets_key = "goodPeopleSets";
-    final public static String spBadTameName_key = "badPeopleTeamName";
-    final public static String spGoodTeamName_key = "goodPeopleTeamName";
-
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        button_initialization();
+        BindViewsAndListeners();
 
 //        FirebaseDatabase firebaseDatabase= FirebaseDatabase.getInstance();
 //        DatabaseReference databaseReference = firebaseDatabase.getReference("message");
@@ -46,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void button_initialization(){
+    private void BindViewsAndListeners(){
 
         hamburger_menu = findViewById(R.id.hamburger_menu);
         hamburger_menu.setOnClickListener(new View.OnClickListener() {
@@ -85,6 +78,6 @@ public class MainActivity extends AppCompatActivity {
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         this.setContentView(R.layout.activity_main);
-        this.button_initialization();
+        this.BindViewsAndListeners();
     }
 }

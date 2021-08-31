@@ -10,11 +10,13 @@
         android:id="@+id/hamburger_menu"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:padding="10dp"
         android:background="@drawable/hamburger_menu_icon"
+        android:padding="10dp"
+        app:layout_constraintVertical_bias="0.04"
+        app:layout_constraintHorizontal_bias="0.92"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -27,14 +29,14 @@
         app:layout_constraintEnd_toEndOf="@id/right_guideline"
         app:layout_constraintStart_toStartOf="@id/left_guideline"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.13" />
+        app:layout_constraintVertical_bias="0.15" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/right_guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.88"  />
+        app:layout_constraintGuide_percent="0.88" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/left_guideline"
@@ -44,59 +46,63 @@
         app:layout_constraintGuide_percent="0.12" />
 
 
-    <io.github.florent37.shapeofview.shapes.DiagonalView
-        android:id="@+id/DiagonalView_launch_scorer"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="60dp"
-        android:background="@color/white"
-        app:layout_constraintDimensionRatio="1.5:1"
-        app:layout_constraintEnd_toEndOf="@id/right_guideline"
-        app:layout_constraintStart_toStartOf="@id/left_guideline"
-        app:layout_constraintTop_toBottomOf="@+id/welcome_text"
-        app:shape_diagonal_angle="7"
-        app:shape_diagonal_position="bottom">
-
-        <Button
-            android:id="@+id/button_launch_scorer"
-            android:layout_width="match_parent"
-            android:layout_height="219dp"
-            android:background="@drawable/welcome_page_button_design_scorer"
-            android:text="@string/button_selection_score"
-            style="?android:attr/borderlessButtonStyle"
-            android:textSize="40sp"
-            app:backgroundTint="#FFFFFF"
-            app:backgroundTintMode="multiply" />
-
-    </io.github.florent37.shapeofview.shapes.DiagonalView>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/mid_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.6" />
 
     <io.github.florent37.shapeofview.shapes.DiagonalView
         android:id="@+id/DiagonalView_launch_history"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="1dp"
-        android:background="@color/white"
-        android:rotation="180"
-        app:layout_constraintDimensionRatio="1.5:1"
+        android:background="@color/Transparent"
+        app:layout_constraintDimensionRatio="1.5"
         app:layout_constraintEnd_toEndOf="@id/right_guideline"
         app:layout_constraintStart_toStartOf="@id/left_guideline"
-        app:layout_constraintTop_toBottomOf="@+id/DiagonalView_launch_scorer"
-        app:shape_diagonal_angle="7"
-        app:shape_diagonal_position="bottom">
+        app:layout_constraintTop_toBottomOf="@+id/mid_guideline"
+        app:shape_diagonal_angle="-7"
+        app:shape_diagonal_position="top">
 
-        <com.AndyH.volleytools.FlippedTextButton
+        <Button
             android:id="@+id/button_launch_history"
+            style="?android:attr/borderlessButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/welcome_page_button_design_history"
             android:text="@string/button_selection_viewhistory"
-            style="?android:attr/borderlessButtonStyle"
             android:textColor="@color/white"
-            android:textSize="40sp" />
+            android:textSize="40sp"
+            app:backgroundTint="@color/Transparent" />
 
     </io.github.florent37.shapeofview.shapes.DiagonalView>
 
+    <io.github.florent37.shapeofview.shapes.DiagonalView
+        android:id="@+id/DiagonalView_launch_scorer"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="60dp"
+        app:backgroundTint="@color/Transparent"
+        app:layout_constraintDimensionRatio="1.5"
+        app:layout_constraintEnd_toEndOf="@id/right_guideline"
+        app:layout_constraintStart_toStartOf="@id/left_guideline"
+        app:layout_constraintBottom_toTopOf="@id/mid_guideline"
+        app:shape_diagonal_angle="7"
+        app:shape_diagonal_position="bottom">
 
+        <Button
+            android:id="@+id/button_launch_scorer"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/welcome_page_button_design_scorer"
+            android:text="@string/button_selection_score"
+            android:textSize="40sp"
+            app:backgroundTint="@color/Transparent" />
+
+    </io.github.florent37.shapeofview.shapes.DiagonalView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

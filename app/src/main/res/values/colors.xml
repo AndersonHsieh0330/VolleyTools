@@ -14,5 +14,6 @@
     <color name="Maroon_Purple">#D9B8F1</color>
     <color name="Sakura_Pink">#FCB6D0</color>
     <color name="Transparent">@null</color>
+    <color name="d">#FFFFFF</color>
     <color name="Text_Grey">#999999</color>
 </resources>
