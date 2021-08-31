@@ -3,12 +3,8 @@ package com.AndyH.volleytools;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
-import android.app.Fragment;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
@@ -56,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         hamburger_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loginpage loginpage_fragment = new loginpage();
+                LoginPage loginpage_fragment = new LoginPage();
                 loginpage_fragment.show(fragmentManager,LOGIN_FRAGMENT_TAG);
             }
         });
@@ -65,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         welcomepage_button_scorer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent scoring_intent = new Intent(v.getContext(), scorer.class);
+                Intent scoring_intent = new Intent(v.getContext(), Scorer.class);
                 v.getContext().startActivity(scoring_intent);
             }
         });
@@ -74,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         welcomepage_button_history.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent matchHistory_intent = new Intent(v.getContext(), matchHistory.class);
+                Intent matchHistory_intent = new Intent(v.getContext(), MatchHistory.class);
                 v.getContext().startActivity(matchHistory_intent);
                 Log.d("recycle", "onClick: ");
             }

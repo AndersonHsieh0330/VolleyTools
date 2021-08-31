@@ -43,7 +43,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 import java.util.concurrent.Executor;
 
-public class loginpage extends DialogFragment {
+public class LoginPage extends DialogFragment {
     private static final int RC_SIGN_IN = 12345;
     Activity current_Activity;
     ImageButton exit_imgbutton;

@@ -18,7 +18,7 @@ import android.widget.EditText;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class scorer extends AppCompatActivity {
+public class Scorer extends AppCompatActivity implements ScorerSettings.ScorerSettingActionListener{
     SharedPreferences sp;
     SharedPreferences.Editor speditor;
     Boolean is_game_on;
@@ -159,7 +159,7 @@ public class scorer extends AppCompatActivity {
 
         @Override
         public void onClick(View v) {
-            scorerSettings scorer_Settings_class = new scorerSettings();
+            ScorerSettings scorer_Settings_class = new ScorerSettings();
             scorer_Settings_class.show(fmanager,"scorer_Settings_tag");
         }
     });
@@ -222,6 +222,16 @@ public class scorer extends AppCompatActivity {
         setContentView(R.layout.activity_scorer);
         BindViewsAndListeners();
         initializeViewContent();
+
+    }
+
+    @Override
+    public void onReStartGame(Boolean isRestarting) {
+
+    }
+
+    @Override
+    public void onSaveGame(Boolean isSaving) {
 
     }
 }

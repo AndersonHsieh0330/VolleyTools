@@ -7,11 +7,12 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="Mint_Green">#C0F7A4</color>
-    <color name="Azure_Blue">#90F1EF</color>
+    <color name="Mint_Green">#B6DCB6</color>
+    <color name="Azure_Blue">#D1EAF5</color>
     <color name="Blossom_Pink">#F7D5DF</color>
     <color name="Yellow_Crayola">#FFEF9F</color>
     <color name="Maroon_Purple">#D9B8F1</color>
+    <color name="Sakura_Pink">#FCB6D0</color>
     <color name="Transparent">@null</color>
     <color name="Text_Grey">#999999</color>
 </resources>

@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-public class mRecyclerAdapter extends RecyclerView.Adapter<mRecyclerAdapter.mViewHolder> {
+public class MHRecyclerAdapter extends RecyclerView.Adapter<MHRecyclerAdapter.mViewHolder> {
     private ArrayList<Game> mhAL;
     private SimpleDateFormat simpleDateFormat;
 
@@ -32,7 +32,7 @@ public class mRecyclerAdapter extends RecyclerView.Adapter<mRecyclerAdapter.mVie
 
     }
 
-    public mRecyclerAdapter(ArrayList<Game> matchHistoryArrayList){
+    public MHRecyclerAdapter(ArrayList<Game> matchHistoryArrayList){
 
         mhAL = matchHistoryArrayList;
         simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd hh:mm aa");

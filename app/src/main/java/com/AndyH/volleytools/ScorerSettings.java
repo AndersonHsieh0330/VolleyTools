@@ -10,16 +10,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 
-public class scorerSettings extends DialogFragment {
+public class ScorerSettings extends DialogFragment {
+    private ScorerSettingActionListener actionListener;
+    private ImageButton reStartButton, saveGameButton;
 
-    public static scorerSettings newInstance(String title) {
-        scorerSettings frag = new scorerSettings();
+    public interface ScorerSettingActionListener{
+         void onReStartGame(Boolean isRestarting);
+         void onSaveGame(Boolean isSaving);
+    }
+
+    public static ScorerSettings newInstance(String title) {
+        ScorerSettings frag = new ScorerSettings();
         Bundle args = new Bundle();
         args.putString("title", title);
         frag.setArguments(args);
@@ -34,9 +43,7 @@ public class scorerSettings extends DialogFragment {
     }
 
     private void setDialogSize(){
-        Dialog dialog = getDialog();
-        dialog.setCanceledOnTouchOutside(false);
-        Window window = dialog.getWindow();
+        Window window = getDialog().getWindow();
         Point size = new Point();
 
         Display display = window.getWindowManager().getDefaultDisplay();
@@ -45,7 +52,7 @@ public class scorerSettings extends DialogFragment {
         int width = size.x;
         int height = size.y;
         //window.setLayout((int) (width * 0.75), WindowManager.LayoutParams.WRAP_CONTENT);
-        window.setLayout((int) (width * 0.7), (int) (height * 0.55));
+        window.setLayout((int) (width * 0.4), (int) (height * 0.4));
         window.setGravity(Gravity.CENTER);
     }
 
@@ -59,12 +66,30 @@ public class scorerSettings extends DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        return inflater.inflate(R.layout.dialogfrag_scorer_settings,container);
+        View inflatedView =  inflater.inflate(R.layout.dialogfrag_scorer_settings,container);
+        BindViewsAndListeners(inflatedView);
 
+        return inflatedView;
+    }
+    private void BindViewsAndListeners(View view){
+        reStartButton = view.findViewById(R.id.scorerSettings_ImgButton_Restart);
+        saveGameButton = view.findViewById(R.id.scorerSettings_ImgButton_saveGame);
 
+        reStartButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        saveGameButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
     }
-
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {

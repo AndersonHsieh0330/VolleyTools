@@ -7,39 +7,37 @@
     <RelativeLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/scorerSettingsMidTopGuide"
-        app:layout_constraintEnd_toEndOf="@id/scorerSettingsRightGuide"
-        app:layout_constraintStart_toStartOf="@id/scorerSettingsLeftGuide"
-        app:layout_constraintTop_toTopOf="@id/scorerSettingsTopGuide"
         android:background="@drawable/scorersettingpage_restartbutton_design"
+        app:layout_constraintBottom_toTopOf="@id/scorerSettingsBottomGuide"
         app:layout_constraintDimensionRatio="1:1"
-        >
+        app:layout_constraintEnd_toEndOf="@id/scorerSettingsMidLeftGuide"
+        app:layout_constraintStart_toStartOf="@id/scorerSettingsLeftGuide"
+        app:layout_constraintTop_toTopOf="@id/scorerSettingsTopGuide">
+
         <ImageButton
             android:id="@+id/scorerSettings_ImgButton_Restart"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/restart_icon"
             android:layout_margin="20dp"
-            ></ImageButton>
+            android:background="@drawable/restart_icon"></ImageButton>
     </RelativeLayout>
-
 
 
     <RelativeLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/scorerSettingsBottomGuide"
-        app:layout_constraintEnd_toEndOf="@id/scorerSettingsRightGuide"
-        app:layout_constraintStart_toStartOf="@id/scorerSettingsLeftGuide"
-        app:layout_constraintTop_toTopOf="@id/scorerSettingsMidBottomGuide"
         android:background="@drawable/scorersettingpage_savebutton_design"
-        app:layout_constraintDimensionRatio="1:1">
+        app:layout_constraintBottom_toTopOf="@id/scorerSettingsBottomGuide"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toStartOf="@id/scorerSettingsRightGuide"
+        app:layout_constraintStart_toStartOf="@id/scorerSettingsMidRightGuide"
+        app:layout_constraintTop_toTopOf="@id/scorerSettingsTopGuide">
+
         <ImageButton
             android:id="@+id/scorerSettings_ImgButton_saveGame"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/save_icon"
-            ></ImageButton>
+            android:background="@drawable/save_icon"></ImageButton>
     </RelativeLayout>
 
     <androidx.constraintlayout.widget.Guideline
@@ -47,28 +45,28 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.1" />
+        app:layout_constraintGuide_percent="0.05" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/scorerSettingsRightGuide"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.9" />
+        app:layout_constraintGuide_percent="0.95" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/scorerSettingsTopGuide"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.05" />
+        app:layout_constraintGuide_percent="0.1" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/scorerSettingsBottomGuide"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.95" />
+        app:layout_constraintGuide_percent="0.9" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/scorerSettingsMidTopGuide"
@@ -77,14 +75,28 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.475" />
     " />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/scorerSettingsMidBottomGuide"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.525" />
-    " />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/scorerSettingsMidLeftGuide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.475" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/scorerSettingsMidRightGuide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.525" />
+    " />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

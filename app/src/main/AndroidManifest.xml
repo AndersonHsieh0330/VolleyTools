@@ -9,10 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.VolleyTools">
-        <activity android:name=".scorer"
-            android:configChanges="orientation|screenSize|keyboard|keyboardHidden"></activity>
-        <activity android:name=".matchHistory"
-            android:configChanges="orientation|screenSize|keyboard|keyboardHidden"></activity>
+        <activity android:name=".Scorer"></activity>
+        <activity android:name=".MatchHistory"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

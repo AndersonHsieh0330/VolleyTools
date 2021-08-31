@@ -1,9 +1,6 @@
 package com.AndyH.volleytools;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class matchHistory extends AppCompatActivity {
+public class MatchHistory extends AppCompatActivity {
     private RecyclerView hmRecyclerView;
     private RecyclerView.Adapter hmAdapter;
     private RecyclerView.LayoutManager hmLayoutManager;
@@ -30,7 +27,7 @@ public class matchHistory extends AppCompatActivity {
 
         hmRecyclerView = findViewById(R.id.mh_recyclerview);
         hmLayoutManager = new LinearLayoutManager(this);
-        hmAdapter = new mRecyclerAdapter(matchHistoryArrayList);
+        hmAdapter = new MHRecyclerAdapter(matchHistoryArrayList);
 
         hmRecyclerView.setAdapter(hmAdapter);
         hmRecyclerView.setLayoutManager(hmLayoutManager);
