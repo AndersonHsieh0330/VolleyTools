@@ -13,16 +13,21 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 
 public class ScorerSettings extends DialogFragment {
     private ScorerSettingActionListener actionListener;
     private ImageButton reStartButton, saveGameButton;
+    private boolean isLoggedIn;
 
     public interface ScorerSettingActionListener{
          void onReStartGame(Boolean isRestarting);
@@ -35,6 +40,9 @@ public class ScorerSettings extends DialogFragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View inflatedView =  inflater.inflate(R.layout.dialogfrag_scorer_settings,container);
         BindViewsAndListeners(inflatedView);
+
+        Bundle bundle = getArguments();
+        isLoggedIn = bundle.getBoolean(Scorer.SCORERSETTINGS_DFBUDDLE_KEY);
 
         return inflatedView;
     }
@@ -84,7 +92,11 @@ public class ScorerSettings extends DialogFragment {
         saveGameButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                actionListener.onSaveGame(true);
+                if(isLoggedIn){
+                    actionListener.onSaveGame(true);
+                }else{
+                    Toast.makeText(getContext(),R.string.saveGameRequestLoggingWaring,Toast.LENGTH_LONG).show();
+                }
                 removeFragment();
             }
         });
@@ -109,5 +121,7 @@ public class ScorerSettings extends DialogFragment {
         window.setLayout((int) (width * 0.4), (int) (height * 0.4));
         window.setGravity(Gravity.CENTER);
     }
+
+
 
 }

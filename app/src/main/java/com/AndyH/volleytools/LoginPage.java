@@ -45,17 +45,17 @@ import java.util.concurrent.Executor;
 
 public class LoginPage extends DialogFragment {
     private static final int RC_SIGN_IN = 12345;
-    Activity current_Activity;
-    ImageButton exit_imgbutton;
-    Button login_button;
+    private Activity current_Activity;
+    private ImageButton exit_imgbutton;
+    private Button login_button;
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth;
-    SignInButton googleSignInButton;
-    Button signOutButton;
+    private FirebaseUser currentUser;
+    private SignInButton googleSignInButton;
+    private Button signOutButton;
     private LayoutInflater mInflater;
     private ViewGroup mContainer;
-    FirebaseUser currentUser;
-    private boolean isloggedin;
+    private boolean isLoggedIn;
 
 
     @Nullable
@@ -66,10 +66,11 @@ public class LoginPage extends DialogFragment {
         mContainer = container;
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
-        isloggedin = checkLogin(currentUser);
+        isLoggedIn = checkLogin(currentUser);
         View inflatedView= inflateView( inflater, container);
         createRequest();
         BindViewsAndListeners(inflatedView);
+
 
         return inflatedView;
     }
@@ -81,7 +82,7 @@ public class LoginPage extends DialogFragment {
     }
 
     private View inflateView(LayoutInflater inflater, ViewGroup container){
-        if(!isloggedin){
+        if(!isLoggedIn){
             return inflater.inflate(R.layout.google_login_page, container, false);
         }else{
             return inflater.inflate(R.layout.google_logout_page, container, false);
@@ -102,7 +103,7 @@ public class LoginPage extends DialogFragment {
         exit_imgbutton = inflatedView.findViewById(R.id.exit_imgbutton);
         enableExitButton();
 
-        if(!isloggedin){
+        if(!isLoggedIn){
             googleSignInButton = (SignInButton) inflatedView.findViewById(R.id.gsign_in_button);
             googleSignInButton.setSize(SignInButton.SIZE_STANDARD);
             googleSignInButton.setOnClickListener(new View.OnClickListener() {
@@ -123,7 +124,7 @@ public class LoginPage extends DialogFragment {
                 public void onClick(View v) {
                     mAuth.signOut();
                     mGoogleSignInClient.signOut();
-                    isloggedin = false;
+                    isLoggedIn = false;
                     removeFragment();
                    Toast.makeText(getContext(),R.string.logout_sucess,Toast.LENGTH_LONG).show();
 
@@ -225,7 +226,7 @@ public class LoginPage extends DialogFragment {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("firebase", "signInWithCredential:success");
                             currentUser = mAuth.getCurrentUser();
-                            isloggedin = true;
+                            isLoggedIn = true;
                             Toast.makeText(getContext(),R.string.login_sucess_NOLINEBREAK,Toast.LENGTH_LONG).show();
                             removeFragment();
 

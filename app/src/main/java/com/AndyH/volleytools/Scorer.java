@@ -16,20 +16,30 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class Scorer extends AppCompatActivity implements ScorerSettings.ScorerSettingActionListener{
-    SharedPreferences sp;
-    SharedPreferences.Editor speditor;
-    Boolean is_game_on;
-    Game current_game;
-    Button goodpeople_score_button,badpeople_score_button,goodpeople_set_button,badpeople_set_button,button_leave,button_Settings;
-    EditText leftBadTeam, rightGoodTeam;
-    FragmentManager fmanager=this.getSupportFragmentManager();
-    FirebaseDatabase rootNode;
-    DatabaseReference reference;
+    private SharedPreferences sp;
+    private SharedPreferences.Editor speditor;
+    private Boolean is_game_on;
+    private Game currentGame;
+    private Button goodpeople_score_button,badpeople_score_button,goodpeople_set_button,badpeople_set_button,button_leave,button_Settings;
+    private EditText leftBadTeam, rightGoodTeam;
+    private FragmentManager fmanager=this.getSupportFragmentManager();
+    private FirebaseDatabase rootNode;
+    private DatabaseReference reference;
+    private FirebaseAuth mAuth;
+    private FirebaseUser currentUser;
+    private boolean isLoggedIn;
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference dbRefHistoryGames;
 
+
+
+    final public static String SCORERSETTINGS_DFBUDDLE_KEY = "scorerSettingBundle";
     final public static String SP_BADSCORE_KEY = "badPeopleScore";
     final public static String SP_GOODSCORE_KEY = "goodPeopleScore";
     final public static String SP_BADSETS_KEY = "badPeopleSets";
@@ -45,7 +55,12 @@ public class Scorer extends AppCompatActivity implements ScorerSettings.ScorerSe
         this.setContentView(R.layout.activity_scorer);
         sp = this.getSharedPreferences(MainActivity.SharedPreference_Key,Context.MODE_PRIVATE);
         speditor = sp.edit();
-        current_game = initializeCurrentGame();
+
+        initializeFirebaseAssociateReference();
+        isLoggedIn = checkLogin(currentUser);
+        checkCurrentUserDBNodeExist();
+
+        currentGame = initializeCurrentGame();
         BindViewsAndListeners();
         initializeViewContent();
         
@@ -62,63 +77,68 @@ public class Scorer extends AppCompatActivity implements ScorerSettings.ScorerSe
 
     @Override
     public void onReStartGame(Boolean isRestarting) {
-        Log.d("saveorrestart", "onReStartGame: isRestarting = "+isRestarting);
+        if(isRestarting){
+            resetGame();
+            Log.d("saveorrestart", "onReStartGame: isRestarting = "+isRestarting);
+        }
     }
 
     @Override
     public void onSaveGame(Boolean isSaving) {
-        Log.d("saveorrestart", "onSaveGame: isSaving = "+isSaving);
+        if(isSaving) {
+            Log.d("saveorrestart", "onSaveGame: isSaving = " + isSaving);
+        }
     }
 
     private Game initializeCurrentGame(){
-        current_game = new Game();
+        currentGame = new Game();
         if(sp.contains(SP_BADSCORE_KEY)){
-            current_game.setBadpeople_points(sp.getInt(SP_BADSCORE_KEY,99));
+            currentGame.setBadpeople_points(sp.getInt(SP_BADSCORE_KEY,99));
         }else{
-            current_game.setBadpeople_points(0);
+            currentGame.setBadpeople_points(0);
             speditor.putInt(SP_BADSCORE_KEY,0).apply();
         }
 
         if(sp.contains(SP_GOODSCORE_KEY)){
-            current_game.setGoodpeople_points(sp.getInt(SP_GOODSCORE_KEY,99));
+            currentGame.setGoodpeople_points(sp.getInt(SP_GOODSCORE_KEY,99));
         }else{
-            current_game.setGoodpeople_points(0);
+            currentGame.setGoodpeople_points(0);
             speditor.putInt(SP_GOODSCORE_KEY,0).apply();
 
         }
 
         if(sp.contains(SP_BADSETS_KEY)){
-            current_game.setBadpeople_sets(sp.getInt(SP_BADSETS_KEY,99));
+            currentGame.setBadpeople_sets(sp.getInt(SP_BADSETS_KEY,99));
         }else{
-            current_game.setBadpeople_sets(0);
+            currentGame.setBadpeople_sets(0);
             speditor.putInt(SP_BADSETS_KEY,0).apply();
 
         }
 
         if(sp.contains(SP_GOODSETS_KEY)){
-            current_game.setGoodpeople_sets(sp.getInt(SP_GOODSETS_KEY,99));
+            currentGame.setGoodpeople_sets(sp.getInt(SP_GOODSETS_KEY,99));
         }else{
-            current_game.setGoodpeople_sets(0);
+            currentGame.setGoodpeople_sets(0);
             speditor.putInt(SP_GOODSETS_KEY,0).apply();
         }
 
         if(sp.contains(SP_BADTEAMNAME_KEY)){
-            current_game.setBadpeople_teamname(sp.getString(SP_BADTEAMNAME_KEY,"Error"));
+            currentGame.setBadpeople_teamname(sp.getString(SP_BADTEAMNAME_KEY,"Error"));
         }else{
             String defaultBadTN = this.getResources().getString(R.string.teams_badpeople);
-            current_game.setGoodpeople_teamname(defaultBadTN);
+            currentGame.setGoodpeople_teamname(defaultBadTN);
             speditor.putString(SP_BADTEAMNAME_KEY,defaultBadTN).apply();
         }
 
         if(sp.contains(SP_GOODTEAMNAME_KEY)){
-            current_game.setGoodpeople_teamname(sp.getString(SP_GOODTEAMNAME_KEY,"Error"));
+            currentGame.setGoodpeople_teamname(sp.getString(SP_GOODTEAMNAME_KEY,"Error"));
         }else{
             String defaultGoodTN = this.getResources().getString(R.string.teams_goodpeople);
-            current_game.setGoodpeople_teamname(defaultGoodTN);
+            currentGame.setGoodpeople_teamname(defaultGoodTN);
             speditor.putString(SP_GOODTEAMNAME_KEY,defaultGoodTN).apply();
         }
 
-        return current_game;
+        return currentGame;
     }
 
     private void initializeViewContent(){
@@ -136,11 +156,10 @@ public class Scorer extends AppCompatActivity implements ScorerSettings.ScorerSe
         goodpeople_score_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                current_game.goodpeople_gain_point();
-                speditor.putInt(SP_GOODSCORE_KEY,current_game.getGoodpeople_points());
+                currentGame.goodpeople_gain_point();
+                speditor.putInt(SP_GOODSCORE_KEY,currentGame.getGoodpeople_points());
                 speditor.apply();
                 goodpeople_score_button.setText(String.valueOf(sp.getInt(SP_GOODSCORE_KEY,99)));
-
             }
         });
 
@@ -149,8 +168,8 @@ public class Scorer extends AppCompatActivity implements ScorerSettings.ScorerSe
         badpeople_score_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                current_game.badpeople_gain_point();
-                speditor.putInt(SP_BADSCORE_KEY,current_game.getBadpeople_points());
+                currentGame.badpeople_gain_point();
+                speditor.putInt(SP_BADSCORE_KEY,currentGame.getBadpeople_points());
                 speditor.apply();
                 badpeople_score_button.setText(String.valueOf(sp.getInt(SP_BADSCORE_KEY,99)));
 
@@ -161,8 +180,8 @@ public class Scorer extends AppCompatActivity implements ScorerSettings.ScorerSe
         goodpeople_set_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                current_game.goodpeople_gain_set();
-                speditor.putInt(SP_GOODSETS_KEY,current_game.getGoodpeople_sets());
+                currentGame.goodpeople_gain_set();
+                speditor.putInt(SP_GOODSETS_KEY,currentGame.getGoodpeople_sets());
                 speditor.apply();
                 goodpeople_set_button.setText(String.valueOf(sp.getInt(SP_GOODSETS_KEY,0)));
             }
@@ -172,11 +191,10 @@ public class Scorer extends AppCompatActivity implements ScorerSettings.ScorerSe
         badpeople_set_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                current_game.badpeople_gain_set();
-                speditor.putInt(SP_BADSETS_KEY,current_game.getBadpeople_sets());
+                currentGame.badpeople_gain_set();
+                speditor.putInt(SP_BADSETS_KEY,currentGame.getBadpeople_sets());
                 speditor.apply();
                 badpeople_set_button.setText(String.valueOf(sp.getInt(SP_BADSETS_KEY,0)));
-
             }
         });
 
@@ -194,8 +212,12 @@ public class Scorer extends AppCompatActivity implements ScorerSettings.ScorerSe
 
             @Override
             public void onClick(View v) {
-                ScorerSettings scorer_Settings_class = new ScorerSettings();
-                scorer_Settings_class.show(fmanager,SCORERSETTING_FRAGMENT_TAG);
+                ScorerSettings scorerSettingsClass = new ScorerSettings();
+                Bundle bundle = new Bundle();
+                bundle.putBoolean(SCORERSETTINGS_DFBUDDLE_KEY,isLoggedIn);
+                scorerSettingsClass.setArguments(bundle);
+                scorerSettingsClass.show(fmanager,SCORERSETTING_FRAGMENT_TAG);
+
             }
         });
 
@@ -213,7 +235,7 @@ public class Scorer extends AppCompatActivity implements ScorerSettings.ScorerSe
 
             @Override
             public void afterTextChanged(Editable s) {
-                current_game.setBadpeople_teamname(s.toString());
+                currentGame.setBadpeople_teamname(s.toString());
                 speditor.putString(SP_BADTEAMNAME_KEY,s.toString()).apply();
 
             }
@@ -233,11 +255,44 @@ public class Scorer extends AppCompatActivity implements ScorerSettings.ScorerSe
 
             @Override
             public void afterTextChanged(Editable s) {
-                current_game.setGoodpeople_teamname(s.toString());
+                currentGame.setGoodpeople_teamname(s.toString());
                 speditor.putString(SP_GOODTEAMNAME_KEY,s.toString()).apply();
             }
         });
 
     }
 
+    private boolean checkLogin(FirebaseUser currentUser){
+        if(currentUser!= null){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    private void resetGame(){
+        currentGame = new Game(0,0,0,0,"好人","壞人",null);
+
+        speditor.putInt(SP_GOODSCORE_KEY,currentGame.getGoodpeople_points());
+        speditor.putInt(SP_BADSCORE_KEY,currentGame.getBadpeople_points());
+        speditor.putInt(SP_GOODSETS_KEY,currentGame.getGoodpeople_sets());
+        speditor.putInt(SP_BADSETS_KEY,currentGame.getBadpeople_sets());
+        speditor.putString(SP_BADTEAMNAME_KEY,currentGame.getBadpeople_teamname());
+        speditor.putString(SP_GOODTEAMNAME_KEY,currentGame.getGoodpeople_teamname());
+        speditor.apply();
+
+        initializeViewContent();
+    }
+
+    private void initializeFirebaseAssociateReference(){
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
+        firebaseDatabase= FirebaseDatabase.getInstance();
+        dbRefHistoryGames = firebaseDatabase.getReference("historyGames");
+    }
+
+    private void checkCurrentUserDBNodeExist(){
+        //start checking whether user uid child exist and update dbreference for performance
+        //(don't query the entire historygame branch)
+    }
 }
