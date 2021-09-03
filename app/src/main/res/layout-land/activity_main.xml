@@ -102,6 +102,7 @@
             android:layout_height="match_parent"
             android:background="@drawable/welcome_page_button_design_scorer_landscape"
             android:text="@string/button_selection_score"
+            android:textColor="@color/white"
             android:textSize="40sp"
             app:backgroundTint="@color/Transparent" />
 

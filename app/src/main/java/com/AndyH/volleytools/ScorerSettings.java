@@ -96,6 +96,7 @@ public class ScorerSettings extends DialogFragment {
                     actionListener.onSaveGame(true);
                 }else{
                     Toast.makeText(getContext(),R.string.saveGameRequestLoggingWaring,Toast.LENGTH_LONG).show();
+                    //pop login page
                 }
                 removeFragment();
             }

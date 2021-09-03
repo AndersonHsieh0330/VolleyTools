@@ -15,27 +15,31 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 public class Scorer extends AppCompatActivity implements ScorerSettings.ScorerSettingActionListener{
     private SharedPreferences sp;
     private SharedPreferences.Editor speditor;
-    private Boolean is_game_on;
     private Game currentGame;
     private Button goodpeople_score_button,badpeople_score_button,goodpeople_set_button,badpeople_set_button,button_leave,button_Settings;
     private EditText leftBadTeam, rightGoodTeam;
     private FragmentManager fmanager=this.getSupportFragmentManager();
-    private FirebaseDatabase rootNode;
-    private DatabaseReference reference;
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
     private boolean isLoggedIn;
     private FirebaseDatabase firebaseDatabase;
-    private DatabaseReference dbRefHistoryGames;
+    private DatabaseReference rootRef;
+    private DatabaseReference currentUserRef;
+    private DatabaseReference currentUserHistoryGameRef;
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd hh:mm aa");
 
 
 
@@ -57,8 +61,8 @@ public class Scorer extends AppCompatActivity implements ScorerSettings.ScorerSe
         speditor = sp.edit();
 
         initializeFirebaseAssociateReference();
-        isLoggedIn = checkLogin(currentUser);
-        checkCurrentUserDBNodeExist();
+
+
 
         currentGame = initializeCurrentGame();
         BindViewsAndListeners();
@@ -85,8 +89,11 @@ public class Scorer extends AppCompatActivity implements ScorerSettings.ScorerSe
 
     @Override
     public void onSaveGame(Boolean isSaving) {
-        if(isSaving) {
+        if(isSaving&&isLoggedIn) {
+            currentGame.setGameEndTime(simpleDateFormat.format(Calendar.getInstance().getTime()));
+            saveGameToFireBase(currentGame);
             Log.d("saveorrestart", "onSaveGame: isSaving = " + isSaving);
+
         }
     }
 
@@ -172,7 +179,6 @@ public class Scorer extends AppCompatActivity implements ScorerSettings.ScorerSe
                 speditor.putInt(SP_BADSCORE_KEY,currentGame.getBadpeople_points());
                 speditor.apply();
                 badpeople_score_button.setText(String.valueOf(sp.getInt(SP_BADSCORE_KEY,99)));
-
             }
         });
 
@@ -287,12 +293,19 @@ public class Scorer extends AppCompatActivity implements ScorerSettings.ScorerSe
     private void initializeFirebaseAssociateReference(){
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
-        firebaseDatabase= FirebaseDatabase.getInstance();
-        dbRefHistoryGames = firebaseDatabase.getReference("historyGames");
-    }
+        isLoggedIn = checkLogin(currentUser);
 
-    private void checkCurrentUserDBNodeExist(){
-        //start checking whether user uid child exist and update dbreference for performance
-        //(don't query the entire historygame branch)
+        firebaseDatabase= FirebaseDatabase.getInstance();
+        rootRef = firebaseDatabase.getReference();
+        if(isLoggedIn){
+            currentUserRef = rootRef.child(currentUser.getUid().toString());
+            currentUserHistoryGameRef = currentUserRef.child("historyGames");
+            }
+        else{
+            Log.d("saveorrestart", "user not logged in");
+        }
+    }
+    private void saveGameToFireBase(Game game){
+        currentUserHistoryGameRef.push().setValue(game);
     }
 }

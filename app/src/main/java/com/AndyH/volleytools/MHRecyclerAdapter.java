@@ -1,5 +1,7 @@
 package com.AndyH.volleytools;
 
+import android.annotation.SuppressLint;
+import android.content.res.ColorStateList;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,6 +9,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.database.DatabaseReference;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -19,6 +23,7 @@ public class MHRecyclerAdapter extends RecyclerView.Adapter<MHRecyclerAdapter.mV
         public TextView bSets, bName, bScore,gSets,gName,gScore,time;
         public mViewHolder(@NonNull View itemView) {
             super(itemView);
+
             bSets = itemView.findViewById(R.id.hm_badpeople_textview_sets);
             bName = itemView.findViewById(R.id.hm_badpeople);
             bScore = itemView.findViewById(R.id.hm_badpeople_textview_score);
@@ -49,15 +54,17 @@ public class MHRecyclerAdapter extends RecyclerView.Adapter<MHRecyclerAdapter.mV
 
     @Override
     public void onBindViewHolder(@NonNull mViewHolder holder, int position) {
+        //newest history game record is on top
+        Game current_game = mhAL.get((mhAL.size()-1)-position);
 
-        Game current_game = mhAL.get(position);
+
         holder.bSets.setText(String.valueOf(current_game.getBadpeople_sets()));
         holder.bScore.setText(String.valueOf(current_game.getBadpeople_points()));
         holder.bName.setText(current_game.getBadpeople_teamname());
         holder.gSets.setText(String.valueOf(current_game.getGoodpeople_sets()));
         holder.gScore.setText(String.valueOf(current_game.getGoodpeople_points()));
         holder.gName.setText(current_game.getGoodpeople_teamname());
-        holder.time.setText(simpleDateFormat.format(current_game.getCalendar().getTime()));
+        holder.time.setText(current_game.getGameEndTime());
 
     }
 
@@ -65,4 +72,6 @@ public class MHRecyclerAdapter extends RecyclerView.Adapter<MHRecyclerAdapter.mV
     public int getItemCount() {
         return mhAL.size();
     }
+
+    private void generateColorPatter(){}
 }

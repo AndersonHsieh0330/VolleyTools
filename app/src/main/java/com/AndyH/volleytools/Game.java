@@ -15,15 +15,14 @@ public class Game {
     private int badpeople_sets;
     private String goodpeople_teamname;
     private String badpeople_teamname;
-    private Calendar currentTime;
+    private String gameEndTime;
 
 
     public Game(){
-
     }
 
     public Game( int goodpeople_points, int badpeople_points, int goodpeople_sets,
-                int badpeople_sets, String goodpeople_teamname, String badpeople_teamname, Calendar calender) {
+                int badpeople_sets, String goodpeople_teamname, String badpeople_teamname, String gameendtime) {
 
         this.goodpeople_points = goodpeople_points;
         this.badpeople_points = badpeople_points;
@@ -31,7 +30,7 @@ public class Game {
         this.badpeople_sets = badpeople_sets;
         this.goodpeople_teamname = goodpeople_teamname;
         this.badpeople_teamname = badpeople_teamname;
-        this.currentTime = calender;
+        this.gameEndTime = gameendtime;
     }
 
     protected Game(Parcel in) {
@@ -45,12 +44,12 @@ public class Game {
     }
 
 
-    public Calendar getCalendar() {
-        return currentTime;
+    public String getGameEndTime() {
+        return gameEndTime;
     }
 
-    public void setCalendar(Calendar currentTime) {
-        this.currentTime = currentTime;
+    public void setGameEndTime(String time) {
+        this.gameEndTime = time;
     }
 
     public int getGoodpeople_points() {
