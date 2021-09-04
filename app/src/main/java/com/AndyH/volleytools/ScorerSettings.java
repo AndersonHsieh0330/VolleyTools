@@ -2,6 +2,7 @@ package com.AndyH.volleytools;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -25,9 +26,10 @@ import com.google.firebase.auth.FirebaseUser;
 
 
 public class ScorerSettings extends DialogFragment {
+    private SharedPreferences sp;
+    private SharedPreferences.Editor speditor;
     private ScorerSettingActionListener actionListener;
     private ImageButton reStartButton, saveGameButton;
-    private boolean isLoggedIn;
 
     public interface ScorerSettingActionListener{
          void onReStartGame(Boolean isRestarting);
@@ -38,11 +40,11 @@ public class ScorerSettings extends DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
+        sp = getContext().getSharedPreferences(Scorer.SHAREDPREFERENCE_KEY, Context.MODE_PRIVATE);
+        speditor = sp.edit();
+
         View inflatedView =  inflater.inflate(R.layout.dialogfrag_scorer_settings,container);
         BindViewsAndListeners(inflatedView);
-
-        Bundle bundle = getArguments();
-        isLoggedIn = bundle.getBoolean(Scorer.SCORERSETTINGS_DFBUDDLE_KEY);
 
         return inflatedView;
     }
@@ -92,11 +94,10 @@ public class ScorerSettings extends DialogFragment {
         saveGameButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                if(isLoggedIn){
+                if(sp.getBoolean(Scorer.SP_LOGINSTATE,false)){
                     actionListener.onSaveGame(true);
                 }else{
                     Toast.makeText(getContext(),R.string.saveGameRequestLoggingWaring,Toast.LENGTH_LONG).show();
-                    //pop login page
                 }
                 removeFragment();
             }

@@ -34,7 +34,6 @@ public class Scorer extends AppCompatActivity implements ScorerSettings.ScorerSe
     private FragmentManager fmanager=this.getSupportFragmentManager();
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
-    private boolean isLoggedIn;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference rootRef;
     private DatabaseReference currentUserRef;
@@ -42,8 +41,7 @@ public class Scorer extends AppCompatActivity implements ScorerSettings.ScorerSe
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd hh:mm aa");
 
 
-
-    final public static String SCORERSETTINGS_DFBUDDLE_KEY = "scorerSettingBundle";
+    final public static String SHAREDPREFERENCE_KEY = "com.AndyH.VolleyTools";
     final public static String SP_BADSCORE_KEY = "badPeopleScore";
     final public static String SP_GOODSCORE_KEY = "goodPeopleScore";
     final public static String SP_BADSETS_KEY = "badPeopleSets";
@@ -51,13 +49,15 @@ public class Scorer extends AppCompatActivity implements ScorerSettings.ScorerSe
     final public static String SP_BADTEAMNAME_KEY = "badPeopleTeamName";
     final public static String SP_GOODTEAMNAME_KEY = "goodPeopleTeamName";
     final public static String SCORERSETTING_FRAGMENT_TAG = "scorer_Settings_tag";
+    final public static String SP_LOGINSTATE = "isUserLoggedIn";
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_scorer);
-        sp = this.getSharedPreferences(MainActivity.SharedPreference_Key,Context.MODE_PRIVATE);
+        sp = this.getSharedPreferences(SHAREDPREFERENCE_KEY,Context.MODE_PRIVATE);
         speditor = sp.edit();
 
         initializeFirebaseAssociateReference();
@@ -89,7 +89,7 @@ public class Scorer extends AppCompatActivity implements ScorerSettings.ScorerSe
 
     @Override
     public void onSaveGame(Boolean isSaving) {
-        if(isSaving&&isLoggedIn) {
+        if(isSaving&&sp.getBoolean(Scorer.SP_LOGINSTATE,false)) {
             currentGame.setGameEndTime(simpleDateFormat.format(Calendar.getInstance().getTime()));
             saveGameToFireBase(currentGame);
             Log.d("saveorrestart", "onSaveGame: isSaving = " + isSaving);
@@ -219,9 +219,6 @@ public class Scorer extends AppCompatActivity implements ScorerSettings.ScorerSe
             @Override
             public void onClick(View v) {
                 ScorerSettings scorerSettingsClass = new ScorerSettings();
-                Bundle bundle = new Bundle();
-                bundle.putBoolean(SCORERSETTINGS_DFBUDDLE_KEY,isLoggedIn);
-                scorerSettingsClass.setArguments(bundle);
                 scorerSettingsClass.show(fmanager,SCORERSETTING_FRAGMENT_TAG);
 
             }
@@ -285,11 +282,10 @@ public class Scorer extends AppCompatActivity implements ScorerSettings.ScorerSe
     private void initializeFirebaseAssociateReference(){
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
-        isLoggedIn = (currentUser != null);
 
         firebaseDatabase= FirebaseDatabase.getInstance();
         rootRef = firebaseDatabase.getReference();
-        if(isLoggedIn){
+        if(sp.getBoolean(Scorer.SP_LOGINSTATE,false)){
             currentUserRef = rootRef.child(currentUser.getUid().toString());
             currentUserHistoryGameRef = currentUserRef.child("historyGames");
             }

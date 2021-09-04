@@ -140,9 +140,4 @@ public class Game {
             badpeople_sets=0;
         };
     }
-
-
-
-
-
 }

@@ -4,41 +4,45 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 
 public class MainActivity extends AppCompatActivity {
-
+    private SharedPreferences sp;
+    private SharedPreferences.Editor speditor;
     Button welcomepage_button_scorer, welcomepage_button_history;
     ImageButton hamburger_menu;
-    FragmentManager fragmentManager= this.getSupportFragmentManager();
+    FragmentManager fragmentManager;
     final public static String LOGIN_FRAGMENT_TAG = "login_page_dialfrag";
-    final public static String SharedPreference_Key = "com.AndyH.VolleyTools";
+    private FirebaseAuth mAuth;
+    private FirebaseUser currentUser;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sp = this.getSharedPreferences(Scorer.SHAREDPREFERENCE_KEY, Context.MODE_PRIVATE);
+        speditor = sp.edit();
+        fragmentManager = this.getSupportFragmentManager();
         setContentView(R.layout.activity_main);
+        initializeFirebaseAssociateReference();
+        syncLoggedInStateToSP();
         BindViewsAndListeners();
-
-//        FirebaseDatabase firebaseDatabase= FirebaseDatabase.getInstance();
-//        DatabaseReference databaseReference = firebaseDatabase.getReference("message");
-//        databaseReference.setValue("testing2 22222");
-//
-//        DatabaseReference databaseReference1 = firebaseDatabase.getReference("tick");
-//        databaseReference1.setValue("ticktick");
-
 
     }
 
@@ -68,14 +72,20 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent matchHistory_intent = new Intent(v.getContext(), MatchHistory.class);
-                v.getContext().startActivity(matchHistory_intent);
-                Log.d("recycle", "onClick: ");
+                if(sp.getBoolean(Scorer.SP_LOGINSTATE,false)){
+                    v.getContext().startActivity(matchHistory_intent);
+                }else{
+                    Toast.makeText(v.getContext(),R.string.mainActivityLoginHint, Toast.LENGTH_SHORT).show();
+                }
             }
         });
+    }
 
 
-
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        syncLoggedInStateToSP();
     }
 
     @Override
@@ -88,16 +98,9 @@ public class MainActivity extends AppCompatActivity {
     private void initializeFirebaseAssociateReference(){
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
-        isLoggedIn = (currentUser != null);
-
-        firebaseDatabase= FirebaseDatabase.getInstance();
-        rootRef = firebaseDatabase.getReference();
-        if(isLoggedIn){
-            currentUserRef = rootRef.child(currentUser.getUid().toString());
-            currentUserHistoryGameRef = currentUserRef.child("historyGames");
-        }
-        else{
-            Log.d("saveorrestart", "user not logged in");
-        }
+    }
+    private void syncLoggedInStateToSP(){
+        speditor.putBoolean(Scorer.SP_LOGINSTATE,(currentUser!=null));
+        speditor.apply();
     }
 }

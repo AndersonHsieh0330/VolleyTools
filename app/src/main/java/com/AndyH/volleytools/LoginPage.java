@@ -2,7 +2,9 @@ package com.AndyH.volleytools;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -41,33 +43,30 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import java.util.SortedMap;
 import java.util.concurrent.Executor;
 
 public class LoginPage extends DialogFragment {
+    private SharedPreferences sp;
+    private SharedPreferences.Editor speditor;
     private static final int RC_SIGN_IN = 12345;
-    private Activity current_Activity;
     private ImageButton exit_imgbutton;
-    private Button login_button;
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
     private SignInButton googleSignInButton;
     private Button signOutButton;
-    private LayoutInflater mInflater;
-    private ViewGroup mContainer;
-    private boolean isLoggedIn;
 
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        mInflater = inflater;
-        mContainer = container;
-        mAuth = FirebaseAuth.getInstance();
-        currentUser = mAuth.getCurrentUser();
-        isLoggedIn = checkLogin(currentUser);
-        View inflatedView= inflateView( inflater, container);
+        sp = getContext().getSharedPreferences(Scorer.SHAREDPREFERENCE_KEY, Context.MODE_PRIVATE);
+        speditor = sp.edit();
+        initializeFirebaseAssociateReference();
+        syncLoggedInStateToSP();
+        View inflatedView= inflateView(inflater, container);
         createRequest();
         BindViewsAndListeners(inflatedView);
 
@@ -82,28 +81,19 @@ public class LoginPage extends DialogFragment {
     }
 
     private View inflateView(LayoutInflater inflater, ViewGroup container){
-        if(!isLoggedIn){
+        if(!sp.getBoolean(Scorer.SP_LOGINSTATE,false)){
             return inflater.inflate(R.layout.google_login_page, container, false);
         }else{
             return inflater.inflate(R.layout.google_logout_page, container, false);
         }
     }
 
-    private boolean checkLogin(FirebaseUser currentUser){
-        if(currentUser!= null){
-            return true;
-        }else{
-            return false;
-        }
-    }
-
-
     private void BindViewsAndListeners(View inflatedView) {
         //exit_imgbutton exist regardless of the login state
         exit_imgbutton = inflatedView.findViewById(R.id.exit_imgbutton);
         enableExitButton();
 
-        if(!isLoggedIn){
+        if(!sp.getBoolean(Scorer.SP_LOGINSTATE,false)){
             googleSignInButton = (SignInButton) inflatedView.findViewById(R.id.gsign_in_button);
             googleSignInButton.setSize(SignInButton.SIZE_STANDARD);
             googleSignInButton.setOnClickListener(new View.OnClickListener() {
@@ -124,7 +114,7 @@ public class LoginPage extends DialogFragment {
                 public void onClick(View v) {
                     mAuth.signOut();
                     mGoogleSignInClient.signOut();
-                    isLoggedIn = false;
+                    speditor.putBoolean(Scorer.SP_LOGINSTATE,false).apply();
                     removeFragment();
                    Toast.makeText(getContext(),R.string.logout_sucess,Toast.LENGTH_LONG).show();
 
@@ -197,7 +187,7 @@ public class LoginPage extends DialogFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.d("firebase", " currnet user statis:" );
+        Log.d("firebase", " currnet user status:" );
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
@@ -209,8 +199,11 @@ public class LoginPage extends DialogFragment {
                 firebaseAuthWithGoogle(account.getIdToken());
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
-                enableExitButton();
                 Log.w("firebase", "Google sign in failed", e);
+                Toast.makeText(getContext(),R.string.loginFailed,Toast.LENGTH_SHORT).show();
+                syncLoggedInStateToSP();
+                enableExitButton();
+
             }
         }
     }
@@ -226,7 +219,7 @@ public class LoginPage extends DialogFragment {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("firebase", "signInWithCredential:success");
                             currentUser = mAuth.getCurrentUser();
-                            isLoggedIn = true;
+                            speditor.putBoolean(Scorer.SP_LOGINSTATE,true).apply();
                             Toast.makeText(getContext(),R.string.login_sucess_NOLINEBREAK,Toast.LENGTH_LONG).show();
                             removeFragment();
 
@@ -243,6 +236,15 @@ public class LoginPage extends DialogFragment {
     @Override
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-//        setDialogSize();
     }
+
+    private void initializeFirebaseAssociateReference(){
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
+    }
+    private void syncLoggedInStateToSP(){
+        speditor.putBoolean(Scorer.SP_LOGINSTATE,(currentUser!=null));
+        speditor.apply();
+    }
+    
 }
