@@ -12,6 +12,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -79,5 +83,21 @@ public class MainActivity extends AppCompatActivity {
         super.onConfigurationChanged(newConfig);
         this.setContentView(R.layout.activity_main);
         this.BindViewsAndListeners();
+    }
+
+    private void initializeFirebaseAssociateReference(){
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
+        isLoggedIn = (currentUser != null);
+
+        firebaseDatabase= FirebaseDatabase.getInstance();
+        rootRef = firebaseDatabase.getReference();
+        if(isLoggedIn){
+            currentUserRef = rootRef.child(currentUser.getUid().toString());
+            currentUserHistoryGameRef = currentUserRef.child("historyGames");
+        }
+        else{
+            Log.d("saveorrestart", "user not logged in");
+        }
     }
 }

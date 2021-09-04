@@ -84,7 +84,7 @@ public class MatchHistory extends AppCompatActivity {
     private void initializeFirebaseAssociateReference(){
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
-        isLoggedIn = checkLogin(currentUser);
+        isLoggedIn = (currentUser != null);
 
         firebaseDatabase= FirebaseDatabase.getInstance();
         rootRef = firebaseDatabase.getReference();
@@ -94,14 +94,6 @@ public class MatchHistory extends AppCompatActivity {
         }
         else{
             Log.d("saveorrestart", "user not logged in");
-        }
-    }
-
-    private boolean checkLogin(FirebaseUser currentUser){
-        if(currentUser!= null){
-            return true;
-        }else{
-            return false;
         }
     }
 

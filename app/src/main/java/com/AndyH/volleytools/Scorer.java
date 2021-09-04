@@ -268,14 +268,6 @@ public class Scorer extends AppCompatActivity implements ScorerSettings.ScorerSe
 
     }
 
-    private boolean checkLogin(FirebaseUser currentUser){
-        if(currentUser!= null){
-            return true;
-        }else{
-            return false;
-        }
-    }
-
     private void resetGame(){
         currentGame = new Game(0,0,0,0,"好人","壞人",null);
 
@@ -293,7 +285,7 @@ public class Scorer extends AppCompatActivity implements ScorerSettings.ScorerSe
     private void initializeFirebaseAssociateReference(){
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
-        isLoggedIn = checkLogin(currentUser);
+        isLoggedIn = (currentUser != null);
 
         firebaseDatabase= FirebaseDatabase.getInstance();
         rootRef = firebaseDatabase.getReference();
