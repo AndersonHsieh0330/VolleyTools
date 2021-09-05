@@ -6,6 +6,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,6 +23,7 @@ import java.util.Calendar;
 
 public class MatchHistory extends AppCompatActivity {
     private RecyclerView hmRecyclerView;
+    private ArrayList<Game> matchHistoryArrayList;
     private RecyclerView.Adapter hmAdapter;
     private RecyclerView.LayoutManager hmLayoutManager;
     private FirebaseAuth mAuth;
@@ -31,6 +33,54 @@ public class MatchHistory extends AppCompatActivity {
     private DatabaseReference rootRef;
     private DatabaseReference currentUserRef;
     private DatabaseReference currentUserHistoryGameRef;
+    private ChildEventListener childEventListener = new ChildEventListener() {
+        @Override
+        public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+            //callback is triggered once for each exiting child
+
+            Game game = snapshot.getValue(Game.class);
+            matchHistoryArrayList.add(game);
+
+            hmAdapter.notifyDataSetChanged();
+        }
+
+        @Override
+        public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+        }
+
+        @Override
+        public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+        }
+
+        @Override
+        public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError error) {
+
+        }
+    };
+    private ItemTouchHelper.SimpleCallback simpCallBack  = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT) {
+        int position;
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+            position = viewHolder.getAdapterPosition();
+
+            matchHistoryArrayList.remove(position);
+            hmAdapter.notifyItemRemoved(position);
+
+        }
+    };
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,7 +88,7 @@ public class MatchHistory extends AppCompatActivity {
         setContentView(R.layout.activity_match_history);
         initializeFirebaseAssociateReference();
 
-        ArrayList<Game> matchHistoryArrayList = new ArrayList<>();
+        matchHistoryArrayList = new ArrayList<>();
 
         hmRecyclerView = findViewById(R.id.mh_recyclerview);
         hmLayoutManager = new LinearLayoutManager(this);
@@ -47,37 +97,8 @@ public class MatchHistory extends AppCompatActivity {
         hmRecyclerView.setAdapter(hmAdapter);
         hmRecyclerView.setLayoutManager(hmLayoutManager);
 
-        currentUserHistoryGameRef.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                //callback is triggered once for each exiting child
-
-                    Game game = snapshot.getValue(Game.class);
-                    matchHistoryArrayList.add(game);
-
-                hmAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+        currentUserHistoryGameRef.addChildEventListener(childEventListener);
+        new ItemTouchHelper(simpCallBack).attachToRecyclerView(hmRecyclerView);
     }
 
 
@@ -96,5 +117,6 @@ public class MatchHistory extends AppCompatActivity {
             Log.d("saveorrestart", "user not logged in");
         }
     }
+
 
 }

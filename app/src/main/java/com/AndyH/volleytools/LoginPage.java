@@ -47,8 +47,6 @@ import java.util.SortedMap;
 import java.util.concurrent.Executor;
 
 public class LoginPage extends DialogFragment {
-    private SharedPreferences sp;
-    private SharedPreferences.Editor speditor;
     private static final int RC_SIGN_IN = 12345;
     private ImageButton exit_imgbutton;
     private GoogleSignInClient mGoogleSignInClient;
@@ -62,10 +60,8 @@ public class LoginPage extends DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        sp = getContext().getSharedPreferences(Scorer.SHAREDPREFERENCE_KEY, Context.MODE_PRIVATE);
-        speditor = sp.edit();
+
         initializeFirebaseAssociateReference();
-        syncLoggedInStateToSP();
         View inflatedView= inflateView(inflater, container);
         createRequest();
         BindViewsAndListeners(inflatedView);
@@ -81,7 +77,7 @@ public class LoginPage extends DialogFragment {
     }
 
     private View inflateView(LayoutInflater inflater, ViewGroup container){
-        if(!sp.getBoolean(Scorer.SP_LOGINSTATE,false)){
+        if(currentUser == null){
             return inflater.inflate(R.layout.google_login_page, container, false);
         }else{
             return inflater.inflate(R.layout.google_logout_page, container, false);
@@ -93,7 +89,7 @@ public class LoginPage extends DialogFragment {
         exit_imgbutton = inflatedView.findViewById(R.id.exit_imgbutton);
         enableExitButton();
 
-        if(!sp.getBoolean(Scorer.SP_LOGINSTATE,false)){
+        if(currentUser == null){
             googleSignInButton = (SignInButton) inflatedView.findViewById(R.id.gsign_in_button);
             googleSignInButton.setSize(SignInButton.SIZE_STANDARD);
             googleSignInButton.setOnClickListener(new View.OnClickListener() {
@@ -114,7 +110,6 @@ public class LoginPage extends DialogFragment {
                 public void onClick(View v) {
                     mAuth.signOut();
                     mGoogleSignInClient.signOut();
-                    speditor.putBoolean(Scorer.SP_LOGINSTATE,false).apply();
                     removeFragment();
                    Toast.makeText(getContext(),R.string.logout_sucess,Toast.LENGTH_LONG).show();
 
@@ -201,7 +196,6 @@ public class LoginPage extends DialogFragment {
                 // Google Sign In failed, update UI appropriately
                 Log.w("firebase", "Google sign in failed", e);
                 Toast.makeText(getContext(),R.string.loginFailed,Toast.LENGTH_SHORT).show();
-                syncLoggedInStateToSP();
                 enableExitButton();
 
             }
@@ -219,7 +213,6 @@ public class LoginPage extends DialogFragment {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("firebase", "signInWithCredential:success");
                             currentUser = mAuth.getCurrentUser();
-                            speditor.putBoolean(Scorer.SP_LOGINSTATE,true).apply();
                             Toast.makeText(getContext(),R.string.login_sucess_NOLINEBREAK,Toast.LENGTH_LONG).show();
                             removeFragment();
 
@@ -242,9 +235,6 @@ public class LoginPage extends DialogFragment {
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
     }
-    private void syncLoggedInStateToSP(){
-        speditor.putBoolean(Scorer.SP_LOGINSTATE,(currentUser!=null));
-        speditor.apply();
-    }
+
     
 }

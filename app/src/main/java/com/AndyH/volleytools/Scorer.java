@@ -48,8 +48,8 @@ public class Scorer extends AppCompatActivity implements ScorerSettings.ScorerSe
     final public static String SP_GOODSETS_KEY = "goodPeopleSets";
     final public static String SP_BADTEAMNAME_KEY = "badPeopleTeamName";
     final public static String SP_GOODTEAMNAME_KEY = "goodPeopleTeamName";
-    final public static String SCORERSETTING_FRAGMENT_TAG = "scorer_Settings_tag";
-    final public static String SP_LOGINSTATE = "isUserLoggedIn";
+    final public static String SCORERSETTINGS_DFBUDDLEKEY_ISLOGGEDIN = "scorerSettingsFragmentBundle_isLoggedIn";
+    final public static String SCORERSETTING_FRAGMENT_TAG = "scorerSettings_tag";
 
 
 
@@ -89,7 +89,7 @@ public class Scorer extends AppCompatActivity implements ScorerSettings.ScorerSe
 
     @Override
     public void onSaveGame(Boolean isSaving) {
-        if(isSaving&&sp.getBoolean(Scorer.SP_LOGINSTATE,false)) {
+        if(isSaving&&(currentUser!= null)) {
             currentGame.setGameEndTime(simpleDateFormat.format(Calendar.getInstance().getTime()));
             saveGameToFireBase(currentGame);
             Log.d("saveorrestart", "onSaveGame: isSaving = " + isSaving);
@@ -219,6 +219,9 @@ public class Scorer extends AppCompatActivity implements ScorerSettings.ScorerSe
             @Override
             public void onClick(View v) {
                 ScorerSettings scorerSettingsClass = new ScorerSettings();
+                Bundle bundle = new Bundle();
+                bundle.putBoolean(SCORERSETTINGS_DFBUDDLEKEY_ISLOGGEDIN,(currentUser != null));
+                scorerSettingsClass.setArguments(bundle);
                 scorerSettingsClass.show(fmanager,SCORERSETTING_FRAGMENT_TAG);
 
             }
@@ -285,7 +288,7 @@ public class Scorer extends AppCompatActivity implements ScorerSettings.ScorerSe
 
         firebaseDatabase= FirebaseDatabase.getInstance();
         rootRef = firebaseDatabase.getReference();
-        if(sp.getBoolean(Scorer.SP_LOGINSTATE,false)){
+        if(currentUser!= null){
             currentUserRef = rootRef.child(currentUser.getUid().toString());
             currentUserHistoryGameRef = currentUserRef.child("historyGames");
             }

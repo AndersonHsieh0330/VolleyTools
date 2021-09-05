@@ -1,10 +1,12 @@
 package com.AndyH.volleytools;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -22,8 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 
 public class MainActivity extends AppCompatActivity {
-    private SharedPreferences sp;
-    private SharedPreferences.Editor speditor;
+
     Button welcomepage_button_scorer, welcomepage_button_history;
     ImageButton hamburger_menu;
     FragmentManager fragmentManager;
@@ -36,12 +37,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        sp = this.getSharedPreferences(Scorer.SHAREDPREFERENCE_KEY, Context.MODE_PRIVATE);
-        speditor = sp.edit();
         fragmentManager = this.getSupportFragmentManager();
         setContentView(R.layout.activity_main);
         initializeFirebaseAssociateReference();
-        syncLoggedInStateToSP();
         BindViewsAndListeners();
 
     }
@@ -72,10 +70,20 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent matchHistory_intent = new Intent(v.getContext(), MatchHistory.class);
-                if(sp.getBoolean(Scorer.SP_LOGINSTATE,false)){
+                if(mAuth.getCurrentUser() != null){
                     v.getContext().startActivity(matchHistory_intent);
                 }else{
-                    Toast.makeText(v.getContext(),R.string.mainActivityLoginHint, Toast.LENGTH_SHORT).show();
+                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(v.getContext())
+                            .setTitle("無法檢視歷史紀錄")
+                            .setMessage(R.string.mainActivityLoginHint)
+                            .setPositiveButton("豪", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            });
+                    alertDialog.show();
+
                 }
             }
         });
@@ -85,7 +93,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        syncLoggedInStateToSP();
     }
 
     @Override
@@ -99,8 +106,5 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
     }
-    private void syncLoggedInStateToSP(){
-        speditor.putBoolean(Scorer.SP_LOGINSTATE,(currentUser!=null));
-        speditor.apply();
-    }
+
 }

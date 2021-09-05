@@ -26,10 +26,9 @@ import com.google.firebase.auth.FirebaseUser;
 
 
 public class ScorerSettings extends DialogFragment {
-    private SharedPreferences sp;
-    private SharedPreferences.Editor speditor;
     private ScorerSettingActionListener actionListener;
     private ImageButton reStartButton, saveGameButton;
+    private boolean isLoggedIn;
 
     public interface ScorerSettingActionListener{
          void onReStartGame(Boolean isRestarting);
@@ -40,9 +39,8 @@ public class ScorerSettings extends DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        sp = getContext().getSharedPreferences(Scorer.SHAREDPREFERENCE_KEY, Context.MODE_PRIVATE);
-        speditor = sp.edit();
-
+        Bundle bundle = getArguments();
+        isLoggedIn = bundle.getBoolean(Scorer.SCORERSETTINGS_DFBUDDLEKEY_ISLOGGEDIN);
         View inflatedView =  inflater.inflate(R.layout.dialogfrag_scorer_settings,container);
         BindViewsAndListeners(inflatedView);
 
@@ -94,7 +92,7 @@ public class ScorerSettings extends DialogFragment {
         saveGameButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                if(sp.getBoolean(Scorer.SP_LOGINSTATE,false)){
+                if(isLoggedIn){
                     actionListener.onSaveGame(true);
                 }else{
                     Toast.makeText(getContext(),R.string.saveGameRequestLoggingWaring,Toast.LENGTH_LONG).show();

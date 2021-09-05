@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.DatabaseReference;
@@ -17,7 +18,6 @@ import java.util.ArrayList;
 
 public class MHRecyclerAdapter extends RecyclerView.Adapter<MHRecyclerAdapter.mViewHolder> {
     private ArrayList<Game> mhAL;
-    private SimpleDateFormat simpleDateFormat;
 
     public static class mViewHolder extends RecyclerView.ViewHolder{
         public TextView bSets, bName, bScore,gSets,gName,gScore,time;
@@ -40,7 +40,6 @@ public class MHRecyclerAdapter extends RecyclerView.Adapter<MHRecyclerAdapter.mV
     public MHRecyclerAdapter(ArrayList<Game> matchHistoryArrayList){
 
         mhAL = matchHistoryArrayList;
-        simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd hh:mm aa");
     }
 
 
@@ -73,5 +72,6 @@ public class MHRecyclerAdapter extends RecyclerView.Adapter<MHRecyclerAdapter.mV
         return mhAL.size();
     }
 
-    private void generateColorPatter(){}
-}
+
+    }
+
