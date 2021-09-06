@@ -40,10 +40,11 @@ public class MatchHistory extends AppCompatActivity {
 
             Game game = snapshot.getValue(Game.class);
             game.setFbKey(snapshot.getKey());
+            Log.d("childeventandy", "onChildAdd: "+snapshot.getKey());
+
             matchHistoryArrayList.add(game);
 
             hmAdapter.notifyDataSetChanged();
-            Log.d("childeventandy", "onChildAdded: ");
         }
 
         @Override
@@ -54,15 +55,12 @@ public class MatchHistory extends AppCompatActivity {
         @Override
         public void onChildRemoved(@NonNull DataSnapshot snapshot) {
             //locate the deleted history game with unique key
+            int oldSize = matchHistoryArrayList.size();
             int oldPosition = findIndex(matchHistoryArrayList,snapshot.getKey());
+            Log.d("childeventandy", "onChildRemoved: "+snapshot.getKey());
 
-            Log.d("childeventandy", "onChildRemoved: "+String.valueOf(matchHistoryArrayList.remove(oldPosition)));
-            hmAdapter.notifyItemRemoved(oldPosition);
-            Log.d("childeventandy", "onChildRemoved: ");
-
-            for(Game each : matchHistoryArrayList){
-                Log.d("childeventandy", "onChildRemoved: "+String.valueOf(each.getBadpeople_points()));
-            }
+            matchHistoryArrayList.remove(oldPosition);
+            hmAdapter.notifyItemRemoved(oldSize-oldPosition);
 
         }
 
@@ -136,10 +134,13 @@ public class MatchHistory extends AppCompatActivity {
 
     private int findIndex(ArrayList<Game> arrayList, String key){
         for(int i = 0; i<arrayList.size();i++){
-            if(arrayList.get(0).getFbKey()==key){
+            if(key.equals(arrayList.get(i).getFbKey())){
+                Log.d("childeventandy", "findIndex: "+String.valueOf(i));
                 return i;
             }
         }
+
+
         //should never get here
         return -1;
     }
