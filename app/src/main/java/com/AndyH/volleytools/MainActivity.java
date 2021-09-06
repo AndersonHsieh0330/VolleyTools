@@ -73,16 +73,15 @@ public class MainActivity extends AppCompatActivity {
                 if(mAuth.getCurrentUser() != null){
                     v.getContext().startActivity(matchHistory_intent);
                 }else{
-                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(v.getContext())
-                            .setTitle("無法檢視歷史紀錄")
-                            .setMessage(R.string.mainActivityLoginHint)
-                            .setPositiveButton("豪", new DialogInterface.OnClickListener() {
+                    new AlertDialog.Builder(v.getContext())
+                            .setTitle(R.string.unableToLaunchHMActivity_Title)
+                            .setMessage(R.string.unableToLaunchHMActivity_Message)
+                            .setPositiveButton(R.string.alertDialogOKButtonText, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
 
                                 }
-                            });
-                    alertDialog.show();
+                            }).show();
 
                 }
             }

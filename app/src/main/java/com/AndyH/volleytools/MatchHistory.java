@@ -39,9 +39,11 @@ public class MatchHistory extends AppCompatActivity {
             //callback is triggered once for each exiting child
 
             Game game = snapshot.getValue(Game.class);
+            game.setFbKey(snapshot.getKey());
             matchHistoryArrayList.add(game);
 
             hmAdapter.notifyDataSetChanged();
+            Log.d("childeventandy", "onChildAdded: ");
         }
 
         @Override
@@ -51,6 +53,16 @@ public class MatchHistory extends AppCompatActivity {
 
         @Override
         public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+            //locate the deleted history game with unique key
+            int oldPosition = findIndex(matchHistoryArrayList,snapshot.getKey());
+
+            Log.d("childeventandy", "onChildRemoved: "+String.valueOf(matchHistoryArrayList.remove(oldPosition)));
+            hmAdapter.notifyItemRemoved(oldPosition);
+            Log.d("childeventandy", "onChildRemoved: ");
+
+            for(Game each : matchHistoryArrayList){
+                Log.d("childeventandy", "onChildRemoved: "+String.valueOf(each.getBadpeople_points()));
+            }
 
         }
 
@@ -75,8 +87,12 @@ public class MatchHistory extends AppCompatActivity {
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
             position = viewHolder.getAdapterPosition();
 
-            matchHistoryArrayList.remove(position);
-            hmAdapter.notifyItemRemoved(position);
+            String keyOfRemovedGame = matchHistoryArrayList.get(position).getFbKey();
+            currentUserHistoryGameRef.child(keyOfRemovedGame).removeValue();
+
+            //duplicate with on child removed, must be tested
+//            matchHistoryArrayList.remove(position);
+//            hmAdapter.notifyItemRemoved(position);
 
         }
     };
@@ -118,5 +134,14 @@ public class MatchHistory extends AppCompatActivity {
         }
     }
 
+    private int findIndex(ArrayList<Game> arrayList, String key){
+        for(int i = 0; i<arrayList.size();i++){
+            if(arrayList.get(0).getFbKey()==key){
+                return i;
+            }
+        }
+        //should never get here
+        return -1;
+    }
 
 }

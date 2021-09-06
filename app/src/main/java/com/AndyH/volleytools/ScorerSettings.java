@@ -2,6 +2,7 @@ package com.AndyH.volleytools;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Point;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -95,7 +97,16 @@ public class ScorerSettings extends DialogFragment {
                 if(isLoggedIn){
                     actionListener.onSaveGame(true);
                 }else{
-                    Toast.makeText(getContext(),R.string.saveGameRequestLoggingWaring,Toast.LENGTH_LONG).show();
+                    new AlertDialog.Builder(v.getContext())
+                            .setTitle("無法儲存歷史紀錄")
+                            .setMessage(R.string.saveGameRequestLoggingWaring)
+                            .setPositiveButton("豪", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            }).show();
+
                 }
                 removeFragment();
             }

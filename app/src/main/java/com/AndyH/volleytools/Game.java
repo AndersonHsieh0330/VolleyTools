@@ -9,6 +9,10 @@ import java.util.Calendar;
 
 public class Game {
 
+
+    private String fbKey;
+    //only initialized after data is retrieved from firebase
+    
     private int goodpeople_points;
     private int badpeople_points;
     private int goodpeople_sets;
@@ -99,6 +103,14 @@ public class Game {
     public void setBadpeople_teamname(String badpeople_customize_name) {
         this.badpeople_teamname = badpeople_customize_name;
     }
+    public String getFbKey() {
+        return fbKey;
+    }
+
+    public void setFbKey(String fbKey) {
+        this.fbKey = fbKey;
+    }
+
 
     public void goodpeople_gain_point(){
         goodpeople_points += 1;

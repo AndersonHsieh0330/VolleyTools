@@ -17,6 +17,12 @@
     <string name="saveGameRequestLoggingWaring">去首頁登入一下嘛~ 霸脫</string>
     <string name="mainActivityLoginHint">點右上角登入呦</string>
     <string name="loginFailed">出了點小意外，登入失敗捏</string>
+    <string name="unableToLaunchHMActivity_Title">無法檢視歷史紀錄"</string>
+    <string name="unableToLaunchHMActivity_Message">點右上角登入呦</string>
+    <string name="alertDialogOKButtonText">豪</string>
+    <string name="alertDialogPositiveButtonText">要！</string>
+    <string name="alertDialogNegativeButtonText">鼻要</string>
+
 
 
     <!-- TODO: Remove or change this placeholder text -->
