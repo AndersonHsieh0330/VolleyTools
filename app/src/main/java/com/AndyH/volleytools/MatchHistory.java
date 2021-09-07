@@ -1,6 +1,7 @@
 package com.AndyH.volleytools;
 
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -89,12 +90,12 @@ public class MatchHistory extends AppCompatActivity {
 
         @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-            position = viewHolder.getAdapterPosition();
+            //position = viewHolder.getAdapterPosition();
             //*Note again: The list in the adapter is reversed, but 'matchHistoryArrayList' is not
             //thus we have to pass in the reversed position
 
-            String keyOfRemovedGame = matchHistoryArrayList.get((matchHistoryArrayList.size()-1)-position).getFbKey();
-            currentUserHistoryGameRef.child(keyOfRemovedGame).removeValue();
+//            String keyOfRemovedGame = matchHistoryArrayList.get((matchHistoryArrayList.size()-1)-position).getFbKey();
+//            currentUserHistoryGameRef.child(keyOfRemovedGame).removeValue();
 
             //duplicate with on child removed, must be tested
 //            matchHistoryArrayList.remove(position);
@@ -110,11 +111,13 @@ public class MatchHistory extends AppCompatActivity {
         setContentView(R.layout.activity_match_history);
         initializeFirebaseAssociateReference();
 
+
         matchHistoryArrayList = new ArrayList<>();
 
         hmRecyclerView = findViewById(R.id.mh_recyclerview);
         hmLayoutManager = new LinearLayoutManager(this);
         hmAdapter = new MHRecyclerAdapter(matchHistoryArrayList);
+
 
         hmRecyclerView.setAdapter(hmAdapter);
         hmRecyclerView.setLayoutManager(hmLayoutManager);
@@ -123,6 +126,22 @@ public class MatchHistory extends AppCompatActivity {
         new ItemTouchHelper(simpCallBack).attachToRecyclerView(hmRecyclerView);
     }
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        if (hmAdapter != null) {
+            hmAdapter.saveStates(outState);
+        }
+    }
+
+    @Override
+    public void onRestoreInstanceState(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
+        super.onRestoreInstanceState(savedInstanceState, persistentState);
+        if (hmAdapter != null) {
+            hmAdapter.restoreStates(savedInstanceState);
+
+        }
+    }
 
     private void initializeFirebaseAssociateReference(){
         mAuth = FirebaseAuth.getInstance();
