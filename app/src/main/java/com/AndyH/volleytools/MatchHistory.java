@@ -40,7 +40,7 @@ public class MatchHistory extends AppCompatActivity {
 
             Game game = snapshot.getValue(Game.class);
             game.setFbKey(snapshot.getKey());
-            Log.d("childeventandy", "onChildAdd: "+snapshot.getKey());
+            Log.d("childEvent", "onChildAdd: "+snapshot.getKey());
 
             matchHistoryArrayList.add(game);
 
@@ -57,10 +57,16 @@ public class MatchHistory extends AppCompatActivity {
             //locate the deleted history game with unique key
             int oldSize = matchHistoryArrayList.size();
             int oldPosition = findIndex(matchHistoryArrayList,snapshot.getKey());
-            Log.d("childeventandy", "onChildRemoved: "+snapshot.getKey());
+            Log.d("childEvent", "onChildRemoved: going to delete "+snapshot.getKey()+" at position "+String.valueOf(oldPosition));
 
+
+            for(int i=0;i<matchHistoryArrayList.size();i++){
+                Log.d("childEvent", "onChildRemoved: currently has "+ String.valueOf(matchHistoryArrayList.get(i).getFbKey())+"at index "+String.valueOf(i));
+            }
             matchHistoryArrayList.remove(oldPosition);
-            hmAdapter.notifyItemRemoved(oldSize-oldPosition);
+
+            //the list in the adapter is reversed, thus we pass in the reversed position index.
+            hmAdapter.notifyItemRemoved((oldSize-1)-oldPosition);
 
         }
 
@@ -84,8 +90,10 @@ public class MatchHistory extends AppCompatActivity {
         @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
             position = viewHolder.getAdapterPosition();
+            //*Note again: The list in the adapter is reversed, but 'matchHistoryArrayList' is not
+            //thus we have to pass in the reversed position
 
-            String keyOfRemovedGame = matchHistoryArrayList.get(position).getFbKey();
+            String keyOfRemovedGame = matchHistoryArrayList.get((matchHistoryArrayList.size()-1)-position).getFbKey();
             currentUserHistoryGameRef.child(keyOfRemovedGame).removeValue();
 
             //duplicate with on child removed, must be tested
