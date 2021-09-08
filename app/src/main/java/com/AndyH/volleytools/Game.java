@@ -20,6 +20,7 @@ public class Game {
     private String goodpeople_teamname;
     private String badpeople_teamname;
     private String gameEndTime;
+    private int backgroundResource;
 
 
     public Game(){
@@ -111,6 +112,13 @@ public class Game {
         this.fbKey = fbKey;
     }
 
+    public int getBackgroundResource() {
+        return backgroundResource;
+    }
+
+    public void setBackgroundResource(int colorDisplay) {
+        this.backgroundResource = colorDisplay;
+    }
 
     public void goodpeople_gain_point(){
         goodpeople_points += 1;

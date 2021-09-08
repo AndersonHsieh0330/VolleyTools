@@ -1,8 +1,11 @@
 package com.AndyH.volleytools;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,6 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 
 public class MatchHistory extends AppCompatActivity {
     private RecyclerView hmRecyclerView;
@@ -33,6 +37,11 @@ public class MatchHistory extends AppCompatActivity {
     private DatabaseReference rootRef;
     private DatabaseReference currentUserRef;
     private DatabaseReference currentUserHistoryGameRef;
+    private HashMap<Integer,Integer> colorPattern;
+    private int colorIndex;
+    private ImageButton infoButton, leaveButton;
+
+
     private ChildEventListener childEventListener = new ChildEventListener() {
         @Override
         public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
@@ -40,6 +49,7 @@ public class MatchHistory extends AppCompatActivity {
 
             Game game = snapshot.getValue(Game.class);
             game.setFbKey(snapshot.getKey());
+            game.setBackgroundResource(generateBackgroundResource());
             Log.d("childEvent", "onChildAdd: "+snapshot.getKey());
 
             matchHistoryArrayList.add(game);
@@ -86,6 +96,9 @@ public class MatchHistory extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_match_history);
         initializeFirebaseAssociateReference();
+        BindViewsAndListensers();
+        colorPattern = initializeColorMap();
+        colorIndex=0;
 
 
         matchHistoryArrayList = new ArrayList<>();
@@ -144,6 +157,38 @@ public class MatchHistory extends AppCompatActivity {
 
         //should never get here
         return -1;
+    }
+
+    private HashMap<Integer,Integer> initializeColorMap(){
+        HashMap<Integer,Integer> colorMap = new HashMap<Integer, Integer>();
+        colorMap.put(1, R.drawable.matchhistory_page_elements_design_blossompink);//sakura_pink
+        colorMap.put(2,R.drawable.matchhistory_page_elements_design_yellowcrayola);
+        colorMap.put(3,R.drawable.matchhistory_page_elements_design_mintgreen);
+        colorMap.put(4,R.drawable.matchhistory_page_elements_design_azureblue);
+        colorMap.put(5,R.drawable.matchhistory_page_elements_design_maroonpurple);
+
+        return colorMap;
+    }
+
+    private int generateBackgroundResource(){
+        colorIndex++;
+        if(colorIndex==6){
+            colorIndex=1;
+        }
+        return colorPattern.get(colorIndex);
+    }
+    private void BindViewsAndListensers(){
+        infoButton = this.findViewById(R.id.mh_buttonInfo);
+
+        leaveButton = this.findViewById(R.id.mh_buttonLeave);
+        leaveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), MainActivity.class);
+                startActivity(intent);
+
+            }
+        });
     }
 
 }

@@ -12,13 +12,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:contentInsetStart="0dp"
-        android:background="@color/Yellow_Crayola">
+        android:background="@color/white">
         <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
+
         <TextView
+            android:id="@+id/mh_title"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:text="歷史比賽紀錄"

@@ -8,6 +8,12 @@
         <entry key="app/src/main/res/drawable/matchHistory_page_deleteButton_design.xml" value="0.14114583333333333" />
         <entry key="app/src/main/res/drawable/matchhistory_page_elementdeletebutton_design.xml" value="0.13425925925925927" />
         <entry key="app/src/main/res/drawable/matchhistory_page_elements_design.xml" value="0.14114583333333333" />
+        <entry key="app/src/main/res/drawable/matchhistory_page_elements_design_Mint_Green.xml" value="0.21388888888888888" />
+        <entry key="app/src/main/res/drawable/matchhistory_page_elements_design_azureblue.xml" value="0.14114583333333333" />
+        <entry key="app/src/main/res/drawable/matchhistory_page_elements_design_blossompink.xml" value="0.14114583333333333" />
+        <entry key="app/src/main/res/drawable/matchhistory_page_elements_design_maroonpurple.xml" value="0.14114583333333333" />
+        <entry key="app/src/main/res/drawable/matchhistory_page_elements_design_mintgreen.xml" value="0.14114583333333333" />
+        <entry key="app/src/main/res/drawable/matchhistory_page_elements_design_yellowcrayola.xml" value="0.14114583333333333" />
         <entry key="app/src/main/res/layout-land/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout-land/activity_scorer.xml" value="0.33" />
         <entry key="app/src/main/res/layout-land/google_login_page.xml" value="0.15255731922398588" />
@@ -19,7 +25,7 @@
         <entry key="app/src/main/res/layout/dialogfrag_scorer_settings.xml" value="0.22" />
         <entry key="app/src/main/res/layout/google_login_page.xml" value="0.15625" />
         <entry key="app/src/main/res/layout/google_logout_page.xml" value="0.15625" />
-        <entry key="app/src/main/res/layout/history_match_elements.xml" value="0.29705882352941176" />
+        <entry key="app/src/main/res/layout/history_match_elements.xml" value="0.375" />
       </map>
     </option>
   </component>

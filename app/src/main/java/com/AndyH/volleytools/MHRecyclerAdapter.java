@@ -2,6 +2,8 @@ package com.AndyH.volleytools;
 
 import android.annotation.SuppressLint;
 import android.content.res.ColorStateList;
+import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,9 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,6 +28,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MHRecyclerAdapter extends RecyclerView.Adapter<MHRecyclerAdapter.mViewHolder> {
     private ArrayList<Game> mhAL;
@@ -36,13 +42,18 @@ public class MHRecyclerAdapter extends RecyclerView.Adapter<MHRecyclerAdapter.mV
     private DatabaseReference currentUserHistoryGameRef;
 
 
+
+
     public static class mViewHolder extends RecyclerView.ViewHolder{
         private TextView bSets, bName, bScore,gSets,gName,gScore,time;
         private SwipeRevealLayout swipeRevealLayout;
         private Button deleteButton;
+        private RelativeLayout relativeLayout;
+
         public mViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            relativeLayout = itemView.findViewById(R.id.hmContainer);
             swipeRevealLayout = itemView.findViewById(R.id.hm_swipLayout);
             deleteButton = itemView.findViewById(R.id.hmButton_Delete);
             bSets = itemView.findViewById(R.id.hm_badpeople_textview_sets);
@@ -61,7 +72,10 @@ public class MHRecyclerAdapter extends RecyclerView.Adapter<MHRecyclerAdapter.mV
     public MHRecyclerAdapter(ArrayList<Game> matchHistoryArrayList){
         mhAL = matchHistoryArrayList;
         initializeFirebaseAssociateReference();
+
+
     }
+
 
 
 
@@ -86,10 +100,11 @@ public class MHRecyclerAdapter extends RecyclerView.Adapter<MHRecyclerAdapter.mV
             public void onClick(View v) {
                 int oldPosition = holder.getAdapterPosition();
                 String keyOfRemovedGame = mhAL.get((mhAL.size()-1)-oldPosition).getFbKey();
-
                 currentUserHistoryGameRef.child(keyOfRemovedGame).removeValue();
             }
         });
+
+        holder.relativeLayout.setBackground(ContextCompat.getDrawable(holder.relativeLayout.getContext(),current_game.getBackgroundResource()));
         holder.bSets.setText(String.valueOf(current_game.getBadpeople_sets()));
         holder.bScore.setText(String.valueOf(current_game.getBadpeople_points()));
         holder.bName.setText(current_game.getBadpeople_teamname());
@@ -113,7 +128,6 @@ public class MHRecyclerAdapter extends RecyclerView.Adapter<MHRecyclerAdapter.mV
     public void restoreStates(Bundle inState) {
         viewBinderHelper.restoreStates(inState);
         //used to save opening/closing state of swipeViewLayout
-
     }
 
     private void initializeFirebaseAssociateReference(){
@@ -130,6 +144,9 @@ public class MHRecyclerAdapter extends RecyclerView.Adapter<MHRecyclerAdapter.mV
             Log.d("saveorrestart", "user not logged in");
         }
     }
+
+
+
 
 }
 
