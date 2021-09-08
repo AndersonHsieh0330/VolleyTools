@@ -25,11 +25,10 @@ import java.util.Calendar;
 public class MatchHistory extends AppCompatActivity {
     private RecyclerView hmRecyclerView;
     private ArrayList<Game> matchHistoryArrayList;
-    private RecyclerView.Adapter hmAdapter;
+    private MHRecyclerAdapter hmAdapter;
     private RecyclerView.LayoutManager hmLayoutManager;
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
-    private boolean isLoggedIn;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference rootRef;
     private DatabaseReference currentUserRef;
@@ -44,7 +43,6 @@ public class MatchHistory extends AppCompatActivity {
             Log.d("childEvent", "onChildAdd: "+snapshot.getKey());
 
             matchHistoryArrayList.add(game);
-
             hmAdapter.notifyDataSetChanged();
         }
 
@@ -81,28 +79,6 @@ public class MatchHistory extends AppCompatActivity {
 
         }
     };
-    private ItemTouchHelper.SimpleCallback simpCallBack  = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT) {
-        int position;
-        @Override
-        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-            return false;
-        }
-
-        @Override
-        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-            //position = viewHolder.getAdapterPosition();
-            //*Note again: The list in the adapter is reversed, but 'matchHistoryArrayList' is not
-            //thus we have to pass in the reversed position
-
-//            String keyOfRemovedGame = matchHistoryArrayList.get((matchHistoryArrayList.size()-1)-position).getFbKey();
-//            currentUserHistoryGameRef.child(keyOfRemovedGame).removeValue();
-
-            //duplicate with on child removed, must be tested
-//            matchHistoryArrayList.remove(position);
-//            hmAdapter.notifyItemRemoved(position);
-
-        }
-    };
 
 
     @Override
@@ -118,12 +94,10 @@ public class MatchHistory extends AppCompatActivity {
         hmLayoutManager = new LinearLayoutManager(this);
         hmAdapter = new MHRecyclerAdapter(matchHistoryArrayList);
 
-
         hmRecyclerView.setAdapter(hmAdapter);
         hmRecyclerView.setLayoutManager(hmLayoutManager);
 
         currentUserHistoryGameRef.addChildEventListener(childEventListener);
-        new ItemTouchHelper(simpCallBack).attachToRecyclerView(hmRecyclerView);
     }
 
     @Override
@@ -140,17 +114,17 @@ public class MatchHistory extends AppCompatActivity {
         if (hmAdapter != null) {
             hmAdapter.restoreStates(savedInstanceState);
 
+
         }
     }
 
     private void initializeFirebaseAssociateReference(){
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
-        isLoggedIn = (currentUser != null);
 
         firebaseDatabase= FirebaseDatabase.getInstance();
         rootRef = firebaseDatabase.getReference();
-        if(isLoggedIn){
+        if(currentUser!=null){
             currentUserRef = rootRef.child(currentUser.getUid().toString());
             currentUserHistoryGameRef = currentUserRef.child("historyGames");
         }

@@ -3,9 +3,11 @@ package com.AndyH.volleytools;
 import android.annotation.SuppressLint;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -26,12 +28,18 @@ import java.util.ArrayList;
 public class MHRecyclerAdapter extends RecyclerView.Adapter<MHRecyclerAdapter.mViewHolder> {
     private ArrayList<Game> mhAL;
     private final ViewBinderHelper viewBinderHelper = new ViewBinderHelper();//from chthai64 library
+    private FirebaseAuth mAuth;
+    private FirebaseUser currentUser;
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference rootRef;
+    private DatabaseReference currentUserRef;
+    private DatabaseReference currentUserHistoryGameRef;
 
 
     public static class mViewHolder extends RecyclerView.ViewHolder{
         private TextView bSets, bName, bScore,gSets,gName,gScore,time;
         private SwipeRevealLayout swipeRevealLayout;
-        private ImageButton deleteButton;
+        private Button deleteButton;
         public mViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -51,9 +59,10 @@ public class MHRecyclerAdapter extends RecyclerView.Adapter<MHRecyclerAdapter.mV
     }
 
     public MHRecyclerAdapter(ArrayList<Game> matchHistoryArrayList){
-
         mhAL = matchHistoryArrayList;
+        initializeFirebaseAssociateReference();
     }
+
 
 
     @NonNull
@@ -75,7 +84,8 @@ public class MHRecyclerAdapter extends RecyclerView.Adapter<MHRecyclerAdapter.mV
         holder.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String keyOfRemovedGame = mhAL.get(position).getFbKey();
+                int oldPosition = holder.getAdapterPosition();
+                String keyOfRemovedGame = mhAL.get((mhAL.size()-1)-oldPosition).getFbKey();
 
                 currentUserHistoryGameRef.child(keyOfRemovedGame).removeValue();
             }
@@ -104,6 +114,21 @@ public class MHRecyclerAdapter extends RecyclerView.Adapter<MHRecyclerAdapter.mV
         viewBinderHelper.restoreStates(inState);
         //used to save opening/closing state of swipeViewLayout
 
+    }
+
+    private void initializeFirebaseAssociateReference(){
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
+
+        firebaseDatabase= FirebaseDatabase.getInstance();
+        rootRef = firebaseDatabase.getReference();
+        if(currentUser!=null){
+            currentUserRef = rootRef.child(currentUser.getUid().toString());
+            currentUserHistoryGameRef = currentUserRef.child("historyGames");
+        }
+        else{
+            Log.d("saveorrestart", "user not logged in");
+        }
     }
 
 }

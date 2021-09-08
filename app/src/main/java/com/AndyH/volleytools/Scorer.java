@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,7 +30,8 @@ public class Scorer extends AppCompatActivity implements ScorerSettings.ScorerSe
     private SharedPreferences sp;
     private SharedPreferences.Editor speditor;
     private Game currentGame;
-    private Button goodpeople_score_button,badpeople_score_button,goodpeople_set_button,badpeople_set_button,button_leave,button_Settings;
+    private Button goodpeople_score_button,badpeople_score_button,goodpeople_set_button,badpeople_set_button;
+    private ImageButton button_leave,button_Settings;
     private EditText leftBadTeam, rightGoodTeam;
     private FragmentManager fmanager=this.getSupportFragmentManager();
     private FirebaseAuth mAuth;
@@ -204,7 +206,7 @@ public class Scorer extends AppCompatActivity implements ScorerSettings.ScorerSe
             }
         });
 
-        button_leave = (Button)this.findViewById(R.id.goodpeople_button_leave);
+        button_leave = this.findViewById(R.id.goodpeople_button_leave);
         button_leave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -213,7 +215,7 @@ public class Scorer extends AppCompatActivity implements ScorerSettings.ScorerSe
 
             }
         });
-        button_Settings =(Button) this.findViewById(R.id.badpeople_button_Settings);
+        button_Settings =this.findViewById(R.id.badpeople_button_Settings);
         button_Settings.setOnClickListener(new View.OnClickListener(){
 
             @Override

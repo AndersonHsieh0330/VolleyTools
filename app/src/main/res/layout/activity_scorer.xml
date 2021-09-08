@@ -31,13 +31,12 @@
             android:gravity="center"
             android:textColor="@color/Text_Grey"
             style="?android:attr/borderlessButtonStyle"
-            app:backgroundTint="#FFFFFF"
-            app:backgroundTintMode="multiply"
+            app:backgroundTint="@color/Transparent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
              />
 
-        <Button
+        <ImageButton
             android:id="@+id/goodpeople_button_leave"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -45,7 +44,6 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/exit_icon"
             android:padding="10dp"
-            android:textSize="40sp"
             app:backgroundTint="@color/Transparent"
             app:layout_constraintBottom_toTopOf="@+id/goodpeople_button_score"
             app:layout_constraintDimensionRatio="1:1"
@@ -60,10 +58,10 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@color/Transparent"
-            android:backgroundTint="#00FFFFFF"
             android:text="25"
             android:textSize="100sp"
-            app:backgroundTint="#00FFFFFF"
+            app:backgroundTint="@color/Transparent"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -128,13 +126,12 @@
             android:textColor="@color/white"
             android:textSize="100sp"
             android:text="24"
-            app:backgroundTint="#00FFFFFF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/badpeople_button_set" />
 
-        <Button
+        <ImageButton
             android:id="@+id/badpeople_button_Settings"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -142,11 +139,8 @@
             android:layout_marginEnd="20dp"
             android:background="@drawable/settings_icon"
             android:padding="10dp"
-            android:text="2"
             style="?android:attr/borderlessButtonStyle"
-            android:textSize="40sp"
-            app:backgroundTint="#FFFFFF"
-            app:backgroundTintMode="multiply"
+            app:backgroundTint="@color/Transparent"
             app:layout_constraintBottom_toTopOf="@+id/badpeople_button_score"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"
