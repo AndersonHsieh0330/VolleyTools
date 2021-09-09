@@ -16,7 +16,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -41,6 +40,8 @@ public class Scorer extends AppCompatActivity implements ScorerSettings.ScorerSe
     private DatabaseReference currentUserRef;
     private DatabaseReference currentUserHistoryGameRef;
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd hh:mm aa");
+
+
 
 
     final public static String SHAREDPREFERENCE_KEY = "com.AndyH.VolleyTools";
@@ -162,9 +163,38 @@ public class Scorer extends AppCompatActivity implements ScorerSettings.ScorerSe
     private void BindViewsAndListeners(){
 
         goodpeople_score_button =  findViewById(R.id.goodpeople_button_score);
-        goodpeople_score_button.setOnClickListener(new View.OnClickListener() {
+        goodpeople_score_button.setOnTouchListener(new ScoreOnSwipeTouchListener(this){
             @Override
-            public void onClick(View v) {
+            public void onSwipeTop() {
+                super.onSwipeTop();
+                currentGame.goodpeople_gain_point();
+                speditor.putInt(SP_GOODSCORE_KEY,currentGame.getGoodpeople_points());
+                speditor.apply();
+                goodpeople_score_button.setText(String.valueOf(sp.getInt(SP_GOODSCORE_KEY,99)));
+            }
+
+            @Override
+            public void onSwipeBottom() {
+                super.onSwipeBottom();
+                currentGame.goodpeople_lose_point();
+                speditor.putInt(SP_GOODSCORE_KEY,currentGame.getGoodpeople_points());
+                speditor.apply();
+                goodpeople_score_button.setText(String.valueOf(sp.getInt(SP_GOODSCORE_KEY,99)));
+            }
+
+
+            @Override
+            public void onLongPressed() {
+                super.onLongPressed();
+                currentGame.setGoodpeople_points(0);
+                speditor.putInt(SP_GOODSCORE_KEY,currentGame.getGoodpeople_points());
+                speditor.apply();
+                goodpeople_score_button.setText(String.valueOf(sp.getInt(SP_GOODSCORE_KEY,99)));
+            }
+
+            @Override
+            public void onClick() {
+                super.onClick();
                 currentGame.goodpeople_gain_point();
                 speditor.putInt(SP_GOODSCORE_KEY,currentGame.getGoodpeople_points());
                 speditor.apply();
@@ -173,10 +203,32 @@ public class Scorer extends AppCompatActivity implements ScorerSettings.ScorerSe
         });
 
 
+
         badpeople_score_button = findViewById(R.id.badpeople_button_score);
-        badpeople_score_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+
+        badpeople_score_button.setOnTouchListener(new ScoreOnSwipeTouchListener(this){
+            public void onSwipeTop(){
+                currentGame.badpeople_gain_point();
+                speditor.putInt(SP_BADSCORE_KEY,currentGame.getBadpeople_points());
+                speditor.apply();
+                badpeople_score_button.setText(String.valueOf(sp.getInt(SP_BADSCORE_KEY,99)));
+            }
+
+            public void onSwipeBottom(){
+                currentGame.badpeople_lose_point();
+                speditor.putInt(SP_BADSCORE_KEY,currentGame.getBadpeople_points());
+                speditor.apply();
+                badpeople_score_button.setText(String.valueOf(sp.getInt(SP_BADSCORE_KEY,99)));
+
+            }
+
+            public void onLongPressed(){
+                currentGame.setBadpeople_points(0);
+                speditor.putInt(SP_BADSCORE_KEY,currentGame.getBadpeople_points());
+                speditor.apply();
+                badpeople_score_button.setText(String.valueOf(sp.getInt(SP_BADSCORE_KEY,99)));
+            }
+            public void onClick(){
                 currentGame.badpeople_gain_point();
                 speditor.putInt(SP_BADSCORE_KEY,currentGame.getBadpeople_points());
                 speditor.apply();
@@ -184,10 +236,17 @@ public class Scorer extends AppCompatActivity implements ScorerSettings.ScorerSe
             }
         });
 
+
         goodpeople_set_button =  this.findViewById(R.id.goodpeople_button_set);
-        goodpeople_set_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        goodpeople_set_button.setOnTouchListener(new SetsOnTouchListener(this){
+            public void onLongPressed(){
+                currentGame.setGoodpeople_sets(0);
+                speditor.putInt(SP_GOODSETS_KEY,currentGame.getGoodpeople_sets());
+                speditor.apply();
+                goodpeople_set_button.setText(String.valueOf(sp.getInt(SP_GOODSETS_KEY,0)));
+        }
+
+            public void onClick(){
                 currentGame.goodpeople_gain_set();
                 speditor.putInt(SP_GOODSETS_KEY,currentGame.getGoodpeople_sets());
                 speditor.apply();
@@ -196,9 +255,15 @@ public class Scorer extends AppCompatActivity implements ScorerSettings.ScorerSe
         });
 
         badpeople_set_button =  this.findViewById(R.id.badpeople_button_set);
-        badpeople_set_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        badpeople_set_button.setOnTouchListener(new SetsOnTouchListener(this){
+            public void onLongPressed(){
+                currentGame.setBadpeople_sets(0);
+                speditor.putInt(SP_BADSETS_KEY,currentGame.getBadpeople_sets());
+                speditor.apply();
+                badpeople_set_button.setText(String.valueOf(sp.getInt(SP_BADSETS_KEY,0)));
+            }
+
+            public void onClick(){
                 currentGame.badpeople_gain_set();
                 speditor.putInt(SP_BADSETS_KEY,currentGame.getBadpeople_sets());
                 speditor.apply();

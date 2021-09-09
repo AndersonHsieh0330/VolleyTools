@@ -15,6 +15,7 @@
         <entry key="app/src/main/res/drawable/matchhistory_page_elements_design_mintgreen.xml" value="0.14114583333333333" />
         <entry key="app/src/main/res/drawable/matchhistory_page_elements_design_yellowcrayola.xml" value="0.14114583333333333" />
         <entry key="app/src/main/res/layout-land/activity_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout-land/activity_match_history.xml" value="0.10008818342151675" />
         <entry key="app/src/main/res/layout-land/activity_scorer.xml" value="0.33" />
         <entry key="app/src/main/res/layout-land/google_login_page.xml" value="0.15255731922398588" />
         <entry key="app/src/main/res/layout-land/google_logout_page.xml" value="0.15255731922398588" />

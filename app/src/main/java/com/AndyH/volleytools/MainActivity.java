@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void BindViewsAndListeners(){
 
-        hamburger_menu = findViewById(R.id.hamburger_menu);
+        hamburger_menu = findViewById(R.id.main_buttonHamburger);
         hamburger_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

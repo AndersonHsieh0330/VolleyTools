@@ -56,13 +56,9 @@
             app:backgroundTint="@color/Transparent"
             app:layout_constraintVertical_bias="0.5"
             style="?android:attr/borderlessButtonStyle" />
-
-
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
     </androidx.appcompat.widget.Toolbar>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/mh_recyclerview"
         android:layout_width="match_parent"
