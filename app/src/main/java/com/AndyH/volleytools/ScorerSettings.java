@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -31,6 +32,7 @@ public class ScorerSettings extends DialogFragment {
     private ScorerSettingActionListener actionListener;
     private ImageButton reStartButton, saveGameButton;
     private boolean isLoggedIn;
+    private Vibrator vibrator;
 
     public interface ScorerSettingActionListener{
          void onReStartGame(Boolean isRestarting);
@@ -45,7 +47,7 @@ public class ScorerSettings extends DialogFragment {
         isLoggedIn = bundle.getBoolean(Scorer.SCORERSETTINGS_DFBUDDLEKEY_ISLOGGEDIN);
         View inflatedView =  inflater.inflate(R.layout.dialogfrag_scorer_settings,container);
         BindViewsAndListeners(inflatedView);
-
+        vibrator = (Vibrator) this.getContext().getSystemService(Context.VIBRATOR_SERVICE);
         return inflatedView;
     }
 
@@ -98,9 +100,9 @@ public class ScorerSettings extends DialogFragment {
                     actionListener.onSaveGame(true);
                 }else{
                     new AlertDialog.Builder(v.getContext())
-                            .setTitle("無法儲存歷史紀錄")
+                            .setTitle(R.string.unableToSaveGameH_Title)
                             .setMessage(R.string.saveGameRequestLoggingWaring)
-                            .setPositiveButton("豪", new DialogInterface.OnClickListener() {
+                            .setPositiveButton(R.string.alertDialogOKButtonText, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
 

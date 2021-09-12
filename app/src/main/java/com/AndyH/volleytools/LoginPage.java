@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Point;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
@@ -54,6 +55,7 @@ public class LoginPage extends DialogFragment {
     private FirebaseUser currentUser;
     private SignInButton googleSignInButton;
     private Button signOutButton;
+    private int currentOrientation;
 
 
     @Nullable
@@ -143,6 +145,7 @@ public class LoginPage extends DialogFragment {
         }
 
     private void setDialogSize(){
+        currentOrientation = getResources().getConfiguration().orientation;
         Dialog dialog = getDialog();
         dialog.setCanceledOnTouchOutside(false);
         Window window = dialog.getWindow();
@@ -153,8 +156,12 @@ public class LoginPage extends DialogFragment {
 
         int width = size.x;
         int height = size.y;
-        //window.setLayout((int) (width * 0.75), WindowManager.LayoutParams.WRAP_CONTENT);
-        window.setLayout((int) (width * 0.7), (int) (height * 0.55));
+
+        if(currentOrientation == Configuration.ORIENTATION_LANDSCAPE){
+            window.setLayout((int) (width * 0.7), (int) (height * 0.65));
+        }else{
+            window.setLayout((int) (width * 0.7), (int) (height * 0.45));
+        }
         window.setGravity(Gravity.CENTER);
     }
 

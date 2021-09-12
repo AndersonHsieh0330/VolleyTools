@@ -2,23 +2,30 @@ package com.AndyH.volleytools;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -40,8 +47,8 @@ public class Scorer extends AppCompatActivity implements ScorerSettings.ScorerSe
     private DatabaseReference currentUserRef;
     private DatabaseReference currentUserHistoryGameRef;
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd hh:mm aa");
-
-
+    private Vibrator vibrator;
+    private int numberOfGames;
 
 
     final public static String SHAREDPREFERENCE_KEY = "com.AndyH.VolleyTools";
@@ -59,18 +66,20 @@ public class Scorer extends AppCompatActivity implements ScorerSettings.ScorerSe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.Mint_Green));
         this.setContentView(R.layout.activity_scorer);
+
         sp = this.getSharedPreferences(SHAREDPREFERENCE_KEY,Context.MODE_PRIVATE);
         speditor = sp.edit();
 
         initializeFirebaseAssociateReference();
-
-
-
         currentGame = initializeCurrentGame();
         BindViewsAndListeners();
         initializeViewContent();
-        
+        vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
+
+
     }
 
     @Override
@@ -85,6 +94,7 @@ public class Scorer extends AppCompatActivity implements ScorerSettings.ScorerSe
     @Override
     public void onReStartGame(Boolean isRestarting) {
         if(isRestarting){
+            vibrator.vibrate(100);
             resetGame();
             Log.d("saveorrestart", "onReStartGame: isRestarting = "+isRestarting);
         }
@@ -93,6 +103,7 @@ public class Scorer extends AppCompatActivity implements ScorerSettings.ScorerSe
     @Override
     public void onSaveGame(Boolean isSaving) {
         if(isSaving&&(currentUser!= null)) {
+            vibrator.vibrate(100);
             currentGame.setGameEndTime(simpleDateFormat.format(Calendar.getInstance().getTime()));
             saveGameToFireBase(currentGame);
             Log.d("saveorrestart", "onSaveGame: isSaving = " + isSaving);
@@ -171,6 +182,7 @@ public class Scorer extends AppCompatActivity implements ScorerSettings.ScorerSe
                 speditor.putInt(SP_GOODSCORE_KEY,currentGame.getGoodpeople_points());
                 speditor.apply();
                 goodpeople_score_button.setText(String.valueOf(sp.getInt(SP_GOODSCORE_KEY,99)));
+                vibrator.vibrate(100);
             }
 
             @Override
@@ -180,6 +192,7 @@ public class Scorer extends AppCompatActivity implements ScorerSettings.ScorerSe
                 speditor.putInt(SP_GOODSCORE_KEY,currentGame.getGoodpeople_points());
                 speditor.apply();
                 goodpeople_score_button.setText(String.valueOf(sp.getInt(SP_GOODSCORE_KEY,99)));
+                vibrator.vibrate(100);
             }
 
 
@@ -190,6 +203,7 @@ public class Scorer extends AppCompatActivity implements ScorerSettings.ScorerSe
                 speditor.putInt(SP_GOODSCORE_KEY,currentGame.getGoodpeople_points());
                 speditor.apply();
                 goodpeople_score_button.setText(String.valueOf(sp.getInt(SP_GOODSCORE_KEY,99)));
+                vibrator.vibrate(100);
             }
 
             @Override
@@ -199,6 +213,7 @@ public class Scorer extends AppCompatActivity implements ScorerSettings.ScorerSe
                 speditor.putInt(SP_GOODSCORE_KEY,currentGame.getGoodpeople_points());
                 speditor.apply();
                 goodpeople_score_button.setText(String.valueOf(sp.getInt(SP_GOODSCORE_KEY,99)));
+                vibrator.vibrate(100);
             }
         });
 
@@ -212,6 +227,7 @@ public class Scorer extends AppCompatActivity implements ScorerSettings.ScorerSe
                 speditor.putInt(SP_BADSCORE_KEY,currentGame.getBadpeople_points());
                 speditor.apply();
                 badpeople_score_button.setText(String.valueOf(sp.getInt(SP_BADSCORE_KEY,99)));
+                vibrator.vibrate(100);
             }
 
             public void onSwipeBottom(){
@@ -219,7 +235,7 @@ public class Scorer extends AppCompatActivity implements ScorerSettings.ScorerSe
                 speditor.putInt(SP_BADSCORE_KEY,currentGame.getBadpeople_points());
                 speditor.apply();
                 badpeople_score_button.setText(String.valueOf(sp.getInt(SP_BADSCORE_KEY,99)));
-
+                vibrator.vibrate(100);
             }
 
             public void onLongPressed(){
@@ -227,49 +243,84 @@ public class Scorer extends AppCompatActivity implements ScorerSettings.ScorerSe
                 speditor.putInt(SP_BADSCORE_KEY,currentGame.getBadpeople_points());
                 speditor.apply();
                 badpeople_score_button.setText(String.valueOf(sp.getInt(SP_BADSCORE_KEY,99)));
+                vibrator.vibrate(100);
             }
             public void onClick(){
                 currentGame.badpeople_gain_point();
                 speditor.putInt(SP_BADSCORE_KEY,currentGame.getBadpeople_points());
                 speditor.apply();
                 badpeople_score_button.setText(String.valueOf(sp.getInt(SP_BADSCORE_KEY,99)));
+                vibrator.vibrate(100);
             }
         });
 
 
         goodpeople_set_button =  this.findViewById(R.id.goodpeople_button_set);
-        goodpeople_set_button.setOnTouchListener(new SetsOnTouchListener(this){
-            public void onLongPressed(){
-                currentGame.setGoodpeople_sets(0);
-                speditor.putInt(SP_GOODSETS_KEY,currentGame.getGoodpeople_sets());
-                speditor.apply();
-                goodpeople_set_button.setText(String.valueOf(sp.getInt(SP_GOODSETS_KEY,0)));
-        }
 
-            public void onClick(){
+        goodpeople_set_button.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
                 currentGame.goodpeople_gain_set();
                 speditor.putInt(SP_GOODSETS_KEY,currentGame.getGoodpeople_sets());
                 speditor.apply();
                 goodpeople_set_button.setText(String.valueOf(sp.getInt(SP_GOODSETS_KEY,0)));
+                vibrator.vibrate(100);
+            }
+        });
+
+        goodpeople_set_button.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                currentGame.setGoodpeople_sets(0);
+                speditor.putInt(SP_GOODSETS_KEY,currentGame.getGoodpeople_sets());
+                speditor.apply();
+                goodpeople_set_button.setText(String.valueOf(sp.getInt(SP_GOODSETS_KEY,0)));
+                vibrator.vibrate(100);
+                return true;
             }
         });
 
         badpeople_set_button =  this.findViewById(R.id.badpeople_button_set);
-        badpeople_set_button.setOnTouchListener(new SetsOnTouchListener(this){
-            public void onLongPressed(){
-                currentGame.setBadpeople_sets(0);
-                speditor.putInt(SP_BADSETS_KEY,currentGame.getBadpeople_sets());
-                speditor.apply();
-                badpeople_set_button.setText(String.valueOf(sp.getInt(SP_BADSETS_KEY,0)));
-            }
-
-            public void onClick(){
+        badpeople_set_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 currentGame.badpeople_gain_set();
                 speditor.putInt(SP_BADSETS_KEY,currentGame.getBadpeople_sets());
                 speditor.apply();
                 badpeople_set_button.setText(String.valueOf(sp.getInt(SP_BADSETS_KEY,0)));
+                vibrator.vibrate(100);
             }
         });
+
+        badpeople_set_button.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                currentGame.setBadpeople_sets(0);
+                speditor.putInt(SP_BADSETS_KEY,currentGame.getBadpeople_sets());
+                speditor.apply();
+                badpeople_set_button.setText(String.valueOf(sp.getInt(SP_BADSETS_KEY,0)));
+                vibrator.vibrate(100);
+                return true;
+            }
+        });
+//        badpeople_set_button.setOnTouchListener(new SetsOnTouchListener(this){
+//            public void onLongPressed(){
+//                currentGame.setBadpeople_sets(0);
+//                speditor.putInt(SP_BADSETS_KEY,currentGame.getBadpeople_sets());
+//                speditor.apply();
+//                badpeople_set_button.setText(String.valueOf(sp.getInt(SP_BADSETS_KEY,0)));
+//                vibrator.vibrate(100);
+//            }
+//
+//            public void onClick(){
+//                currentGame.badpeople_gain_set();
+//                speditor.putInt(SP_BADSETS_KEY,currentGame.getBadpeople_sets());
+//                speditor.apply();
+//                badpeople_set_button.setText(String.valueOf(sp.getInt(SP_BADSETS_KEY,0)));
+//                vibrator.vibrate(100);
+//            }
+//        });
 
         button_leave = this.findViewById(R.id.goodpeople_button_leave);
         button_leave.setOnClickListener(new View.OnClickListener() {
@@ -314,6 +365,7 @@ public class Scorer extends AppCompatActivity implements ScorerSettings.ScorerSe
             }
         });
 
+
         rightGoodTeam = this.findViewById(R.id.goodpeople_name);
         rightGoodTeam.addTextChangedListener(new TextWatcher() {
             @Override
@@ -336,7 +388,7 @@ public class Scorer extends AppCompatActivity implements ScorerSettings.ScorerSe
     }
 
     private void resetGame(){
-        currentGame = new Game(0,0,0,0,"好人","壞人",null);
+        currentGame = new Game(0,0,0,0,getString(R.string.teams_goodpeople),getString(R.string.teams_badpeople),null);
 
         speditor.putInt(SP_GOODSCORE_KEY,currentGame.getGoodpeople_points());
         speditor.putInt(SP_BADSCORE_KEY,currentGame.getBadpeople_points());
@@ -365,5 +417,8 @@ public class Scorer extends AppCompatActivity implements ScorerSettings.ScorerSe
     }
     private void saveGameToFireBase(Game game){
         currentUserHistoryGameRef.push().setValue(game);
+
     }
+
+
 }

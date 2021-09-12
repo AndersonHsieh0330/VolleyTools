@@ -1,27 +1,35 @@
 <resources>
     <string name="app_name">VolleyTools</string>
-    <string name="activiy_welcome_string_madarin_NOLINEBREAK">早安，排球人! 今天袂衝啥</string>
-    <string name="activiy_welcome_string_madarin_LINEBREAK"><br>早安，排球人!\n今天袂衝啥</br></string>
-    <string name="button_selection_score">計分仔</string>
-    <string name="button_selection_viewhistory">以前的比賽</string>
-    <string name="teams_goodpeople">好人</string>
-    <string name="teams_badpeople">壞人</string>
-    <string name= "login_waringtext_linebreak"><br>要登入才能\n紀錄以前的比賽呦</br></string>
-    <string name= "login_waringtext_nolinebreak">要登入才能紀錄以前的比賽呦</string>
-    <string name= "logout_waringtext_linebreak"><br>已登入\n\n可以看以前的比賽了呦!</br></string>
-    <string name= "logout_waringtext_nolinebreak">已登入, 可以看以前的比賽了呦!</string>
-    <string name= "login_sucess_LINEBREAK"><br>水啦!\n登入成功</br></string>
-    <string name= "login_sucess_NOLINEBREAK">水啦!登入成功</string>
-    <string name="logout_mandarin">登出</string>
-    <string name="logout_sucess">登出成功</string>
-    <string name="saveGameRequestLoggingWaring">去首頁登入一下嘛~ 霸脫</string>
-    <string name="mainActivityLoginHint">點右上角登入呦</string>
-    <string name="loginFailed">出了點小意外，登入失敗捏</string>
-    <string name="unableToLaunchHMActivity_Title">無法檢視歷史紀錄"</string>
-    <string name="unableToLaunchHMActivity_Message">點右上角登入呦</string>
-    <string name="alertDialogOKButtonText">豪</string>
-    <string name="alertDialogPositiveButtonText">要！</string>
-    <string name="alertDialogNegativeButtonText">鼻要</string>
+    <string name="activiy_welcome_string_LINEBREAK"><br>Good Morning!\nWhat would you like to do today?</br></string>
+    <string name="activiy_welcome_string_NOLINEBREAK">Good Morning! What would you like to do today?</string>
+    <string name="goodMorning"><br>Good Morning, </br></string>
+    <string name="whatYouDoing"><br>What\'d you like to do today?</br></string>
+    <string name="button_selection_score">ScoreBoard</string>
+    <string name="button_selection_viewhistory"><br>History\nMatches</br></string>
+    <string name="teams_goodpeople">Heroes</string>
+    <string name="teams_badpeople">Villains</string>
+    <string name= "login_waringtext_linebreak"><br>Must Login\n\nTo Record Match History</br></string>
+    <string name= "login_waringtext_nolinebreak">Must Login To Record Match History</string>
+    <string name= "logout_waringtext_linebreak"><br>You\'re logged in!\n\nHistory matches are now available!</br></string>
+    <string name= "logout_waringtext_nolinebreak">You\'re logged in! History matches are now available!</string>
+    <string name= "login_sucess_LINEBREAK"><br>Login success</br></string>
+    <string name= "login_sucess_NOLINEBREAK">Login success</string>
+    <string name="logout_mandarin">Logout</string>
+    <string name="logout_sucess">Logout success</string>
+    <string name="saveGameRequestLoggingWaring">Please login at main page</string>
+    <string name="loginFailed">Login failed</string>
+    <string name="unableToLaunchHMActivity_Title">❌ Unable to show History matches"</string>
+    <string name="unableToSaveGameH_Title">❌ Unable to save game history"</string>
+    <string name="unableToLaunchHMActivity_Message">Click top right corner to login</string>
+    <string name="alertDialogOKButtonText">OK</string>
+    <string name="alertDialogPositiveButtonText">Yes！</string>
+    <string name="alertDialogNegativeButtonText">Nope</string>
+    <string name="swipeLeftToDeleteHint">swipe left to delete a match record</string>
+    <string name="littleNote">Note ♡</string>
+    <string name="delete">Delete</string>
+    <string name="hmActivityTitle">History Matches</string>
+
+
 
 
 

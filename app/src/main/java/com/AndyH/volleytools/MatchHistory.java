@@ -1,5 +1,7 @@
 package com.AndyH.volleytools;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -9,7 +11,9 @@ import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -51,9 +55,9 @@ public class MatchHistory extends AppCompatActivity {
             game.setFbKey(snapshot.getKey());
             game.setBackgroundResource(generateBackgroundResource());
             Log.d("childEvent", "onChildAdd: "+snapshot.getKey());
-
             matchHistoryArrayList.add(game);
             hmAdapter.notifyDataSetChanged();
+
         }
 
         @Override
@@ -94,23 +98,23 @@ public class MatchHistory extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.Mint_Green));
+
+
         setContentView(R.layout.activity_match_history);
         initializeFirebaseAssociateReference();
         BindViewsAndListensers();
         colorPattern = initializeColorMap();
         colorIndex=0;
 
-
         matchHistoryArrayList = new ArrayList<>();
+        currentUserHistoryGameRef.addChildEventListener(childEventListener);
 
         hmRecyclerView = findViewById(R.id.mh_recyclerview);
         hmLayoutManager = new LinearLayoutManager(this);
         hmAdapter = new MHRecyclerAdapter(matchHistoryArrayList);
-
         hmRecyclerView.setAdapter(hmAdapter);
         hmRecyclerView.setLayoutManager(hmLayoutManager);
-
-        currentUserHistoryGameRef.addChildEventListener(childEventListener);
     }
 
     @Override
@@ -134,7 +138,6 @@ public class MatchHistory extends AppCompatActivity {
     private void initializeFirebaseAssociateReference(){
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
-
         firebaseDatabase= FirebaseDatabase.getInstance();
         rootRef = firebaseDatabase.getReference();
         if(currentUser!=null){
@@ -179,6 +182,15 @@ public class MatchHistory extends AppCompatActivity {
     }
     private void BindViewsAndListensers(){
         infoButton = this.findViewById(R.id.mh_buttonInfo);
+        infoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                builder.setTitle(R.string.littleNote);
+                builder.setMessage(R.string.swipeLeftToDeleteHint);
+                builder.create().show();
+            }
+        });
 
         leaveButton = this.findViewById(R.id.mh_buttonLeave);
         leaveButton.setOnClickListener(new View.OnClickListener() {

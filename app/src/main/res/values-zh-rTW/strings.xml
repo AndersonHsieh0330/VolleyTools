@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">VolleyTools:排球計分板</string>
+    <string name="activiy_welcome_string_LINEBREAK"><br>早安，排球人!\n今天袂衝啥?</br></string>
+    <string name="activiy_welcome_string_NOLINEBREAK">早安，排球人! 今天袂衝啥?</string>
+    <string name="goodMorning"><br>早安， </br></string>
+    <string name="whatYouDoing"><br>今天袂衝啥?</br></string>
+    <string name="button_selection_score">計分仔</string>
+    <string name="button_selection_viewhistory">以前的比賽</string>
+    <string name="teams_goodpeople">好人</string>
+    <string name="teams_badpeople">壞人</string>
+    <string name= "login_waringtext_linebreak"><br>要登入才能\n\n紀錄以前的比賽呦</br></string>
+    <string name= "login_waringtext_nolinebreak">要登入才能紀錄以前的比賽呦</string>
+    <string name= "logout_waringtext_linebreak"><br>已登入\n\n可以看以前的比賽了呦!</br></string>
+    <string name= "logout_waringtext_nolinebreak">已登入, 可以看以前的比賽了呦!</string>
+    <string name= "login_sucess_LINEBREAK"><br>水啦!\n登入成功</br></string>
+    <string name= "login_sucess_NOLINEBREAK">水啦!登入成功</string>
+    <string name="logout_mandarin">登出</string>
+    <string name="logout_sucess">登出成功</string>
+    <string name="saveGameRequestLoggingWaring">去首頁登入一下嘛~ 霸脫</string>
+    <string name="loginFailed">出了點小意外，登入失敗捏</string>
+    <string name="unableToLaunchHMActivity_Title">❌ 無法檢視歷史紀錄"</string>
+    <string name="unableToSaveGameH_Title">❌ 無法儲存歷史紀錄"</string>
+    <string name="unableToLaunchHMActivity_Message">點右上角登入呦</string>
+    <string name="alertDialogOKButtonText">豪</string>
+    <string name="alertDialogPositiveButtonText">要！</string>
+    <string name="alertDialogNegativeButtonText">鼻要</string>
+    <string name="swipeLeftToDeleteHint">往左滑可以刪除紀錄呦</string>
+    <string name="littleNote">小提示 ♡</string>
+    <string name="delete">刪除</string>
+    <string name="hmActivityTitle">歷史必賽紀錄</string>
+</resources>

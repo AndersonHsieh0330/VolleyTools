@@ -23,7 +23,7 @@
             android:id="@+id/mh_title"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:text="歷史比賽紀錄"
+            android:text="@string/hmActivityTitle"
             android:textSize="20sp"
             android:gravity="center"
             app:layout_constraintStart_toEndOf="@id/mh_buttonInfo"

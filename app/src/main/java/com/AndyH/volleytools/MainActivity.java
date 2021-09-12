@@ -3,6 +3,7 @@ package com.AndyH.volleytools;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 
 import android.content.Context;
@@ -15,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
     Button welcomepage_button_scorer, welcomepage_button_history;
     ImageButton hamburger_menu;
+    TextView welcomText;
     FragmentManager fragmentManager;
     final public static String LOGIN_FRAGMENT_TAG = "login_page_dialfrag";
     private FirebaseAuth mAuth;
@@ -37,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.Mint_Green));
         fragmentManager = this.getSupportFragmentManager();
         setContentView(R.layout.activity_main);
         initializeFirebaseAssociateReference();
@@ -86,6 +90,15 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        welcomText = findViewById(R.id.welcome_text);
+        if(mAuth.getCurrentUser()!= null){
+            if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+                welcomText.setText(getString(R.string.goodMorning)+currentUser.getDisplayName()+"! "+getString(R.string.whatYouDoing));
+            }else{
+                welcomText.setText(getString(R.string.goodMorning)+currentUser.getDisplayName()+"!\n"+getString(R.string.whatYouDoing));
+            }
+        }
     }
 
 

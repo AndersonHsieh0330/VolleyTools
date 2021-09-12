@@ -17,7 +17,10 @@
         app:layout_constraintEnd_toStartOf="@id/right"
         app:layout_constraintStart_toEndOf="@+id/left"
         app:layout_constraintTop_toBottomOf="@id/top"
-        app:layout_constraintBottom_toBottomOf="@id/mid_top">
+        app:layout_constraintBottom_toBottomOf="@id/mid_top"
+        android:clickable="true"
+        android:focusableInTouchMode="true"
+        android:focusable="true">
 
 
         <Button
@@ -34,8 +37,7 @@
             style="?android:attr/borderlessButtonStyle"
             app:backgroundTint="@color/Transparent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-             />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
             android:id="@+id/goodpeople_button_leave"
@@ -50,7 +52,7 @@
             app:layout_constraintDimensionRatio="1:1"
             style="?android:attr/borderlessButtonStyle"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
 
@@ -72,11 +74,12 @@
             android:id="@+id/goodpeople_name"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:textSize="40sp"
+            android:textSize="30sp"
             android:background="@color/Transparent"
-            android:cursorVisible="false"
+            android:cursorVisible="true"
             android:gravity="center_horizontal|bottom"
             android:textColor="@color/Text_Grey"
+            android:textCursorDrawable="@null"
             android:inputType="textPersonName"
             android:text="@string/teams_goodpeople"
             android:layout_marginLeft="10dp"
@@ -85,7 +88,7 @@
             app:layout_constraintEnd_toStartOf="@+id/goodpeople_button_leave"
             app:layout_constraintStart_toEndOf="@+id/goodpeople_button_set"
             app:layout_constraintTop_toTopOf="@+id/goodpeople_constraintLayout"
-            android:maxLength="8"/>
+            android:maxLength="16" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -158,8 +161,8 @@
             android:cursorVisible="false"
             android:gravity="center_horizontal|bottom"
             android:inputType="textPersonName"
-            android:maxLength="8"
-            android:textSize="40sp"
+            android:maxLength="16"
+            android:textSize="30sp"
             android:text="@string/teams_badpeople"
             android:textColor="@color/Text_Grey"
             app:layout_constraintBottom_toTopOf="@+id/badpeople_button_score"

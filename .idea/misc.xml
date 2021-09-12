@@ -19,14 +19,18 @@
         <entry key="app/src/main/res/layout-land/activity_scorer.xml" value="0.33" />
         <entry key="app/src/main/res/layout-land/google_login_page.xml" value="0.15255731922398588" />
         <entry key="app/src/main/res/layout-land/google_logout_page.xml" value="0.15255731922398588" />
+        <entry key="app/src/main/res/layout-land/history_match_elements.xml" value="0.10890652557319223" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.10461956521739131" />
         <entry key="app/src/main/res/layout/activity_match_history.xml" value="0.15625" />
-        <entry key="app/src/main/res/layout/activity_scorer.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_scorer.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/dialogfrag_processing.xml" value="0.1" />
         <entry key="app/src/main/res/layout/dialogfrag_scorer_savegame.xml" value="0.15520833333333334" />
         <entry key="app/src/main/res/layout/dialogfrag_scorer_settings.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/dialogfrag_scorer_tooltip.xml" value="0.1" />
         <entry key="app/src/main/res/layout/google_login_page.xml" value="0.15625" />
         <entry key="app/src/main/res/layout/google_logout_page.xml" value="0.15625" />
         <entry key="app/src/main/res/layout/history_match_elements.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/infopage_mainactivity.xml" value="0.10555555555555556" />
       </map>
     </option>
   </component>

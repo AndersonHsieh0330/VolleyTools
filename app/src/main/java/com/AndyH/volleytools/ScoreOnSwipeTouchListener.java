@@ -19,13 +19,15 @@ public class ScoreOnSwipeTouchListener implements OnTouchListener{
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         return gestureDetector.onTouchEvent(event);
-       }
+        }
 
     private final class GestureListener extends SimpleOnGestureListener {
 
         private static final int SWIPE_THRESHOLD = 50;//minimum distance to be considered a swipe
         private static final int SWIPE_VELOCITY_THRESHOLD = 50;//minimum speed to be considered a swipe
-
+        private static final int CLICK_POSITION_THRESHOLD = 5;
+        private int startTime;
+        private int endTime;
         @Override
         public boolean onDown(MotionEvent e) {
             return true;
@@ -39,13 +41,15 @@ public class ScoreOnSwipeTouchListener implements OnTouchListener{
 
         @Override
         public boolean onSingleTapUp(MotionEvent e) {
-            onClick();
+//            onClick();
             return super.onSingleTapUp(e);
         }
 
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             boolean result = false;
+            Log.d("onflingtest", "onFling: ");
+            Log.d("onflingtest", "onFling: ");
             try {
                 float diffY = e2.getY() - e1.getY();
                 float diffX = e2.getX() - e1.getX();
