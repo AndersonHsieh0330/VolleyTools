@@ -1,9 +1,8 @@
 <resources>
     <string name="app_name">VolleyTools</string>
-    <string name="activiy_welcome_string_LINEBREAK"><br>Good Morning!\nWhat would you like to do today?</br></string>
-    <string name="activiy_welcome_string_NOLINEBREAK">Good Morning! What would you like to do today?</string>
-    <string name="goodMorning"><br>Good Morning, </br></string>
-    <string name="whatYouDoing"><br>What\'d you like to do today?</br></string>
+    <string name="volleyballer">Volleyballer</string>
+    <string name="welcomeStatement"><br>Good Morning, %s! What\'d you like to do today?</br></string>
+    <string name="welcomeStatement_LineBreak"><br>Good Morning, %s!\nWhat\'d you like to do today?</br></string>
     <string name="button_selection_score">ScoreBoard</string>
     <string name="button_selection_viewhistory"><br>History\nMatches</br></string>
     <string name="teams_goodpeople">Heroes</string>
@@ -34,5 +33,4 @@
 
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

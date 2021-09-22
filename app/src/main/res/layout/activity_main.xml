@@ -63,7 +63,7 @@
             android:id="@+id/welcome_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/activiy_welcome_string_LINEBREAK"
+            android:text="@string/welcomeStatement_LineBreak"
             android:textSize="25sp"
             android:gravity="center"
             app:layout_constraintEnd_toEndOf="@id/right_guideline"

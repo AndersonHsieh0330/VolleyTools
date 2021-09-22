@@ -65,7 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:text="@string/activiy_welcome_string_NOLINEBREAK"
+            android:text="@string/welcomeStatement"
             android:textSize="30sp"
             app:layout_constraintBottom_toTopOf="@id/DiagonalView_launch_scorer"
             app:layout_constraintEnd_toEndOf="@id/right_guideline"

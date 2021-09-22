@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">VolleyTools:排球計分板</string>
-    <string name="activiy_welcome_string_LINEBREAK"><br>早安，排球人!\n今天袂衝啥?</br></string>
-    <string name="activiy_welcome_string_NOLINEBREAK">早安，排球人! 今天袂衝啥?</string>
-    <string name="goodMorning"><br>早安， </br></string>
-    <string name="whatYouDoing"><br>今天袂衝啥?</br></string>
+    <string name="volleyballer">排球人</string>
+    <string name="welcomeStatement"><br>早安， %s！ 今天袂衝啥?</br></string>
+    <string name="welcomeStatement_LineBreak"><br>早安， %s！\n今天袂衝啥?</br></string>
     <string name="button_selection_score">計分仔</string>
     <string name="button_selection_viewhistory">以前的比賽</string>
     <string name="teams_goodpeople">好人</string>

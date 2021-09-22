@@ -1,12 +1,5 @@
 package com.AndyH.volleytools;
 
-import android.os.Bundle;
-import android.os.Parcel;
-import android.os.Parcelable;
-import android.util.Log;
-
-import java.util.Calendar;
-
 public class Game {
 
 
@@ -37,17 +30,6 @@ public class Game {
         this.badpeople_teamname = badpeople_teamname;
         this.gameEndTime = gameendtime;
     }
-
-    protected Game(Parcel in) {
-
-        goodpeople_points = in.readInt();
-        badpeople_points = in.readInt();
-        goodpeople_sets = in.readInt();
-        badpeople_sets = in.readInt();
-        goodpeople_teamname = in.readString();
-        badpeople_teamname = in.readString();
-    }
-
 
     public String getGameEndTime() {
         return gameEndTime;
@@ -152,12 +134,12 @@ public class Game {
         goodpeople_sets+=1;
         if(goodpeople_sets==10){
             goodpeople_sets=0;
-        };
+        }
     }
     public void badpeople_gain_set(){
         badpeople_sets+=1;
         if(badpeople_sets==10){
             badpeople_sets=0;
-        };
+        }
     }
 }

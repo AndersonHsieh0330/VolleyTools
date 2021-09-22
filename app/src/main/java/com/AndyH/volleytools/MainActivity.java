@@ -5,24 +5,15 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
-
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -52,52 +43,47 @@ public class MainActivity extends AppCompatActivity {
     private void BindViewsAndListeners(){
 
         hamburger_menu = findViewById(R.id.main_buttonHamburger);
-        hamburger_menu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LoginPage loginpage_fragment = new LoginPage();
-                loginpage_fragment.show(fragmentManager,LOGIN_FRAGMENT_TAG);
-            }
+        hamburger_menu.setOnClickListener(v -> {
+            LoginPage loginpage_fragment = new LoginPage();
+            loginpage_fragment.show(fragmentManager,LOGIN_FRAGMENT_TAG);
         });
 
         welcomepage_button_scorer = (Button)findViewById(R.id.button_launch_scorer);
-        welcomepage_button_scorer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent scoring_intent = new Intent(v.getContext(), Scorer.class);
-                v.getContext().startActivity(scoring_intent);
-            }
+        welcomepage_button_scorer.setOnClickListener(v -> {
+            Intent scoring_intent = new Intent(v.getContext(), Scorer.class);
+            v.getContext().startActivity(scoring_intent);
         });
 
         welcomepage_button_history = (Button)findViewById(R.id.button_launch_history);
-        welcomepage_button_history.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent matchHistory_intent = new Intent(v.getContext(), MatchHistory.class);
-                if(mAuth.getCurrentUser() != null){
-                    v.getContext().startActivity(matchHistory_intent);
-                }else{
-                    new AlertDialog.Builder(v.getContext())
-                            .setTitle(R.string.unableToLaunchHMActivity_Title)
-                            .setMessage(R.string.unableToLaunchHMActivity_Message)
-                            .setPositiveButton(R.string.alertDialogOKButtonText, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
+        welcomepage_button_history.setOnClickListener(v -> {
+            Intent matchHistory_intent = new Intent(v.getContext(), MatchHistory.class);
+            if(mAuth.getCurrentUser() != null){
+                v.getContext().startActivity(matchHistory_intent);
+            }else{
+                new AlertDialog.Builder(v.getContext())
+                        .setTitle(R.string.unableToLaunchHMActivity_Title)
+                        .setMessage(R.string.unableToLaunchHMActivity_Message)
+                        .setPositiveButton(R.string.alertDialogOKButtonText, (dialog, which) -> {
 
-                                }
-                            }).show();
+                        }).show();
 
-                }
             }
         });
 
         welcomText = findViewById(R.id.welcome_text);
         if(mAuth.getCurrentUser()!= null){
             if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
-                welcomText.setText(getString(R.string.goodMorning)+currentUser.getDisplayName()+"! "+getString(R.string.whatYouDoing));
+                welcomText.setText(String.format(getResources().getString(R.string.welcomeStatement),currentUser.getDisplayName()));
             }else{
-                welcomText.setText(getString(R.string.goodMorning)+currentUser.getDisplayName()+"!\n"+getString(R.string.whatYouDoing));
+                welcomText.setText(String.format(getResources().getString(R.string.welcomeStatement_LineBreak),currentUser.getDisplayName()));
             }
+        }else{
+            if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+                welcomText.setText(String.format(getResources().getString(R.string.welcomeStatement),getResources().getString(R.string.volleyballer)));
+            }else{
+                welcomText.setText(String.format(getResources().getString(R.string.welcomeStatement_LineBreak),getResources().getString(R.string.volleyballer)));
+            }
+
         }
     }
 
