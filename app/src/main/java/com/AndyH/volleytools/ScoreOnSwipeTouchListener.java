@@ -18,16 +18,14 @@ public class ScoreOnSwipeTouchListener implements OnTouchListener{
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
+        v.performClick();//no onClickListener is assigned, performClick does not do anything
         return gestureDetector.onTouchEvent(event);
-        }
+    }
 
     private final class GestureListener extends SimpleOnGestureListener {
 
         private static final int SWIPE_THRESHOLD = 50;//minimum distance to be considered a swipe
         private static final int SWIPE_VELOCITY_THRESHOLD = 50;//minimum speed to be considered a swipe
-        private static final int CLICK_POSITION_THRESHOLD = 5;
-        private int startTime;
-        private int endTime;
         @Override
         public boolean onDown(MotionEvent e) {
             return true;
@@ -56,10 +54,10 @@ public class ScoreOnSwipeTouchListener implements OnTouchListener{
                 if (Math.abs(diffX) > Math.abs(diffY)) {
                     if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
                         if (diffX > 0) {
-                            //logic for swipe right
+                            //user swiped right
                             onSwipeTop();
                         } else {
-                            //logic for swip left
+                            //user swiped left
                             onSwipeTop();
                         }
                         result = true;
@@ -67,8 +65,10 @@ public class ScoreOnSwipeTouchListener implements OnTouchListener{
                 }
                 else if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
                     if (diffY > 0) {
+                        //user swiped down
                         onSwipeBottom();
                     } else {
+                        //user swiped up
                         onSwipeTop();
                     }
                     result = true;
@@ -80,23 +80,19 @@ public class ScoreOnSwipeTouchListener implements OnTouchListener{
         }
     }
 
-    public void onSwipeRight() {
-    }
-
-    public void onSwipeLeft() {
-    }
-
     public void onSwipeTop() {
+        //dummy function, overwrite this method when assign the listener
     }
 
     public void onSwipeBottom() {
+        //dummy function, overwrite this method when assign the listener
     }
     public void onLongPressed(){
-
+        //dummy function, overwrite this method when assign the listener
     }
 
     public void onClick(){
-
+        //dummy function, overwrite this method when assign the listener
     }
 
 

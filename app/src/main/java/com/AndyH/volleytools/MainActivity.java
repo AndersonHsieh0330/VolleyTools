@@ -5,7 +5,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -48,13 +47,13 @@ public class MainActivity extends AppCompatActivity {
             loginpage_fragment.show(fragmentManager,LOGIN_FRAGMENT_TAG);
         });
 
-        welcomepage_button_scorer = (Button)findViewById(R.id.button_launch_scorer);
+        welcomepage_button_scorer = findViewById(R.id.button_launch_scorer);
         welcomepage_button_scorer.setOnClickListener(v -> {
             Intent scoring_intent = new Intent(v.getContext(), Scorer.class);
             v.getContext().startActivity(scoring_intent);
         });
 
-        welcomepage_button_history = (Button)findViewById(R.id.button_launch_history);
+        welcomepage_button_history = findViewById(R.id.button_launch_history);
         welcomepage_button_history.setOnClickListener(v -> {
             Intent matchHistory_intent = new Intent(v.getContext(), MatchHistory.class);
             if(mAuth.getCurrentUser() != null){

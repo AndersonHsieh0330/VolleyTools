@@ -1,25 +1,16 @@
 package com.AndyH.volleytools;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.res.ColorStateList;
-import android.content.res.Resources;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chauthai.swipereveallayout.SwipeRevealLayout;
@@ -29,29 +20,27 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class MHRecyclerAdapter extends RecyclerView.Adapter<MHRecyclerAdapter.mViewHolder> {
-    private ArrayList<Game> mhAL;
+    private final ArrayList<Game> mhAL;
     private final ViewBinderHelper viewBinderHelper = new ViewBinderHelper();//from chthai64 library
-    private FirebaseAuth mAuth;
-    private FirebaseUser currentUser;
-    private FirebaseDatabase firebaseDatabase;
-    private DatabaseReference rootRef;
-    private DatabaseReference currentUserRef;
     private DatabaseReference currentUserHistoryGameRef;
 
 
 
 
     public static class mViewHolder extends RecyclerView.ViewHolder{
-        private TextView bSets, bName, bScore,gSets,gName,gScore,time;
-        private SwipeRevealLayout swipeRevealLayout;
-        private Button deleteButton;
-        private RelativeLayout relativeLayout;
+        private final TextView bSets;
+        private final TextView bName;
+        private final TextView bScore;
+        private final TextView gSets;
+        private final TextView gName;
+        private final TextView gScore;
+        private final TextView time;
+        private final SwipeRevealLayout swipeRevealLayout;
+        private final Button deleteButton;
+        private final RelativeLayout relativeLayout;
 
         public mViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -86,8 +75,7 @@ public class MHRecyclerAdapter extends RecyclerView.Adapter<MHRecyclerAdapter.mV
     @Override
     public mViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.history_match_elements,parent,false);
-        mViewHolder vh = new mViewHolder(v);
-        return vh;
+        return new mViewHolder(v);
     }
 
     @Override
@@ -98,13 +86,10 @@ public class MHRecyclerAdapter extends RecyclerView.Adapter<MHRecyclerAdapter.mV
         viewBinderHelper.setOpenOnlyOne(false);
         viewBinderHelper.bind(holder.swipeRevealLayout, current_game.getFbKey());
 
-        holder.deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int oldPosition = holder.getAdapterPosition();
-                String keyOfRemovedGame = mhAL.get((mhAL.size()-1)-oldPosition).getFbKey();
-                currentUserHistoryGameRef.child(keyOfRemovedGame).removeValue();
-            }
+        holder.deleteButton.setOnClickListener(v -> {
+            int oldPosition = holder.getAdapterPosition();
+            String keyOfRemovedGame = mhAL.get((mhAL.size()-1)-oldPosition).getFbKey();
+            currentUserHistoryGameRef.child(keyOfRemovedGame).removeValue();
         });
 
         holder.relativeLayout.setBackground(ContextCompat.getDrawable(holder.relativeLayout.getContext(),current_game.getBackgroundResource()));
@@ -134,23 +119,18 @@ public class MHRecyclerAdapter extends RecyclerView.Adapter<MHRecyclerAdapter.mV
     }
 
     private void initializeFirebaseAssociateReference(){
-        mAuth = FirebaseAuth.getInstance();
-        currentUser = mAuth.getCurrentUser();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
 
-        firebaseDatabase= FirebaseDatabase.getInstance();
-        rootRef = firebaseDatabase.getReference();
-        if(currentUser!=null){
-            currentUserRef = rootRef.child(currentUser.getUid().toString());
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference rootRef = firebaseDatabase.getReference();
+        if (currentUser == null) {
+            Log.d("log", "user not logged in");
+        } else {
+            DatabaseReference currentUserRef = rootRef.child(currentUser.getUid());
             currentUserHistoryGameRef = currentUserRef.child("historyGames");
         }
-        else{
-            Log.d("saveorrestart", "user not logged in");
-        }
     }
-
-
-
-
 }
 
 
