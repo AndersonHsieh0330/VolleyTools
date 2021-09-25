@@ -185,10 +185,10 @@ public class LoginPage extends DialogFragment {
                 // Google Sign In was successful, authenticate with Firebase
                 disableExitButton();
                 GoogleSignInAccount account = task.getResult(ApiException.class);
-                if(account!=null) {
+                if (account != null) {
                     Log.d("firebase", "firebaseAuthWithGoogle:" + account.getId());
                     firebaseAuthWithGoogle(account.getIdToken());
-                }else{
+                } else {
                     Log.d("firebase", "GoogleSignInAccount: null");
                 }
             } catch (ApiException e) {

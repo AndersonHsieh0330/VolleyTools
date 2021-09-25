@@ -52,7 +52,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
-        <Button
+        <com.AndyH.volleytools.ScoreCustomButton
 
             android:id="@+id/goodpeople_button_score"
             android:layout_width="0dp"
@@ -116,7 +116,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
+        <com.AndyH.volleytools.ScoreCustomButton
             android:id="@+id/badpeople_button_score"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="0dp"

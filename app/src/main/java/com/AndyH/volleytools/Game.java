@@ -2,10 +2,9 @@ package com.AndyH.volleytools;
 
 public class Game {
 
-
     private String fbKey;
     //only initialized after data is retrieved from firebase
-    
+
     private int goodpeople_points;
     private int badpeople_points;
     private int goodpeople_sets;
@@ -16,10 +15,10 @@ public class Game {
     private int backgroundResource;
 
 
-    public Game(){
+    public Game() {
     }
 
-    public Game( int goodpeople_points, int badpeople_points, int goodpeople_sets,
+    public Game(int goodpeople_points, int badpeople_points, int goodpeople_sets,
                 int badpeople_sets, String goodpeople_teamname, String badpeople_teamname, String gameendtime) {
 
         this.goodpeople_points = goodpeople_points;
@@ -86,6 +85,7 @@ public class Game {
     public void setBadpeople_teamname(String badpeople_customize_name) {
         this.badpeople_teamname = badpeople_customize_name;
     }
+
     public String getFbKey() {
         return fbKey;
     }
@@ -102,44 +102,45 @@ public class Game {
         this.backgroundResource = colorDisplay;
     }
 
-    public void goodpeople_gain_point(){
+    public void goodpeople_gain_point() {
         goodpeople_points += 1;
-        if(goodpeople_points ==100){
-            goodpeople_points =0;
+        if (goodpeople_points == 100) {
+            goodpeople_points = 0;
         }
     }
 
-    public void badpeople_gain_point(){
+    public void badpeople_gain_point() {
         badpeople_points += 1;
-        if(badpeople_points == 100){
+        if (badpeople_points == 100) {
             badpeople_points = 0;
         }
     }
 
-    public void goodpeople_lose_point(){
+    public void goodpeople_lose_point() {
         goodpeople_points -= 1;
-        if(goodpeople_points == -1){
+        if (goodpeople_points == -1) {
             goodpeople_points = 99;
         }
     }
 
-    public void badpeople_lose_point(){
+    public void badpeople_lose_point() {
         badpeople_points -= 1;
-        if(badpeople_points==-1){
+        if (badpeople_points == -1) {
             badpeople_points = 99;
         }
     }
 
-    public void goodpeople_gain_set(){
-        goodpeople_sets+=1;
-        if(goodpeople_sets==10){
-            goodpeople_sets=0;
+    public void goodpeople_gain_set() {
+        goodpeople_sets += 1;
+        if (goodpeople_sets == 10) {
+            goodpeople_sets = 0;
         }
     }
-    public void badpeople_gain_set(){
-        badpeople_sets+=1;
-        if(badpeople_sets==10){
-            badpeople_sets=0;
+
+    public void badpeople_gain_set() {
+        badpeople_sets += 1;
+        if (badpeople_sets == 10) {
+            badpeople_sets = 0;
         }
     }
 }

@@ -1,38 +1,31 @@
 package com.AndyH.volleytools;
 
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.os.Vibrator;
+import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import java.util.Objects;
 
 
 public class ScorerSettings extends DialogFragment {
     private ScorerSettingActionListener actionListener;
-    private ImageButton reStartButton, saveGameButton;
     private boolean isLoggedIn;
-    private Vibrator vibrator;
 
     public interface ScorerSettingActionListener{
          void onReStartGame(Boolean isRestarting);
@@ -44,10 +37,13 @@ public class ScorerSettings extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         Bundle bundle = getArguments();
-        isLoggedIn = bundle.getBoolean(Scorer.SCORERSETTINGS_DFBUDDLEKEY_ISLOGGEDIN);
+        if (bundle != null) {
+            isLoggedIn = bundle.getBoolean(Scorer.SCORERSETTINGS_DFBUDDLEKEY_ISLOGGEDIN);
+        }else{
+            Log.d("log", "onCreateView: ScorerSettings, no bundle ");
+        }
         View inflatedView =  inflater.inflate(R.layout.dialogfrag_scorer_settings,container);
         BindViewsAndListeners(inflatedView);
-        vibrator = (Vibrator) this.getContext().getSystemService(Context.VIBRATOR_SERVICE);
         return inflatedView;
     }
 
@@ -82,47 +78,44 @@ public class ScorerSettings extends DialogFragment {
     }
 
     private void BindViewsAndListeners(View view){
-        reStartButton = view.findViewById(R.id.scorerSettings_ImgButton_Restart);
-        saveGameButton = view.findViewById(R.id.scorerSettings_ImgButton_saveGame);
+        ImageButton reStartButton = view.findViewById(R.id.scorerSettings_ImgButton_Restart);
+        ImageButton saveGameButton = view.findViewById(R.id.scorerSettings_ImgButton_saveGame);
 
-        reStartButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                actionListener.onReStartGame(true);
-                removeFragment();
-            }
+        reStartButton.setOnClickListener(v -> {
+            actionListener.onReStartGame(true);
+            removeFragment();
         });
 
-        saveGameButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                if(isLoggedIn){
-                    actionListener.onSaveGame(true);
-                }else{
-                    new AlertDialog.Builder(v.getContext())
-                            .setTitle(R.string.unableToSaveGameH_Title)
-                            .setMessage(R.string.saveGameRequestLoggingWaring)
-                            .setPositiveButton(R.string.alertDialogOKButtonText, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
+        saveGameButton.setOnClickListener(v -> {
+            if(isLoggedIn){
+                actionListener.onSaveGame(true);
+            }else{
+                new AlertDialog.Builder(v.getContext())
+                        .setTitle(R.string.unableToSaveGameH_Title)
+                        .setMessage(R.string.saveGameRequestLoggingWaring)
+                        .setPositiveButton(R.string.alertDialogOKButtonText, (dialog, which) -> {
+                            //alertDialog gets closed automatically
+                        }).show();
 
-                                }
-                            }).show();
-
-                }
-                removeFragment();
             }
+            removeFragment();
         });
 
     }
 
     private void removeFragment(){
         FragmentManager currentFragManager = getParentFragmentManager();
-        currentFragManager.beginTransaction().remove(currentFragManager.findFragmentByTag(Scorer.SCORERSETTING_FRAGMENT_TAG)).commit();
+        Fragment scorerSettingsDF = currentFragManager.findFragmentByTag(Scorer.SCORERSETTING_FRAGMENT_TAG);
+        if(scorerSettingsDF==null){
+            Log.d("log", "removeFragment: can't find fragment while removing scorerSettings");
+        }else {
+            currentFragManager.beginTransaction().remove(scorerSettingsDF).commit();
+        }
     }
 
     private void setDialogSize(){
-        Window window = getDialog().getWindow();
+        //get the size of the screen
+        Window window = Objects.requireNonNull(getDialog()).getWindow();
         Point size = new Point();
 
         Display display = window.getWindowManager().getDefaultDisplay();
@@ -130,9 +123,11 @@ public class ScorerSettings extends DialogFragment {
 
         int width = size.x;
         int height = size.y;
-        //window.setLayout((int) (width * 0.75), WindowManager.LayoutParams.WRAP_CONTENT);
+
+        //set the fragment size by ratio of the height/width of the screen
         window.setLayout((int) (width * 0.4), (int) (height * 0.4));
         window.setGravity(Gravity.CENTER);
+
     }
 
 

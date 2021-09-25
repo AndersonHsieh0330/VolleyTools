@@ -28,4 +28,8 @@
     <string name="littleNote">小提示 ♡</string>
     <string name="delete">刪除</string>
     <string name="hmActivityTitle">歷史必賽紀錄</string>
+    <string name="gameSavedSuccessfully">儲存成功囉</string>
+    <string name="description"> 多元顯示內容</string>
+
+
 </resources>

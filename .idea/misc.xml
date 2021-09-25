@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../layout/custom_preview.xml" value="0.14791666666666667" />
         <entry key="app/src/main/res/drawable/ic_delete_24.xml" value="0.14114583333333333" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.14114583333333333" />
         <entry key="app/src/main/res/drawable/matchHistory_page_deleteButton_design.xml" value="0.14114583333333333" />
@@ -22,7 +23,7 @@
         <entry key="app/src/main/res/layout-land/history_match_elements.xml" value="0.10890652557319223" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.10461956521739131" />
         <entry key="app/src/main/res/layout/activity_match_history.xml" value="0.15625" />
-        <entry key="app/src/main/res/layout/activity_scorer.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_scorer.xml" value="0.14262194275240667" />
         <entry key="app/src/main/res/layout/dialogfrag_processing.xml" value="0.1" />
         <entry key="app/src/main/res/layout/dialogfrag_scorer_savegame.xml" value="0.15520833333333334" />
         <entry key="app/src/main/res/layout/dialogfrag_scorer_settings.xml" value="0.22" />

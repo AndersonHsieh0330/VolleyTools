@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,38 +14,31 @@ import android.os.Vibrator;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 public class Scorer extends AppCompatActivity implements ScorerSettings.ScorerSettingActionListener{
     private SharedPreferences sp;
     private SharedPreferences.Editor speditor;
     private Game currentGame;
-    private Button goodpeople_score_button,badpeople_score_button,goodpeople_set_button,badpeople_set_button;
-    private ImageButton button_Settings;
+    private Button goodpeople_set_button,badpeople_set_button;
+    private ScoreCustomButton goodpeople_score_button, badpeople_score_button;
     private EditText leftBadTeam, rightGoodTeam;
-    private FragmentManager fmanager=this.getSupportFragmentManager();
-    private FirebaseAuth mAuth;
+    private final FragmentManager fmanager=this.getSupportFragmentManager();
     private FirebaseUser currentUser;
-    private FirebaseDatabase firebaseDatabase;
-    private DatabaseReference rootRef;
-    private DatabaseReference currentUserRef;
     private DatabaseReference currentUserHistoryGameRef;
-    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd hh:mm aa");
+    private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd hh:mm aa", Locale.TAIWAN);
     private Vibrator vibrator;
 
 
@@ -92,16 +84,19 @@ public class Scorer extends AppCompatActivity implements ScorerSettings.ScorerSe
 
     @Override
     public void onReStartGame(Boolean isRestarting) {
-        if(isRestarting){
+        //isRestarting is always true, ScorerSettings fragment never sends "false"
+        //thus there's no need to check again
             vibrator.vibrate(100);
             resetGame();
             Log.d("saveorrestart", "onReStartGame: isRestarting = "+isRestarting);
-        }
+
     }
 
     @Override
     public void onSaveGame(Boolean isSaving) {
-        if(isSaving&&(currentUser!= null)) {
+        //isSaving is always true, ScorerSettings fragment never sends "false"
+        //thus there's no need to check again, only check whether user is logged in
+        if(currentUser!= null) {
             vibrator.vibrate(100);
             currentGame.setGameEndTime(simpleDateFormat.format(Calendar.getInstance().getTime()));
             saveGameToFireBase(currentGame);
@@ -239,75 +234,55 @@ public class Scorer extends AppCompatActivity implements ScorerSettings.ScorerSe
 
         goodpeople_set_button =  this.findViewById(R.id.goodpeople_button_set);
 
-        goodpeople_set_button.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View v) {
-                currentGame.goodpeople_gain_set();
-                speditor.putInt(SP_GOODSETS_KEY,currentGame.getGoodpeople_sets());
-                speditor.apply();
-                goodpeople_set_button.setText(String.valueOf(sp.getInt(SP_GOODSETS_KEY,0)));
-                vibrator.vibrate(100);
-            }
+        goodpeople_set_button.setOnClickListener(v -> {
+            currentGame.goodpeople_gain_set();
+            speditor.putInt(SP_GOODSETS_KEY,currentGame.getGoodpeople_sets());
+            speditor.apply();
+            goodpeople_set_button.setText(String.valueOf(sp.getInt(SP_GOODSETS_KEY,0)));
+            vibrator.vibrate(100);
         });
 
-        goodpeople_set_button.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                currentGame.setGoodpeople_sets(0);
-                speditor.putInt(SP_GOODSETS_KEY,currentGame.getGoodpeople_sets());
-                speditor.apply();
-                goodpeople_set_button.setText(String.valueOf(sp.getInt(SP_GOODSETS_KEY,0)));
-                vibrator.vibrate(100);
-                return true;
-            }
+        goodpeople_set_button.setOnLongClickListener(v -> {
+            currentGame.setGoodpeople_sets(0);
+            speditor.putInt(SP_GOODSETS_KEY,currentGame.getGoodpeople_sets());
+            speditor.apply();
+            goodpeople_set_button.setText(String.valueOf(sp.getInt(SP_GOODSETS_KEY,0)));
+            vibrator.vibrate(100);
+            return true;
         });
 
         badpeople_set_button =  this.findViewById(R.id.badpeople_button_set);
-        badpeople_set_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                currentGame.badpeople_gain_set();
-                speditor.putInt(SP_BADSETS_KEY,currentGame.getBadpeople_sets());
-                speditor.apply();
-                badpeople_set_button.setText(String.valueOf(sp.getInt(SP_BADSETS_KEY,0)));
-                vibrator.vibrate(100);
-            }
+        badpeople_set_button.setOnClickListener(v -> {
+            currentGame.badpeople_gain_set();
+            speditor.putInt(SP_BADSETS_KEY,currentGame.getBadpeople_sets());
+            speditor.apply();
+            badpeople_set_button.setText(String.valueOf(sp.getInt(SP_BADSETS_KEY,0)));
+            vibrator.vibrate(100);
         });
 
-        badpeople_set_button.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                currentGame.setBadpeople_sets(0);
-                speditor.putInt(SP_BADSETS_KEY,currentGame.getBadpeople_sets());
-                speditor.apply();
-                badpeople_set_button.setText(String.valueOf(sp.getInt(SP_BADSETS_KEY,0)));
-                vibrator.vibrate(100);
-                return true;
-            }
+        badpeople_set_button.setOnLongClickListener(v -> {
+            currentGame.setBadpeople_sets(0);
+            speditor.putInt(SP_BADSETS_KEY,currentGame.getBadpeople_sets());
+            speditor.apply();
+            badpeople_set_button.setText(String.valueOf(sp.getInt(SP_BADSETS_KEY,0)));
+            vibrator.vibrate(100);
+            return true;
         });
 
         ImageButton button_leave = this.findViewById(R.id.goodpeople_button_leave);
-        button_leave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), MainActivity.class);
-                startActivity(intent);
+        button_leave.setOnClickListener(v -> {
+            Intent intent = new Intent(v.getContext(), MainActivity.class);
+            startActivity(intent);
 
-            }
         });
-        button_Settings =this.findViewById(R.id.badpeople_button_Settings);
-        button_Settings.setOnClickListener(new View.OnClickListener(){
+        ImageButton button_Settings = this.findViewById(R.id.badpeople_button_Settings);
+        button_Settings.setOnClickListener(v -> {
+            ScorerSettings scorerSettingsClass = new ScorerSettings();
+            Bundle bundle = new Bundle();
+            bundle.putBoolean(SCORERSETTINGS_DFBUDDLEKEY_ISLOGGEDIN,(currentUser != null));
+            scorerSettingsClass.setArguments(bundle);
+            scorerSettingsClass.show(fmanager,SCORERSETTING_FRAGMENT_TAG);
 
-            @Override
-            public void onClick(View v) {
-                ScorerSettings scorerSettingsClass = new ScorerSettings();
-                Bundle bundle = new Bundle();
-                bundle.putBoolean(SCORERSETTINGS_DFBUDDLEKEY_ISLOGGEDIN,(currentUser != null));
-                scorerSettingsClass.setArguments(bundle);
-                scorerSettingsClass.show(fmanager,SCORERSETTING_FRAGMENT_TAG);
-
-            }
         });
 
         leftBadTeam = this.findViewById(R.id.badpeople_name);
@@ -367,13 +342,13 @@ public class Scorer extends AppCompatActivity implements ScorerSettings.ScorerSe
     }
 
     private void initializeFirebaseAssociateReference(){
-        mAuth = FirebaseAuth.getInstance();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
 
-        firebaseDatabase= FirebaseDatabase.getInstance();
-        rootRef = firebaseDatabase.getReference();
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference rootRef = firebaseDatabase.getReference();
         if(currentUser!= null){
-            currentUserRef = rootRef.child(currentUser.getUid().toString());
+            DatabaseReference currentUserRef = rootRef.child(currentUser.getUid());
             currentUserHistoryGameRef = currentUserRef.child("historyGames");
             }
         else{
@@ -382,7 +357,7 @@ public class Scorer extends AppCompatActivity implements ScorerSettings.ScorerSe
     }
     private void saveGameToFireBase(Game game){
         currentUserHistoryGameRef.push().setValue(game);
-
+        Toast.makeText(this,R.string.gameSavedSuccessfully,Toast.LENGTH_SHORT).show();
     }
 
 

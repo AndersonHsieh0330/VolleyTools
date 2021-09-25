@@ -53,13 +53,8 @@ public class ScoreOnSwipeTouchListener implements OnTouchListener{
                 float diffX = e2.getX() - e1.getX();
                 if (Math.abs(diffX) > Math.abs(diffY)) {
                     if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
-                        if (diffX > 0) {
-                            //user swiped right
-                            onSwipeTop();
-                        } else {
-                            //user swiped left
-                            onSwipeTop();
-                        }
+                        //check (diffX > 0) for swiping left and right
+                        onSwipeTop();
                         result = true;
                     }
                 }
@@ -88,10 +83,6 @@ public class ScoreOnSwipeTouchListener implements OnTouchListener{
         //dummy function, overwrite this method when assign the listener
     }
     public void onLongPressed(){
-        //dummy function, overwrite this method when assign the listener
-    }
-
-    public void onClick(){
         //dummy function, overwrite this method when assign the listener
     }
 
