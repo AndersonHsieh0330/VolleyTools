@@ -32,6 +32,10 @@
         <entry key="app/src/main/res/layout/google_logout_page.xml" value="0.15625" />
         <entry key="app/src/main/res/layout/history_match_elements.xml" value="0.375" />
         <entry key="app/src/main/res/layout/infopage_mainactivity.xml" value="0.10555555555555556" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.10384615384615385" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/volleyIcon.xml" value="0.10384615384615385" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/volleyIcon_round.xml" value="0.10384615384615385" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/volleyicon_launcher.xml" value="0.1188034188034188" />
       </map>
     </option>
   </component>
