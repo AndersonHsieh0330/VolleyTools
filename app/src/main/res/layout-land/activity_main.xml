@@ -41,7 +41,7 @@
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_margin="15dp"
+                android:layout_margin="10dp"
                 android:background="@drawable/info_icon"
                 app:backgroundTint="@color/Transparent"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -64,12 +64,12 @@
             android:id="@+id/welcome_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
             android:text="@string/welcomeStatement"
-            android:textSize="30sp"
+            android:textSize="20sp"
             app:layout_constraintBottom_toTopOf="@id/DiagonalView_launch_scorer"
             app:layout_constraintEnd_toEndOf="@id/right_guideline"
-            app:layout_constraintStart_toStartOf="@id/left_guideline" />
+            app:layout_constraintStart_toStartOf="@id/left_guideline"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/right_guideline"
@@ -117,7 +117,8 @@
                 android:text="@string/button_selection_viewhistory"
                 android:textColor="@color/white"
                 android:textSize="30sp"
-                app:backgroundTint="@color/Transparent" />
+                app:backgroundTint="@color/Transparent"
+                android:textAllCaps="false"/>
 
         </io.github.florent37.shapeofview.shapes.DiagonalView>
 
@@ -144,7 +145,8 @@
                 android:text="@string/button_selection_score"
                 android:textColor="@color/white"
                 android:textSize="30sp"
-                app:backgroundTint="@color/Transparent" />
+                app:backgroundTint="@color/Transparent"
+                android:textAllCaps="false"/>
 
         </io.github.florent37.shapeofview.shapes.DiagonalView>
 

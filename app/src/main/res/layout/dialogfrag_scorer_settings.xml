@@ -14,13 +14,13 @@
         android:background="@drawable/scorersettingpage_restartbutton_design"
         app:layout_constraintDimensionRatio="1:1"
         >
+
         <ImageButton
             android:id="@+id/scorerSettings_ImgButton_Restart"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/restart_icon"
-            android:layout_margin="20dp"
-            ></ImageButton>
+            android:layout_margin="20dp" />
     </RelativeLayout>
 
 
@@ -34,12 +34,13 @@
         app:layout_constraintTop_toTopOf="@id/scorerSettingsMidBottomGuide"
         android:background="@drawable/scorersettingpage_savebutton_design"
         app:layout_constraintDimensionRatio="1:1">
+
         <ImageButton
             android:id="@+id/scorerSettings_ImgButton_saveGame"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/save_icon"
-            ></ImageButton>
+            android:layout_margin="10dp"
+            android:background="@drawable/save_icon" />
     </RelativeLayout>
 
     <androidx.constraintlayout.widget.Guideline

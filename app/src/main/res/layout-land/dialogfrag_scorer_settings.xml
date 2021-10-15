@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="20dp"
-            android:background="@drawable/restart_icon"></ImageButton>
+            android:background="@drawable/restart_icon" />
     </RelativeLayout>
 
 
@@ -37,7 +37,8 @@
             android:id="@+id/scorerSettings_ImgButton_saveGame"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/save_icon"></ImageButton>
+            android:layout_margin="10dp"
+            android:background="@drawable/save_icon" />
     </RelativeLayout>
 
     <androidx.constraintlayout.widget.Guideline

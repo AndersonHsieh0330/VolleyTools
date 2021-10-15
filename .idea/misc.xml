@@ -16,8 +16,9 @@
         <entry key="app/src/main/res/drawable/matchhistory_page_elements_design_mintgreen.xml" value="0.14114583333333333" />
         <entry key="app/src/main/res/drawable/matchhistory_page_elements_design_yellowcrayola.xml" value="0.14114583333333333" />
         <entry key="app/src/main/res/layout-land/activity_main.xml" value="0.1" />
-        <entry key="app/src/main/res/layout-land/activity_match_history.xml" value="0.10008818342151675" />
+        <entry key="app/src/main/res/layout-land/activity_match_history.xml" value="0.10216379293202732" />
         <entry key="app/src/main/res/layout-land/activity_scorer.xml" value="0.33" />
+        <entry key="app/src/main/res/layout-land/dialogfrag_scorer_settings.xml" value="0.22139379855330144" />
         <entry key="app/src/main/res/layout-land/google_login_page.xml" value="0.15255731922398588" />
         <entry key="app/src/main/res/layout-land/google_logout_page.xml" value="0.15255731922398588" />
         <entry key="app/src/main/res/layout-land/history_match_elements.xml" value="0.10890652557319223" />
@@ -39,7 +40,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="false" project-jdk-name="11" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
