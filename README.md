@@ -22,3 +22,15 @@ Libraries and resources I used
 - Shape of view 
 - Icons 
 - Swiping in recycler view
+
+hamburger menu icon: https://freeicons.io/social-media/hamburger-menu-icon-11554
+
+download icon: https://freeicons.io/test/system-download-down-icon-1391
+
+settings icon: https://freeicons.io/web-and-mobile-app-icons/system-settings-icon-1405
+
+X icon: https://icon-icons.com/icon/x-thin/171414
+
+exit icon: https://freeicons.io/essentials-user-interface/exit-door-sign-out-ui-interface-icon-104256
+
+restart icon: https://icons8.com/icon/11676/restart
