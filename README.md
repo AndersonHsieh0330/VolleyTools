@@ -6,8 +6,9 @@ Playing post secondary volleyball was a dream of mine back in the high school da
 <br/>
 <br/>
 For the future, I plan on adding the feature of auto generating a scoresheet of a game as a PDF. Back in the highschool league games, we'd always have to send people to do the [scoresheet](https://volleyball.ca/uploads/Development/Referee/Rules/Volleyball_Canada_Score_Sheet_Presentation_v3_4_-_Sept_2016.pdf) and it was not particularly easy to do. Having a tool like this would definitely help save some time and energy.
-
-
+<br/>
+<br/>
+Checkout the icon design on [Figma](https://www.figma.com/file/yPW3yIO8pfjm6M3fVQlZyr/VolleyTools-Icon)
 ## VolleyTools supports:
 - Basic functionality of a scoreboard app
 - Log in system with Google
