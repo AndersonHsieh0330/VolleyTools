@@ -19,7 +19,7 @@ Checkout the icon design on [Figma](https://www.figma.com/file/yPW3yIO8pfjm6M3fV
 - Firebase Authentication: Google
 - Fragment/Activity communication 
 - Gesture detector
-- Taking care of Jolson data 
+- Taking care of Json data 
 - Customize view appearance with drawable.xml
 
 ## Libraries and resources I used
